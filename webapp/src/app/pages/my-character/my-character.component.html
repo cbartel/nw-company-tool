@@ -2,6 +2,11 @@
   <mat-card class="default-container">
     <div class="div-center">
       <mat-tab-group animationDuration="500ms">
+        <mat-tab label="BASIC">
+          <div class="div-center">
+            <app-my-character-basic [character$]="character"></app-my-character-basic>
+          </div>
+        </mat-tab>
         <mat-tab label="ATTRIBUTES">
           <div class="div-center">
             <app-my-character-attributes [character$]="character"></app-my-character-attributes>

@@ -85,4 +85,11 @@ export class UserDao extends AbstractDao {
     `;
     this.run(sql, [+admin, id]);
   }
+
+  public setCharacterName(id: number, name: string): void {
+    const sql = `
+      UPDATE user SET character_name = ? WHERE id = ?;
+    `
+    this.run(sql, [name, id]);
+  }
 }

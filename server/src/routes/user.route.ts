@@ -23,3 +23,19 @@ router.get('/', (req, res, next) => {
     next(error);
   }
 });
+
+router.post('/charactername', (req, res, next) => {
+  try {
+    const cookies: Cookies = req.cookies;
+    const name = req.body.value;
+    if (!cookies.access_token) {
+      next(new HttpError(401, 'access token is missing'));
+      return;
+    }
+    const accessToken = tokenService.parseAccessToken(cookies.access_token);
+    userService.setCharacterName(accessToken.id, name);
+    res.status(200).send();
+  } catch (error) {
+    next(error);
+  }
+});

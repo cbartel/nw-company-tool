@@ -75,6 +75,10 @@ export class UserService {
     return this.getUserByDiscordId(user.discordId)!;
   }
 
+  public setCharacterName(id: number, name: string): void {
+    this.userDao.setCharacterName(id, name);
+  }
+
   public isEnabled(id: number): boolean {
     return this.userDao.isEnabled(id);
   }

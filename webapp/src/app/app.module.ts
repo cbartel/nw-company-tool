@@ -50,6 +50,7 @@ import { WeaponMasteryComponent } from './components/weapon-mastery/weapon-maste
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TradeSkillComponent } from './components/trade-skill/trade-skill.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MyCharacterBasicComponent } from './components/my-character-basic/my-character-basic.component';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
@@ -90,7 +91,8 @@ const cookieConfig: NgcCookieConsentConfig = {
     AttributeComponent,
     AfterValueChangedDirective,
     WeaponMasteryComponent,
-    TradeSkillComponent
+    TradeSkillComponent,
+    MyCharacterBasicComponent
   ],
   imports: [
     NgcCookieConsentModule.forRoot(cookieConfig),

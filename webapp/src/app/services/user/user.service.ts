@@ -83,4 +83,9 @@ export class UserService {
       )
       .subscribe();
   }
+
+  public setCharacterName(name: string): void {
+      this.http.post('/api/user/charactername', {value: name}, {withCredentials:true}).subscribe();
+      this.refreshUser();
+  }
 }
