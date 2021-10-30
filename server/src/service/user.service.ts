@@ -1,5 +1,6 @@
 import { UserDao } from '../dao/user/user.dao';
 import { User } from '../model/user.model';
+import {UserEntity} from "../dao/user/user.entity";
 
 export class UserService {
   private static readonly INSTANCE = new UserService();
@@ -58,17 +59,20 @@ export class UserService {
   }
 
   public createUser(user: User): User {
-    this.userDao.put({
+    const entity: UserEntity = {
       discord_id: user.discordId,
       discord_username: user.discordUsername,
-      character_name: user.characterName
-    });
-    const newUser = this.getUserByDiscordId(user.discordId)!;
-    if(this.userDao.userCount() === 1) {
-      this.setEnabled(newUser.id, true);
-      this.setAdmin(newUser.id, true);
+      character_name: user.characterName,
+      enabled: false,
+      admin: false
+    };
+    if(this.userDao.userCount() === 0) {
+      entity.admin = true;
+      entity.enabled = true;
     }
-    return newUser;
+    this.userDao.put(entity);
+
+    return this.getUserByDiscordId(user.discordId)!;
   }
 
   public isEnabled(id: number): boolean {

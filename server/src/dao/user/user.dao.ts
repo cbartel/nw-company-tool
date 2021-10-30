@@ -64,12 +64,12 @@ export class UserDao extends AbstractDao {
   public put(user: UserEntity): void {
     const sql = `
       INSERT INTO
-        user (discord_id, discord_username, character_name)
+        user (discord_id, discord_username, character_name, enabled, admin)
       VALUES
-        (?, ?, ?)
+        (?, ?, ?, ?, ?)
     `;
 
-    this.run(sql, [user.discord_id, user.discord_username, user.character_name]);
+    this.run(sql, [user.discord_id, user.discord_username, user.character_name, +user.enabled!, +user.admin!]);
   }
 
   public setEnabled(id: number, enabled: boolean): void {
