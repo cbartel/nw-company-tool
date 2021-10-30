@@ -81,12 +81,14 @@ router.get('/callback', async ({ query }, res, next) => {
           httpOnly: true
         });
         res.redirect('/');
+        return;
       } else {
         // Create new User
         res.cookie(CookieNames.DISCORD_TOKEN, discordAccessToken, {
           httpOnly: true
         });
         res.redirect('/');
+        return;
       }
     }
   } catch (error) {
@@ -100,6 +102,7 @@ router.post('/register', async (req, res, next) => {
     const payload: RegisterRequest = req.body;
     if (!cookies.discord_token) {
       next(new HttpError(401, 'missing discord token'));
+      return;
     } else {
       const discordUser = await discordService.getUser(cookies.discord_token).toPromise();
       const user = userService.createUser({
