@@ -35,6 +35,7 @@ router.post('/', (req, res, next) => {
         return;
       } else {
         next(new HttpError(400, 'User not found'));
+        return;
       }
     }
     if (cookies.discord_token) {
@@ -51,6 +52,7 @@ router.post('/', (req, res, next) => {
         success: false
       };
       res.status(200).send(response);
+      return;
     } else {
       next(error);
     }
