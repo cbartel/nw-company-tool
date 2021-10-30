@@ -1,0 +1,14 @@
+<div class="attributes-container">
+  <button mat-icon-button (click)="decrement()">
+    <mat-icon>chevron_left</mat-icon>
+  </button>
+  <mat-form-field class="attributes-value-form">
+    <input matInput type="number" class="attributes-value" [formControl]="form" autocomplete="off"/>
+  </mat-form-field>
+  <button mat-icon-button (click)="increment()">
+    <mat-icon>chevron_right</mat-icon>
+  </button>
+  <div class="attributes-name">
+    {{label}}
+  </div>
+</div>

@@ -1,0 +1,11 @@
+.my-character-weapon-mastery-container {
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: left;
+}
+
+.my-character-weapon-mastery-section {
+  margin: 6px;
+  min-width: 150px;
+}

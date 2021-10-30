@@ -1,0 +1,32 @@
+.div-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+}
+
+.home-card:hover {
+  cursor: pointer;
+}
+
+.home-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  transition: transform .5s;
+}
+
+.home-icon:hover {
+  transform: scale(1.2);
+}
+
+.home-label {
+  margin-top: 4px;
+}

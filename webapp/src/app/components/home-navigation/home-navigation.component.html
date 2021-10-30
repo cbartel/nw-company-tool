@@ -1,0 +1,14 @@
+<mat-grid-list cols="4" rowHeight="150px">
+  <mat-grid-tile *ngFor="let item of getNavigationItems()" routerLink="{{item.routerLink}}">
+    <mat-card class="home-card">
+      <mat-card-content>
+        <div class="div-center">
+          <mat-icon aria-hidden="false" class="home-icon">{{item.icon}}</mat-icon>
+        </div>
+        <div class="div-center home-label">
+          <span>{{item.label}}</span>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>

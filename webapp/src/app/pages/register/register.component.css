@@ -1,0 +1,21 @@
+.register-div {
+  display: flex;
+  justify-content: center;
+  align-items: normal;
+}
+
+.register-button {
+  width: 400px;
+  height: 60px;
+}
+
+
+.register-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.register-form-full-width {
+  width: 100%;
+}

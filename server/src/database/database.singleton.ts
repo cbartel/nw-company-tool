@@ -1,0 +1,48 @@
+import * as sqlite3 from 'better-sqlite3';
+import { Database } from 'better-sqlite3';
+import { dbVersion } from './schema/database.version';
+import { dbV1 } from './schema/database.v1';
+import { ConfigService } from '../service/config.service';
+
+export class DatabaseSingleton {
+  private static readonly CURRENT_DB_VERSION = 1;
+
+  private static readonly INSTANCE = new DatabaseSingleton();
+  private readonly db: Database;
+
+  private constructor() {
+    const config = ConfigService.get().getServerConfig();
+    this.db = new sqlite3(config.DATABASE || 'database.db', config.DEV ? { verbose: console.log } : {});
+    this.db.exec(dbVersion);
+    this.setupDbSchema();
+  }
+
+  public getDb(): Database {
+    return this.db;
+  }
+
+  public static get(): Database {
+    return DatabaseSingleton.INSTANCE.db;
+  }
+
+  private setupDbSchema() {
+    const versionWrapper: { version: number } = this.db.prepare('SELECT version from version').get([]);
+    if (!versionWrapper) {
+      console.log(`db schema not initialized yet. Creating schema version ${DatabaseSingleton.CURRENT_DB_VERSION}`);
+      this.initDb(DatabaseSingleton.CURRENT_DB_VERSION);
+      return;
+    }
+    const version = versionWrapper.version;
+    console.log(`db schema version is ${version}`);
+  }
+
+  private initDb(version: number) {
+    switch (version) {
+      case 1: {
+        this.db.exec(dbV1);
+        console.log(`db schema initiated in version 1`);
+        break;
+      }
+    }
+  }
+}

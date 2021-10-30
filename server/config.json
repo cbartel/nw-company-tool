@@ -1,0 +1,16 @@
+{
+  "DISCORD": {
+    "CLIENT_ID": "ID",
+    "CLIENT_SECRET": "SECRET"
+  },
+  "BASE_URL": "http://localhost:4200",
+  "TOKEN_SECRET": "Test",
+  "PORT": 8080,
+  "DATABASE": "database.db",
+  "WEBAPP": {
+    "COMPANY": {
+      "NAME": "MY COMPANY",
+      "SERVER": "MY SERVER"
+    }
+  }
+}
