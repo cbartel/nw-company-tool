@@ -63,7 +63,12 @@ export class UserService {
       discord_username: user.discordUsername,
       character_name: user.characterName
     });
-    return this.getUserByDiscordId(user.discordId)!;
+    const newUser = this.getUserByDiscordId(user.discordId)!;
+    if(this.userDao.userCount() === 1) {
+      this.setEnabled(newUser.id, true);
+      this.setAdmin(newUser.id, true);
+    }
+    return newUser;
   }
 
   public isEnabled(id: number): boolean {

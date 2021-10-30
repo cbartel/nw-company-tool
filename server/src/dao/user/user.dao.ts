@@ -8,6 +8,13 @@ export class UserDao extends AbstractDao {
     return UserDao.INSTANCE;
   }
 
+  public userCount(): number {
+    const sql = `
+      SELECT count(*) as count FROM user;
+    `
+    return this.get<{ count: number }>(sql, [])!.count;
+  }
+
   public findAll(): UserEntity[] | undefined {
     const sql = `
       SELECT * FROM user;
