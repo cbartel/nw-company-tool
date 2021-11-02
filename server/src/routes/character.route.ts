@@ -48,24 +48,6 @@ router.get('/attributes/:userid', (req, res, next) => {
   }
 });
 
-router.get('/attributes/me', (req, res, next) => {
-  try {
-    const cookies: Cookies = req.cookies;
-    if (!cookies.access_token) {
-      next(new HttpError(401, 'access token is missing'));
-      return;
-    }
-    const accessToken = tokenService.parseAccessToken(cookies.access_token);
-    const userDetails = characterService.getAllAttributes(accessToken.id);
-    if (!userDetails) {
-      res.status(404).send();
-    }
-    res.status(200).send(userDetails);
-  } catch (error) {
-    next(error);
-  }
-});
-
 router.post('/attributes/me/:attribute', (req, res, next) => {
   try {
     const cookies: Cookies = req.cookies;

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CharacterService } from '../../services/character/character.service';
 import { ReplaySubject } from 'rxjs';
-import {CharacterAttributes} from "@model/character.model";
+import { CharacterAttributes } from '@model/character.model';
+import { UserService } from '../../services/user/user.service';
 
 @Component({
   selector: 'app-my-character',
@@ -11,11 +12,15 @@ import {CharacterAttributes} from "@model/character.model";
 export class MyCharacterComponent implements OnInit {
   character = new ReplaySubject<CharacterAttributes>(1);
 
-  constructor(private characterService: CharacterService) {}
+  constructor(private characterService: CharacterService, private userService: UserService) {}
 
   ngOnInit(): void {
-    this.characterService.getAllAttributes().subscribe((result) => {
-      this.character.next(result);
-    });
+    this.userService
+      .getUser$()
+      .subscribe((user) =>
+        this.characterService
+          .getAllAttributesForUser(user.id)
+          .subscribe((attributes) => this.character.next(attributes))
+      );
   }
 }
