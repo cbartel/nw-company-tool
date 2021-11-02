@@ -17,7 +17,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { HomeIconComponent } from './components/home-icon/home-icon.component';
 import { AccountDisabledComponent } from './pages/account-disabled/account-disabled.component';
 import { ForbiddenComponent } from './pages/forbidden/forbidden.component';
 import { AdminComponent } from './pages/admin/admin.component';
@@ -26,7 +25,6 @@ import { ConfigModule } from './services/config/config.module';
 import { LoginGuard } from './guards/login.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { CompanyComponent } from './pages/company/company.component';
-import { CompanyModule } from './services/company/company.module';
 import { MatTableModule } from '@angular/material/table';
 import { MyCharacterComponent } from './pages/my-character/my-character.component';
 import { ConfigService } from './services/config/config.service';
@@ -51,10 +49,16 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { TradeSkillComponent } from './components/trade-skill/trade-skill.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MyCharacterBasicComponent } from './components/my-character-basic/my-character-basic.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { CharacterDetailComponent } from './components/character-detail/character-detail.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
-    domain: 'localhost' // or 'your.domain.com' // it is mandatory to set a domain, for cookies to work properly (see https://goo.gl/S2Hy2A)
+    domain: ''
   },
   palette: {
     popup: {
@@ -76,7 +80,6 @@ const cookieConfig: NgcCookieConsentConfig = {
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    HomeIconComponent,
     AccountDisabledComponent,
     ForbiddenComponent,
     AdminComponent,
@@ -92,7 +95,8 @@ const cookieConfig: NgcCookieConsentConfig = {
     AfterValueChangedDirective,
     WeaponMasteryComponent,
     TradeSkillComponent,
-    MyCharacterBasicComponent
+    MyCharacterBasicComponent,
+    CharacterDetailComponent
   ],
   imports: [
     NgcCookieConsentModule.forRoot(cookieConfig),
@@ -102,23 +106,27 @@ const cookieConfig: NgcCookieConsentConfig = {
     HttpClientModule,
     ReactiveFormsModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatCardModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatGridListModule,
     MatIconModule,
     MatInputModule,
     MatMenuModule,
+    MatPaginatorModule,
     MatProgressBarModule,
     MatSidenavModule,
     MatSlideToggleModule,
+    MatSortModule,
     MatTableModule,
     MatTabsModule,
     MatToolbarModule,
+    MatTooltipModule,
     NavigationModule,
     AdminModule,
     UserModule,
     ConfigModule,
-    CompanyModule,
     CharacterModule
   ],
   providers: [LoginGuard, AdminGuard],

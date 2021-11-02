@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../services/admin/admin.service';
 import { UserService } from '../../services/user/user.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
-import {User} from "@model/user.model";
+import { User } from '@model/user.model';
 
 @Component({
   selector: 'app-admin-users-table',

@@ -6,7 +6,6 @@ import * as cors from 'cors';
 import { router as loginRouter } from './routes/login.route';
 import { router as userRouter } from './routes/user.route';
 import { router as characterRouter } from './routes/character.route';
-import { router as companyRouter } from './routes/company.route';
 import { router as configRouter } from './routes/config.route';
 import { router as adminRouter } from './routes/admin.route';
 import { errorHandler, invalidTokenErrorHandler } from './routes/error.route';
@@ -24,14 +23,12 @@ const distDir = __dirname + '/app/';
 app.use(express.static(distDir));
 
 app.use('/api/character', accountEnabled);
-app.use('/api/company', accountEnabled);
 app.use('/api/admin', accountEnabled);
 app.use('/api/admin', accountAdmin);
 
 app.use('/api/login/', loginRouter);
 app.use('/api/user/', userRouter);
-app.use('/api/character/', characterRouter);
-app.use('/api/company/', companyRouter);
+app.use('/api/characters/', characterRouter);
 app.use('/api/config/', configRouter);
 app.use('/api/admin/', adminRouter);
 

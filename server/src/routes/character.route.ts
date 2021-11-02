@@ -10,7 +10,45 @@ export const router = Router();
 const tokenService = TokenService.get();
 const characterService = CharacterService.get();
 
-router.get('/attributes', (req, res, next) => {
+router.get('/all', (req, res, next) => {
+  try {
+    const result = characterService.getAllCharacters();
+    res.status(200).send(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/all', (req, res, next) => {
+  try {
+    const queryAttributes: string[] = req.body.attributes;
+    if (queryAttributes && queryAttributes.length > 0) {
+      const attributes = queryAttributes.map((attribute) => Attribute[attribute as keyof typeof Attribute]);
+      const result = characterService.queryWithAttributes(attributes);
+      res.status(200).send(result);
+      return;
+    }
+    const result = characterService.getAllCharacters();
+    res.status(200).send(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/attributes/:userid', (req, res, next) => {
+  try {
+    const id = Number(req.params.userid);
+    const userDetails = characterService.getAllAttributes(id);
+    if (!userDetails) {
+      res.status(404).send();
+    }
+    res.status(200).send(userDetails);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/attributes/me', (req, res, next) => {
   try {
     const cookies: Cookies = req.cookies;
     if (!cookies.access_token) {
@@ -28,7 +66,7 @@ router.get('/attributes', (req, res, next) => {
   }
 });
 
-router.post('/attributes/:attribute', (req, res, next) => {
+router.post('/attributes/me/:attribute', (req, res, next) => {
   try {
     const cookies: Cookies = req.cookies;
     const attribute = Attribute[req.params.attribute.toUpperCase() as keyof typeof Attribute];

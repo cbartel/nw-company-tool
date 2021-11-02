@@ -1,33 +1,18 @@
+.weapon-mastery-value > mat-form-field {
+    width: 48px;
+}
+
+.weapon-mastery-value > mat-form-field input {
+    font-size: 12px;
+    text-align: center;
+}
+
 .weapon-mastery-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 10px;
-  border: #333 solid 1px;
-  padding: 12px;
-  border-radius: 5px;
+    border: 1px solid #5c5c5c;
+    margin: 3px 0px 3px 0px;
+    padding: 3px 3px 3px 3px;
 }
 
-.weapon-mastery-value-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
-.weapon-mastery-value-form {
-  padding-top: 18px;
-  width: 48px;
-}
-
-.weapon-mastery-value {
-  font-size: 24px;
-  background-color:transparent;
-  border: 0;
-  text-align: center;
-  color: #fff;
-}
-
-.weapon-mastery-label {
-  font-size: 12px;
+:host ::ng-deep .mat-form-field-wrapper{
+    padding: 3px;
 }

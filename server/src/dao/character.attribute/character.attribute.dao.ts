@@ -1,5 +1,6 @@
 import { AbstractDao } from '../abstract.dao';
-import { CharacterAttributeEntity } from './character.attribute.entity';
+import { CharacterAttributeEntity, CharacterAttributePivotEntity } from './character.attribute.entity';
+import { Attribute } from '../../model/character.model';
 
 export class CharacterAttributeDao extends AbstractDao {
   private static readonly INSTANCE = new CharacterAttributeDao();
@@ -17,6 +18,23 @@ export class CharacterAttributeDao extends AbstractDao {
       SELECT * FROM character_attribute WHERE user_id = ?
     `;
     return this.all<CharacterAttributeEntity>(sql, [id]);
+  }
+
+  public findAllAndPivotAttributes(attributes: Attribute[]): CharacterAttributePivotEntity[] | undefined {
+    const sql = `
+      SELECT 
+        u.id,
+        u.character_name,
+        u.discord_id,
+        ${attributes
+          .reduce((a, attribute) => a + `SUM(c.value) FILTER ( WHERE KEY = '${attribute}') as ${attribute},`, '')
+          .slice(0, -1)}
+      FROM character_attribute c
+      JOIN user u on c.user_id = u.id
+      GROUP BY user_id
+    `;
+    console.log(sql);
+    return this.all<CharacterAttributePivotEntity>(sql, []);
   }
 
   public put(entity: CharacterAttributeEntity): void {

@@ -18,7 +18,7 @@ export class NavigationService {
     {
       label: 'COMPANY',
       routerLink: 'company',
-      icon: 'account_circle'
+      icon: 'group'
     }
   ];
 
@@ -26,7 +26,7 @@ export class NavigationService {
     {
       label: 'ADMINISTRATION',
       routerLink: 'admin',
-      icon: 'account_circle'
+      icon: 'admin_panel_settings'
     }
   ];
 

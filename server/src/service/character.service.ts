@@ -1,5 +1,5 @@
 import { CharacterAttributeDao } from '../dao/character.attribute/character.attribute.dao';
-import { Attribute, Character, CharacterAttributes } from '../model/character.model';
+import { Attribute, Character, CharacterAttributes, CharacterWithPartialAttributes } from '../model/character.model';
 import { UserDao } from '../dao/user/user.dao';
 
 export class CharacterService {
@@ -20,7 +20,8 @@ export class CharacterService {
     }
     return entities.map((entity) => ({
       id: entity.id!,
-      characterName: entity.character_name
+      characterName: entity.character_name,
+      discordId: entity.discord_id
     }));
   }
 
@@ -182,6 +183,23 @@ export class CharacterService {
       }
     });
     return characterAttributes;
+  }
+
+  public queryWithAttributes(attributes: Attribute[]): CharacterWithPartialAttributes[] {
+    const entities = this.characterAttributeDao.findAllAndPivotAttributes(attributes);
+    if (!entities) {
+      return [];
+    }
+    return entities.map((entity) => {
+      const resultRecord: Partial<Record<Attribute, number>> = {};
+      attributes.forEach((attribute) => (resultRecord[attribute] = entity[attribute] || 0));
+      return {
+        id: entity.id,
+        characterName: entity.character_name,
+        discordId: entity.discord_id,
+        ...resultRecord
+      };
+    });
   }
 
   private static createCharacterAttributes(): CharacterAttributes {

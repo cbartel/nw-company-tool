@@ -1,15 +1,10 @@
-.div-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .home-card {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 150px;
   height: 150px;
+  margin: 6px 6px 6px 6px;
 }
 
 .home-card:hover {

@@ -1,28 +1,26 @@
-<div class="div-center">
-  <mat-card class="default-container">
-    <div class="div-center">
-      <mat-tab-group animationDuration="500ms">
-        <mat-tab label="BASIC">
-          <div class="div-center">
-            <app-my-character-basic [character$]="character"></app-my-character-basic>
-          </div>
-        </mat-tab>
-        <mat-tab label="ATTRIBUTES">
-          <div class="div-center">
-            <app-my-character-attributes [character$]="character"></app-my-character-attributes>
-          </div>
-        </mat-tab>
-        <mat-tab label="WEAPON MASTERY">
-          <div class="div-center">
-            <app-my-character-weapon-mastery [character$]="character"></app-my-character-weapon-mastery>
-          </div>
-        </mat-tab>
-        <mat-tab label="TRADE SKILLS">
-          <div class="div-center">
-            <app-my-character-trade-skills [character$]="character"></app-my-character-trade-skills>
-          </div>
-        </mat-tab>
-      </mat-tab-group>
-    </div>
-  </mat-card>
+<div>
+    <mat-card class="content card">
+        <mat-tab-group animationDuration="500ms">
+            <mat-tab label="BASIC">
+                <div class="content">
+                    <app-my-character-basic [character$]="character"></app-my-character-basic>
+                </div>
+            </mat-tab>
+            <mat-tab label="ATTRIBUTES">
+                <div class="content">
+                    <app-my-character-attributes [character$]="character"></app-my-character-attributes>
+                </div>
+            </mat-tab>
+            <mat-tab label="WEAPON MASTERY">
+                <div class="content">
+                    <app-my-character-weapon-mastery [character$]="character"></app-my-character-weapon-mastery>
+                </div>
+            </mat-tab>
+            <mat-tab label="TRADE SKILLS">
+                <div class="content">
+                    <app-my-character-trade-skills [character$]="character"></app-my-character-trade-skills>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </mat-card>
 </div>

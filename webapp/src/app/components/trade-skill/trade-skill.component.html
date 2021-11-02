@@ -1,15 +1,15 @@
-<div class="trade-skill-container">
-  <div class="trade-skill-label">{{label}}</div>
-  <mat-progress-bar mode="determinate" [value]="value / 200 * 100"></mat-progress-bar>
-  <div class="trade-skill-value-container">
-    <button mat-icon-button (click)="decrement()">
-      <mat-icon>chevron_left</mat-icon>
-    </button>
-    <mat-form-field class="trade-skill-value-form" appearance="outline">
-      <input matInput type="number" class="trade-skill-value" [formControl]="form" autocomplete="off"/>
-    </mat-form-field>
-    <button mat-icon-button (click)="increment()">
-      <mat-icon>chevron_right</mat-icon>
-    </button>
-  </div>
+<div class="flex flex-center flex-column trade-skill-container">
+    <div>{{label}}</div>
+    <mat-progress-bar mode="determinate" [value]="value / 200 * 100"></mat-progress-bar>
+    <div class="trade-skill-value">
+        <button mat-icon-button (click)="decrement()">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+        <mat-form-field appearance="outline">
+            <input matInput type="number" [formControl]="form" autocomplete="off"/>
+        </mat-form-field>
+        <button mat-icon-button (click)="increment()">
+            <mat-icon>chevron_right</mat-icon>
+        </button>
+    </div>
 </div>

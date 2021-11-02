@@ -94,5 +94,12 @@ export type CharacterAttributes = {
 
 export type Character = {
   id: number;
+  discordId: string;
   characterName: string;
+};
+
+export type CharacterWithPartialAttributes = Character & Partial<Record<Attribute, number>>;
+
+export type CharacterQuery = {
+  attributes: Attribute[];
 };

@@ -12,6 +12,7 @@ export type ServerConfig = {
 };
 
 export type ClientConfig = {
+  DOMAIN: string,
   COMPANY: {
     NAME: string;
     SERVER: string;
