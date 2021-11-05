@@ -4,6 +4,7 @@ import { CharacterService } from '../service/character.service';
 import { Cookies } from '../model/request.model';
 import { HttpError } from '../model/error.model';
 import { Attribute } from '../model/character.model';
+import { checkNumber, checkSpecialCharacters } from '../validation/input.validation';
 
 export const router = Router();
 
@@ -38,6 +39,10 @@ router.post('/all', (req, res, next) => {
 router.get('/attributes/:userid', (req, res, next) => {
   try {
     const id = Number(req.params.userid);
+    if (!checkNumber(id)) {
+      next(new HttpError(400, 'invalid input'));
+      return;
+    }
     const userDetails = characterService.getAllAttributes(id);
     if (!userDetails) {
       res.status(404).send();
@@ -55,6 +60,11 @@ router.post('/attributes/me/:attribute', (req, res, next) => {
     const attributeValue = req.body.value;
     if (!attribute) {
       next(new HttpError(400, 'invalid attribute'));
+      return;
+    }
+
+    if (!checkSpecialCharacters(attributeValue)) {
+      next(new HttpError(400, 'invalid attribute value'));
       return;
     }
 

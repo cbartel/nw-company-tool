@@ -8,11 +8,9 @@ export type ServerConfig = {
   PORT?: number;
   DATABASE?: string;
   WEBAPP: ClientConfig;
-  DEV?: boolean;
 };
 
 export type ClientConfig = {
-  DOMAIN: string,
   COMPANY: {
     NAME: string;
     SERVER: string;

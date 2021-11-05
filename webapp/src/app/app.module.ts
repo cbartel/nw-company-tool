@@ -8,7 +8,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { LoginComponent } from './pages/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgcCookieConsentConfig, NgcCookieConsentModule, NgcCookieConsentService } from 'ngx-cookieconsent';
 import { RegisterComponent } from './pages/register/register.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -55,6 +55,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { CharacterDetailComponent } from './components/character-detail/character-detail.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SnackbarModule } from './services/snackbar/snackbar.module';
+import { InterceptorModule } from './interceptor/interceptor.module';
+import { TranslateLoader, TranslateModule, TranslateModuleConfig } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
@@ -70,6 +75,19 @@ const cookieConfig: NgcCookieConsentConfig = {
   },
   theme: 'classic',
   type: 'info'
+};
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+
+const i18nConfig: TranslateModuleConfig = {
+  loader: {
+    provide: TranslateLoader,
+    useFactory: HttpLoaderFactory,
+    deps: [HttpClient]
+  },
+  defaultLanguage: 'en'
 };
 
 @NgModule({
@@ -100,6 +118,7 @@ const cookieConfig: NgcCookieConsentConfig = {
   ],
   imports: [
     NgcCookieConsentModule.forRoot(cookieConfig),
+    TranslateModule.forRoot(i18nConfig),
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -118,6 +137,7 @@ const cookieConfig: NgcCookieConsentConfig = {
     MatProgressBarModule,
     MatSidenavModule,
     MatSlideToggleModule,
+    MatSnackBarModule,
     MatSortModule,
     MatTableModule,
     MatTabsModule,
@@ -127,7 +147,9 @@ const cookieConfig: NgcCookieConsentConfig = {
     AdminModule,
     UserModule,
     ConfigModule,
-    CharacterModule
+    CharacterModule,
+    InterceptorModule,
+    SnackbarModule
   ],
   providers: [LoginGuard, AdminGuard],
   bootstrap: [AppComponent],

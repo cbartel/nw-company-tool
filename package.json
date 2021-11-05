@@ -1,0 +1,11 @@
+{
+  "name": "nw-company-tool",
+  "version": "0.0.0",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "private": true,
+  "devDependencies": {
+    "esbuild": "^0.13.12"
+  }
+}

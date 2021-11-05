@@ -1,5 +1,7 @@
 export enum Args {
-  CONFIG
+  DATAPATH,
+  CONFIGNAME,
+  DEVELOPMENT
 }
 
 export class ArgsService {
@@ -10,13 +12,18 @@ export class ArgsService {
   }
 
   private readonly keyMap: Record<string, Args> = {
-    '-c': Args.CONFIG
+    '--dataPath': Args.DATAPATH,
+    '--configName': Args.CONFIGNAME,
+    '--dev': Args.DEVELOPMENT
   };
 
   private readonly arguments = new Map<Args, string>();
 
   private constructor() {
-    const args = process.argv.slice(2);
+    let args = process.argv;
+    while (args[0] && !args[0].startsWith('--')) {
+      args = args.slice(1);
+    }
     for (let i = 0; i + 1 < args.length; i += 2) {
       const key = args[i];
       const value = args[i + 1];
@@ -26,6 +33,9 @@ export class ArgsService {
       } else {
         console.warn(`unknown command line parameter ${key}`);
       }
+    }
+    if (!this.getArgument(Args.DATAPATH)) {
+      throw new Error('missing command line argument --dataPath');
     }
   }
 

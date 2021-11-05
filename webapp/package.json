@@ -20,6 +20,8 @@
     "@angular/platform-browser": "~12.2.0",
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
+    "@ngx-translate/core": "^13.0.0",
+    "@ngx-translate/http-loader": "^6.0.0",
     "cookieconsent": "^3.1.1",
     "jsonwebtoken": "^8.5.1",
     "ngx-cookieconsent": "^2.2.3",

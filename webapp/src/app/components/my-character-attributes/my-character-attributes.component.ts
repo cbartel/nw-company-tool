@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { CharacterService } from '../../services/character/character.service';
-import { debounceTime } from 'rxjs/operators';
-import { Observable } from 'rxjs';
-import {Attribute, CharacterAttributes} from "@model/character.model";
+import { debounceTime, map, mergeMap, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { Attribute, CharacterAttributes } from '@model/character.model';
+import { SnackbarService } from '../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-my-character-attributes',
@@ -22,7 +23,7 @@ export class MyCharacterAttributesComponent implements OnInit {
   focusForm = new FormControl(0, [Validators.max(999), Validators.min(0)]);
   constitutionForm = new FormControl(0, [Validators.max(999), Validators.min(0)]);
 
-  constructor(private characterService: CharacterService) {}
+  constructor(private characterService: CharacterService, private snackbarService: SnackbarService) {}
 
   ngOnInit(): void {
     this.setupForm(this.strengthForm, Attribute.STRENGTH, (character) => character.attributes.strength);
@@ -40,11 +41,21 @@ export class MyCharacterAttributesComponent implements OnInit {
     const sub = this.character$.subscribe((character) => {
       form.setValue(attributeSelector(character));
       sub.unsubscribe();
-      form.valueChanges.pipe(debounceTime(this.DEBOUNCE_TIME)).subscribe((value) => {
-        if (form.valid && value !== null) {
-          this.characterService.updateAttribute(attribute, value);
-        }
-      });
+      form.valueChanges
+        .pipe(
+          debounceTime(this.DEBOUNCE_TIME),
+          mergeMap((value) => {
+            if (form.valid && value !== null) {
+              return this.characterService.updateAttribute(attribute, value).pipe(map(() => true));
+            }
+            return of(false);
+          })
+        )
+        .subscribe((updated) => {
+          if (updated) {
+            this.snackbarService.open('Character saved');
+          }
+        });
     });
   }
 }

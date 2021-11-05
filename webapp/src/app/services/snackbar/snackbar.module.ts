@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
-import { UserService } from './user.service';
 import { HttpClientModule } from '@angular/common/http';
+import { SnackbarService } from './snackbar.service';
 
 @NgModule({
-  providers: [UserService],
+  providers: [SnackbarService],
   imports: [HttpClientModule]
 })
-export class UserModule {}
+export class SnackbarModule {}

@@ -3,6 +3,7 @@ import { TokenService } from '../service/token.service';
 import { UserService } from '../service/user.service';
 import { Cookies } from '../model/request.model';
 import { HttpError } from '../model/error.model';
+import { checkSpecialCharacters } from '../validation/input.validation';
 
 export const router = Router();
 
@@ -28,6 +29,10 @@ router.post('/charactername', (req, res, next) => {
   try {
     const cookies: Cookies = req.cookies;
     const name = req.body.value;
+    if (!checkSpecialCharacters(name)) {
+      next(new HttpError(400, 'invalid character name'));
+      return;
+    }
     if (!cookies.access_token) {
       next(new HttpError(401, 'access token is missing'));
       return;

@@ -3,6 +3,7 @@ import { AdminService } from '../../services/admin/admin.service';
 import { UserService } from '../../services/user/user.service';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { User } from '@model/user.model';
+import { SnackbarService } from '../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-admin-users-table',
@@ -15,7 +16,11 @@ export class AdminUsersTableComponent implements OnInit {
   displayedData: User[] = [];
   data: User[] = [];
 
-  constructor(private adminService: AdminService, private userService: UserService) {}
+  constructor(
+    private adminService: AdminService,
+    private userService: UserService,
+    private snackbarService: SnackbarService
+  ) {}
 
   ngOnInit(): void {
     this.adminService.findAll().subscribe((data) => {
@@ -38,7 +43,9 @@ export class AdminUsersTableComponent implements OnInit {
     if (this.userService.getUser()?.id === user.id) {
       return;
     }
-    this.adminService.setEnabled(user.id, change.checked);
+    this.adminService
+      .setEnabled(user.id, change.checked)
+      .subscribe(() => this.snackbarService.open(`User enabled: ${change.checked}`));
   }
 
   admin(change: MatSlideToggleChange, user: User): void {
@@ -46,6 +53,8 @@ export class AdminUsersTableComponent implements OnInit {
     if (this.userService.getUser()?.id === user.id) {
       return;
     }
-    this.adminService.setAdmin(user.id, change.checked);
+    this.adminService
+      .setAdmin(user.id, change.checked)
+      .subscribe(() => this.snackbarService.open(`User admin: ${change.checked}`));
   }
 }

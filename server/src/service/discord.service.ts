@@ -2,6 +2,7 @@ import { Observable } from 'rxjs';
 import axios from 'axios';
 import { TokenResponse, UserResponse } from '../model/discord.model';
 import { ConfigService } from './config.service';
+import { URLSearchParams } from 'url';
 
 const serverConfig = ConfigService.get().getServerConfig();
 

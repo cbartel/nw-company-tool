@@ -145,7 +145,7 @@ export class CharacterService {
           characterAttributes.tradeSkills.refining.woodworking = Number(entity.value);
           break;
         }
-        case Attribute.LEATERWORKING: {
+        case Attribute.LEATHERWORKING: {
           characterAttributes.tradeSkills.refining.leatherworking = Number(entity.value);
           break;
         }

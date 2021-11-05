@@ -55,3 +55,13 @@ input[type=number] {
 .flex-column {
   flex-direction: column;
 }
+
+.snackbar-info {
+  background: #393939;
+  color: #ffffff;
+}
+
+.snackbar-error {
+  background: #393939;
+  color: #ffb3b3;
+}

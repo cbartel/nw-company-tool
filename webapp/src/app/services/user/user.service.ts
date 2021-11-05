@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, ReplaySubject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import {LoginResponse} from "@model/login.model";
-import {User} from "@model/user.model";
+import { LoginResponse } from '@model/login.model';
+import { User } from '@model/user.model';
 
 @Injectable()
 export class UserService {
@@ -84,8 +84,11 @@ export class UserService {
       .subscribe();
   }
 
-  public setCharacterName(name: string): void {
-      this.http.post('/api/user/charactername', {value: name}, {withCredentials:true}).subscribe();
-      this.refreshUser();
+  public setCharacterName(name: string): Observable<unknown> {
+    return this.http.post('/api/user/charactername', { value: name }, { withCredentials: true }).pipe(
+      tap(() => {
+        this.refreshUser();
+      })
+    );
   }
 }

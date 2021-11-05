@@ -5,6 +5,7 @@ import { UserService } from '../service/user.service';
 import { CookieNames, Cookies } from '../model/request.model';
 import { HttpError } from '../model/error.model';
 import { LoginResponse, RegisterRequest } from '../model/login.model';
+import { checkSpecialCharacters } from '../validation/input.validation';
 
 export const router = Router();
 
@@ -34,7 +35,7 @@ router.post('/', (req, res, next) => {
         res.status(200).send(response);
         return;
       } else {
-        next(new HttpError(400, 'User not found'));
+        next(new HttpError(401, 'User not found'));
         return;
       }
     }
@@ -102,26 +103,31 @@ router.post('/register', async (req, res, next) => {
   try {
     const cookies: Cookies = req.cookies;
     const payload: RegisterRequest = req.body;
+
+    if (!checkSpecialCharacters(payload.characterName)) {
+      next(new HttpError(400, 'invalid character name'));
+      return;
+    }
+
     if (!cookies.discord_token) {
       next(new HttpError(401, 'missing discord token'));
       return;
-    } else {
-      const discordUser = await discordService.getUser(cookies.discord_token).toPromise();
-      const user = userService.createUser({
-        id: 0,
-        discordUsername: discordUser.username,
-        discordId: discordUser.id,
-        characterName: payload.characterName,
-        enabled: false,
-        admin: false
-      });
-      res.clearCookie(CookieNames.DISCORD_TOKEN);
-      res.cookie(CookieNames.ACCESS_TOKEN, tokenService.createAccessToken(user.id!, user.discordId), {
-        httpOnly: true
-      });
-      res.status(200);
-      res.send();
     }
+    const discordUser = await discordService.getUser(cookies.discord_token!).toPromise();
+    const user = userService.createUser({
+      id: 0,
+      discordUsername: discordUser.username,
+      discordId: discordUser.id,
+      characterName: payload.characterName,
+      enabled: false,
+      admin: false
+    });
+    res.clearCookie(CookieNames.DISCORD_TOKEN);
+    res.cookie(CookieNames.ACCESS_TOKEN, tokenService.createAccessToken(user.id!, user.discordId), {
+      httpOnly: true
+    });
+    res.status(200);
+    res.send();
   } catch (error) {
     next(error);
   }

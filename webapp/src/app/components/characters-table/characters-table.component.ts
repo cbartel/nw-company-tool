@@ -22,7 +22,8 @@ export class CharactersTableComponent implements OnInit, AfterViewInit {
     Attribute.ENGINEERING,
     Attribute.JEWELCRAFTING,
     Attribute.ARCANA,
-    Attribute.COOKING
+    Attribute.COOKING,
+    Attribute.FURNISHING
   ];
   selectedCraftSkill = new FormControl();
 

@@ -1,44 +1,43 @@
-import * as express from 'express';
-import * as compression from 'compression';
-import * as bodyParser from 'body-parser';
-import * as cookieParser from 'cookie-parser';
-import * as cors from 'cors';
-import { router as loginRouter } from './routes/login.route';
-import { router as userRouter } from './routes/user.route';
-import { router as characterRouter } from './routes/character.route';
-import { router as configRouter } from './routes/config.route';
-import { router as adminRouter } from './routes/admin.route';
-import { errorHandler, invalidTokenErrorHandler } from './routes/error.route';
-import { ConfigService } from './service/config.service';
-import { accountAdmin, accountEnabled } from './routes/auth.route';
+import { exec, fork } from 'child_process';
+import process from 'process';
+import { promisify } from 'util';
+import { Args, ArgsService } from './service/args.service';
 
-const app = express();
+const argsService = ArgsService.get();
 
-app.use(bodyParser.json());
-app.use(cookieParser());
-app.use(cors());
-app.use(compression());
+async function startServer() {
+  console.log(`
+-----------------------------------------------------------------------------------------------------------------------------
 
-const distDir = __dirname + '/app/';
-app.use(express.static(distDir));
+███    ██ ██     ██      ██████  ██████  ███    ███ ██████   █████  ███    ██ ██    ██     ████████  ██████   ██████  ██      
+████   ██ ██     ██     ██      ██    ██ ████  ████ ██   ██ ██   ██ ████   ██  ██  ██         ██    ██    ██ ██    ██ ██      
+██ ██  ██ ██  █  ██     ██      ██    ██ ██ ████ ██ ██████  ███████ ██ ██  ██   ████          ██    ██    ██ ██    ██ ██      
+██  ██ ██ ██ ███ ██     ██      ██    ██ ██  ██  ██ ██      ██   ██ ██  ██ ██    ██           ██    ██    ██ ██    ██ ██      
+██   ████  ███ ███       ██████  ██████  ██      ██ ██      ██   ██ ██   ████    ██           ██     ██████   ██████  ███████ 
+               
+-----------------------------------------------------------------------------------------------------------------------------                                                                                        
+  `);
 
-app.use('/api/character', accountEnabled);
-app.use('/api/admin', accountEnabled);
-app.use('/api/admin', accountAdmin);
+  process.chdir(__dirname + /../);
+  await installDependencies();
+  const server = fork(__dirname + '/server', process.argv, Object.create(process.env));
 
-app.use('/api/login/', loginRouter);
-app.use('/api/user/', userRouter);
-app.use('/api/characters/', characterRouter);
-app.use('/api/config/', configRouter);
-app.use('/api/admin/', adminRouter);
+  server.on('message', (msg) => {
+    if (msg == 'restart') {
+      console.log('restarting server...');
+      server.kill('SIGINT');
+      setTimeout(() => startServer(), 1000);
+    }
+  });
+}
 
-app.all('/*', (req, res) => {
-  res.sendFile('app/index.html', { root: __dirname });
-});
+async function installDependencies() {
+  if (argsService.getArgument(Args.DEVELOPMENT) === 'true') {
+    return;
+  }
+  console.log('installing dependencies... (this may take a while)');
+  await promisify(exec)('npm install --only=production');
+  console.log('installing dependencies... done.');
+}
 
-app.use(invalidTokenErrorHandler);
-app.use(errorHandler);
-
-const config = ConfigService.get().getServerConfig();
-
-app.listen(config.PORT || 8080);
+startServer().then(() => console.log('server started.'));

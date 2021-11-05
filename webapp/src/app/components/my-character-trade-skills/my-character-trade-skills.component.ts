@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { FormControl, Validators } from '@angular/forms';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, map, mergeMap } from 'rxjs/operators';
 import { CharacterService } from '../../services/character/character.service';
-import {Attribute, CharacterAttributes} from "@model/character.model";
+import { Attribute, CharacterAttributes } from '@model/character.model';
+import { SnackbarService } from '../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-my-character-trade-skills',
@@ -13,6 +14,8 @@ import {Attribute, CharacterAttributes} from "@model/character.model";
 export class MyCharacterTradeSkillsComponent implements OnInit {
   @Input()
   character$!: Observable<CharacterAttributes>;
+
+  attributes = Attribute;
 
   private readonly DEBOUNCE_TIME = 300;
 
@@ -34,7 +37,7 @@ export class MyCharacterTradeSkillsComponent implements OnInit {
   harvesting = new FormControl(0, [Validators.max(200), Validators.min(0)]);
   trackingAndSkinning = new FormControl(0, [Validators.max(200), Validators.min(0)]);
 
-  constructor(private characterService: CharacterService) {}
+  constructor(private characterService: CharacterService, private snackbarService: SnackbarService) {}
 
   ngOnInit(): void {
     this.setupForm(
@@ -56,7 +59,7 @@ export class MyCharacterTradeSkillsComponent implements OnInit {
     this.setupForm(this.woodworking, Attribute.WOODWORKING, (character) => character.tradeSkills.refining.woodworking);
     this.setupForm(
       this.leatherworking,
-      Attribute.LEATERWORKING,
+      Attribute.LEATHERWORKING,
       (character) => character.tradeSkills.refining.leatherworking
     );
     this.setupForm(this.weaving, Attribute.WEAVING, (character) => character.tradeSkills.refining.weaving);
@@ -84,11 +87,21 @@ export class MyCharacterTradeSkillsComponent implements OnInit {
     const sub = this.character$.subscribe((character) => {
       form.setValue(attributeSelector(character));
       sub.unsubscribe();
-      form.valueChanges.pipe(debounceTime(this.DEBOUNCE_TIME)).subscribe((value) => {
-        if (form.valid && value !== null) {
-          this.characterService.updateAttribute(attribute, value);
-        }
-      });
+      form.valueChanges
+        .pipe(
+          debounceTime(this.DEBOUNCE_TIME),
+          mergeMap((value) => {
+            if (form.valid && value !== null) {
+              return this.characterService.updateAttribute(attribute, value).pipe(map(() => true));
+            }
+            return of(false);
+          })
+        )
+        .subscribe((updated) => {
+          if (updated) {
+            this.snackbarService.open('Character saved');
+          }
+        });
     });
   }
 }

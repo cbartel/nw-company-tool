@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { CharacterService } from '../../services/character/character.service';
-import { Observable } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
-import {Attribute, CharacterAttributes} from "@model/character.model";
+import { Observable, of } from 'rxjs';
+import { debounceTime, map, mergeMap } from 'rxjs/operators';
+import { Attribute, CharacterAttributes } from '@model/character.model';
+import { SnackbarService } from '../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-my-character-weapon-mastery',
@@ -13,6 +14,8 @@ import {Attribute, CharacterAttributes} from "@model/character.model";
 export class MyCharacterWeaponMasteryComponent implements OnInit {
   @Input()
   character$!: Observable<CharacterAttributes>;
+
+  attributes = Attribute;
 
   private readonly DEBOUNCE_TIME = 300;
 
@@ -28,7 +31,7 @@ export class MyCharacterWeaponMasteryComponent implements OnInit {
   lifestaff = new FormControl(0, [Validators.max(20), Validators.min(0)]);
   iceGauntlet = new FormControl(0, [Validators.max(20), Validators.min(0)]);
 
-  constructor(private characterService: CharacterService) {}
+  constructor(private characterService: CharacterService, private snackbarService: SnackbarService) {}
 
   ngOnInit(): void {
     this.setupForm(
@@ -56,12 +59,21 @@ export class MyCharacterWeaponMasteryComponent implements OnInit {
     const sub = this.character$.subscribe((character) => {
       form.setValue(attributeSelector(character));
       sub.unsubscribe();
-      form.valueChanges.pipe(debounceTime(this.DEBOUNCE_TIME)).subscribe((value) => {
-        if (form.valid && value !== null) {
-          this.characterService.updateAttribute(attribute, value);
-        }
-      });
+      form.valueChanges
+        .pipe(
+          debounceTime(this.DEBOUNCE_TIME),
+          mergeMap((value) => {
+            if (form.valid && value !== null) {
+              return this.characterService.updateAttribute(attribute, value).pipe(map(() => true));
+            }
+            return of(false);
+          })
+        )
+        .subscribe((updated) => {
+          if (updated) {
+            this.snackbarService.open('Character saved');
+          }
+        });
     });
-
   }
 }

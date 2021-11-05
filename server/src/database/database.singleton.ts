@@ -1,8 +1,8 @@
-import * as sqlite3 from 'better-sqlite3';
-import { Database } from 'better-sqlite3';
+import sqlite3, { Database } from 'better-sqlite3';
 import { dbVersion } from './schema/database.version';
 import { dbV1 } from './schema/database.v1';
 import { ConfigService } from '../service/config.service';
+import { Args, ArgsService } from '../service/args.service';
 
 export class DatabaseSingleton {
   private static readonly CURRENT_DB_VERSION = 1;
@@ -12,7 +12,10 @@ export class DatabaseSingleton {
 
   private constructor() {
     const config = ConfigService.get().getServerConfig();
-    this.db = new sqlite3(config.DATABASE || 'database.db', config.DEV ? { verbose: console.log } : {});
+    const dataPath = ArgsService.get().getArgument(Args.DATAPATH);
+    const databaseFileName = config.DATABASE || 'database.db';
+    const databaseFullPath = dataPath + databaseFileName;
+    this.db = new sqlite3(databaseFullPath, config.DEV ? { verbose: console.log } : {});
     this.db.exec(dbVersion);
     this.setupDbSchema();
   }
@@ -33,7 +36,6 @@ export class DatabaseSingleton {
       return;
     }
     const version = versionWrapper.version;
-    console.log(`db schema version is ${version}`);
   }
 
   private initDb(version: number) {

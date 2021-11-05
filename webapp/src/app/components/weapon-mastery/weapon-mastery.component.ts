@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Attribute } from '@model/character.model';
 
 @Component({
   selector: 'app-weapon-mastery',
@@ -8,7 +9,7 @@ import { FormControl } from '@angular/forms';
 })
 export class WeaponMasteryComponent implements OnInit {
   @Input()
-  label = '';
+  attribute: Attribute;
 
   @Input()
   form!: FormControl;

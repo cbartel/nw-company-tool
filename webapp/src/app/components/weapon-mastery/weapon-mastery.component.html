@@ -1,5 +1,5 @@
 <div class="flex flex-center flex-column weapon-mastery-container">
-    <div>{{label}}</div>
+    <div>{{'ATTRIBUTES.' + attribute | translate}}</div>
     <mat-progress-bar mode="determinate" [value]="value / 20 * 100"></mat-progress-bar>
     <div class="weapon-mastery-value">
         <button mat-icon-button (click)="decrement()">

@@ -25,7 +25,7 @@ export class CharacterService {
     return this.http.get<CharacterAttributes>(`/api/characters/attributes/${userId}`, { withCredentials: true });
   }
 
-  public updateAttribute(attribute: Attribute, value: number): void {
-    this.http.post(`/api/characters/attributes/me/${attribute}`, { value }, { withCredentials: true }).subscribe();
+  public updateAttribute(attribute: Attribute, value: number): Observable<unknown> {
+    return this.http.post(`/api/characters/attributes/me/${attribute}`, { value }, { withCredentials: true });
   }
 }

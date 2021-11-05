@@ -11,17 +11,17 @@ export class AdminService {
     return this.http.get<User[]>('/api/admin/users');
   }
 
-  public setEnabled(id: number, enabled: boolean): void {
+  public setEnabled(id: number, enabled: boolean): Observable<unknown> {
     const payload = {
       enabled
     };
-    this.http.post(`/api/admin/users/enable/${id}`, payload, { withCredentials: true }).subscribe();
+    return this.http.post(`/api/admin/users/enable/${id}`, payload, { withCredentials: true });
   }
 
-  public setAdmin(id: number, admin: boolean): void {
+  public setAdmin(id: number, admin: boolean): Observable<unknown> {
     const payload = {
       admin
     };
-    this.http.post(`/api/admin/users/admin/${id}`, payload, { withCredentials: true }).subscribe();
+    return this.http.post(`/api/admin/users/admin/${id}`, payload, { withCredentials: true });
   }
 }
