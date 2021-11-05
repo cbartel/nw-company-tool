@@ -47,7 +47,7 @@
       {
         "assets": [
           {
-            "path": "nw-company-tool-tar.gz",
+            "path": "nw-company-tool.tar.gz",
             "label": "node distribution"
           }
         ]
