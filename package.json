@@ -1,11 +1,20 @@
 {
   "name": "nw-company-tool",
-  "version": "0.0.0",
+  "version": "0.0.0-development",
   "scripts": {
-    "build": "node build.js"
+    "build": "node build.js",
+    "semantic-release": "semantic-release"
   },
   "private": true,
   "devDependencies": {
-    "esbuild": "^0.13.12"
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^8.0.2",
+    "@semantic-release/release-notes-generator": "^10.0.2",
+    "esbuild": "^0.13.12",
+    "semantic-release": "^18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cbartel/nw-company-tool.git"
   }
 }
