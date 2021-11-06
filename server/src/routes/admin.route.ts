@@ -57,10 +57,28 @@ router.post('/server/restart/', (req, res, next) => {
   }
 });
 
-router.post('/server/update/', (req, res, next) => {
+router.post('/server/update/', async (req, res, next) => {
   try {
-    serverService.update();
+    await serverService.update();
     res.status(200).send();
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/server/release/latest', async (req, res, next) => {
+  try {
+    const latestRelease = await serverService.getLatestRelease();
+    res.status(200).send(latestRelease);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get('/server/release/current', async (req, res, next) => {
+  try {
+    const latestRelease = await serverService.getCurrentRelease();
+    res.status(200).send(latestRelease);
   } catch (error) {
     next(error);
   }

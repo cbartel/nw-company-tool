@@ -32,7 +32,6 @@ async function startServer() {
 }
 
 async function installDependencies() {
-  console.log(argsService.getArgument(Args.DEVELOPMENT));
   if (argsService.getArgument(Args.DEVELOPMENT) === 'true') {
     console.log('skipping dependencies as this server in running in development mode.');
     return;

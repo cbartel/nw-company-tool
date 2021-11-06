@@ -42,8 +42,6 @@ async function build() {
   fs.copySync("./webapp/dist/app", "./dist/dist/app");
   fs.outputJsonSync("./dist/package.json", packageJson, { spaces: 2 });
   assets.forEach((asset) => fs.copySync(`./${asset}`, `./dist/${asset}`));
-
-  await run("tar cfvz nw-company-tool.tar.gz -C ./dist .");
 }
 
 build().then(() => console.log("build complete."));
