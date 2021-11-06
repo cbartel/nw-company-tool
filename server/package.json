@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/main.js --dataPath \"./../data/\" --development \"true\"\"",
-    "build": "tsc -p ./tsconfig.json && node ../build.js",
+    "build": "tsc -p ./tsconfig.json",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },

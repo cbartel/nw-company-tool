@@ -15,7 +15,10 @@ export class DatabaseSingleton {
     const dataPath = ArgsService.get().getArgument(Args.DATAPATH);
     const databaseFileName = config.DATABASE || 'database.db';
     const databaseFullPath = dataPath + databaseFileName;
-    this.db = new sqlite3(databaseFullPath, config.DEV ? { verbose: console.log } : {});
+    this.db = new sqlite3(
+      databaseFullPath,
+      ArgsService.get().getArgument(Args.DEVELOPMENT) === 'true' ? { verbose: console.log } : {}
+    );
     this.db.exec(dbVersion);
     this.setupDbSchema();
   }

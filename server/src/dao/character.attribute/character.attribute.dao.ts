@@ -33,7 +33,6 @@ export class CharacterAttributeDao extends AbstractDao {
       JOIN user u on c.user_id = u.id
       GROUP BY user_id
     `;
-    console.log(sql);
     return this.all<CharacterAttributePivotEntity>(sql, []);
   }
 
