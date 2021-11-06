@@ -14,7 +14,7 @@ export class ArgsService {
   private readonly keyMap: Record<string, Args> = {
     '--dataPath': Args.DATAPATH,
     '--configName': Args.CONFIGNAME,
-    '--dev': Args.DEVELOPMENT
+    '--development': Args.DEVELOPMENT
   };
 
   private readonly arguments = new Map<Args, string>();
