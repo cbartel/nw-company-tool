@@ -2,7 +2,7 @@ import sqlite3, { Database } from 'better-sqlite3';
 import { dbVersion } from './schema/database.version';
 import { dbV1 } from './schema/database.v1';
 import { ConfigService } from '../service/config.service';
-import { Args, ArgsService } from '../service/args.service';
+import { Args, ArgsService, Flags } from '../service/args.service';
 
 export class DatabaseSingleton {
   private static readonly CURRENT_DB_VERSION = 1;
@@ -17,7 +17,7 @@ export class DatabaseSingleton {
     const databaseFullPath = dataPath + databaseFileName;
     this.db = new sqlite3(
       databaseFullPath,
-      ArgsService.get().getArgument(Args.DEVELOPMENT) === 'true' ? { verbose: console.log } : {}
+      ArgsService.get().getFlag(Flags.DEVELOPMENT) ? { verbose: console.log } : {}
     );
     this.db.exec(dbVersion);
     this.setupDbSchema();
