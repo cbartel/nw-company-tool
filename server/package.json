@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/main.js --dataPath \"./../data/\" --development \"true\"\"",
+    "dev": "tsc-watch --noClear -p ./tsconfig.json --onSuccess \"node ./dist/main.js --dataPath \"./../data/\" --development\"",
     "build": "tsc -p ./tsconfig.json",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

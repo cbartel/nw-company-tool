@@ -1,7 +1,7 @@
 import { exec, fork } from 'child_process';
 import process from 'process';
 import { promisify } from 'util';
-import { Args, ArgsService } from './service/args.service';
+import { ArgsService, Flags } from './service/args.service';
 
 const argsService = ArgsService.get();
 
@@ -32,7 +32,7 @@ async function startServer() {
 }
 
 async function installDependencies() {
-  if (argsService.getArgument(Args.DEVELOPMENT) === 'true') {
+  if (argsService.getFlag(Flags.DEVELOPMENT)) {
     console.log('skipping dependencies as this server in running in development mode.');
     return;
   }
