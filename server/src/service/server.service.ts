@@ -3,6 +3,7 @@ import { HttpError } from '../model/error.model';
 import { UpdateService } from './update.service';
 import { GithubService } from './github.service';
 import { Version } from '../model/admin.model';
+import { ArgsService, Flags } from './args.service';
 
 export class ServerService {
   private static readonly INSTANCE = new ServerService();
@@ -13,6 +14,7 @@ export class ServerService {
 
   private updateService = UpdateService.get();
   private githubService = GithubService.get();
+  private argsService = ArgsService.get();
 
   private constructor() {}
 
@@ -33,6 +35,10 @@ export class ServerService {
   }
 
   public async update(): Promise<void> {
+    if (this.argsService.getFlag(Flags.DEVELOPMENT)) {
+      console.log('server is running in development mode, skipping update.');
+      return;
+    }
     console.log('starting update...');
     const latestRelease = await this.githubService.getLatestRelease();
     const currentReleaseVersion = `v${this.updateService.readCurrentPackageVersion()}`; // package.json has release version without v

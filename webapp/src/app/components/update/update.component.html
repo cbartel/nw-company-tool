@@ -1,0 +1,6 @@
+<div class="content">
+    <h2>Update</h2>
+    <p>Current Release: {{currentVersion}}</p>
+    <p>Latest Release: {{latestVersion}}</p>
+    <button mat-raised-button [disabled]="!updateAvailable" (click)="update()" color="primary">UPDATE</button>
+</div>

@@ -60,6 +60,7 @@ import { SnackbarModule } from './services/snackbar/snackbar.module';
 import { InterceptorModule } from './interceptor/interceptor.module';
 import { TranslateLoader, TranslateModule, TranslateModuleConfig } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { UpdateComponent } from './components/update/update.component';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
@@ -114,7 +115,8 @@ const i18nConfig: TranslateModuleConfig = {
     WeaponMasteryComponent,
     TradeSkillComponent,
     MyCharacterBasicComponent,
-    CharacterDetailComponent
+    CharacterDetailComponent,
+    UpdateComponent
   ],
   imports: [
     NgcCookieConsentModule.forRoot(cookieConfig),
