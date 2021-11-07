@@ -12,7 +12,8 @@
     "prettier"
   ],
   "rules": {
-    "prettier/prettier": 2
+    "prettier/prettier": 2,
+    "@typescript-eslint/no-empty-function": 0
   },
   "ignorePatterns": ["node_modules", "*.test.ts"]
 }

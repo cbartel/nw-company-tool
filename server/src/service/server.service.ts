@@ -2,7 +2,6 @@ import * as process from 'process';
 import { HttpError } from '../model/error.model';
 import { UpdateService } from './update.service';
 import { GithubService } from './github.service';
-import { Release } from '../model/github.model';
 import { Version } from '../model/admin.model';
 
 export class ServerService {
@@ -22,18 +21,21 @@ export class ServerService {
       throw new HttpError(500, 'can not restart: this process seems to be no node child_process.');
     }
     setTimeout(() => {
-      process.send!('restart');
+      process.send?.('restart');
     }, 1000);
   }
 
-  public getLatestRelease(): Promise<Release> {
-    return this.githubService.getLatestRelease();
+  public async getLatestRelease(): Promise<Version> {
+    const githubRelease = await this.githubService.getLatestRelease();
+    return {
+      version: githubRelease.name.substring(1) // strip the v from v1.0.0
+    };
   }
 
   public async update(): Promise<void> {
     console.log('starting update...');
-    const latestRelease = await this.getLatestRelease();
-    const currentReleaseVersion = `v${this.updateService.readCurrentPackageVersion()}`;
+    const latestRelease = await this.githubService.getLatestRelease();
+    const currentReleaseVersion = `v${this.updateService.readCurrentPackageVersion()}`; // package.json has release version without v
     if (latestRelease.name === currentReleaseVersion) {
       console.log('already up to date.');
       return;

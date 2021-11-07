@@ -14,7 +14,7 @@ export class ArgsService {
     return ArgsService.INSTANCE;
   }
 
-  private readonly keyMap: Record<string, Args> = {
+  private readonly argsMap: Record<string, Args> = {
     '--dataPath': Args.DATAPATH,
     '--configName': Args.CONFIGNAME
   };
@@ -31,14 +31,14 @@ export class ArgsService {
     while (args[0] && !args[0].startsWith('--')) {
       args = args.slice(1);
     }
-    for (let i = 0; i + 1 < args.length; i += 1) {
+    for (let i = 0; i < args.length; i += 1) {
       const key = args[i];
-      if (this.keyMap.hasOwnProperty(key)) {
-        const arg = this.keyMap[key];
+      if (Object.prototype.hasOwnProperty.call(this.argsMap, key)) {
+        const arg = this.argsMap[key];
         i += 1;
         const value = args[i];
         this.arguments.set(arg, value);
-      } else if (this.flagMap.hasOwnProperty(key)) {
+      } else if (Object.prototype.hasOwnProperty.call(this.flagMap, key)) {
         const flag = this.flagMap[key];
         this.flags.set(flag, true);
       } else {
