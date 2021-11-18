@@ -1,27 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from '@model/user.model';
-import { Version } from '@model/admin.model';
 import { map, mergeMap } from 'rxjs/operators';
+import { AdminUser, EnableUser, UserWithPermissions, Version } from '@nw-company-tool/model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AdminService {
   constructor(private http: HttpClient) {}
 
-  public findAll(): Observable<User[]> {
-    return this.http.get<User[]>('/api/admin/users');
+  public findAll(): Observable<UserWithPermissions[]> {
+    return this.http.get<UserWithPermissions[]>('/api/admin/users');
   }
 
   public setEnabled(id: number, enabled: boolean): Observable<unknown> {
-    const payload = {
+    const payload: EnableUser = {
+      userId: id,
       enabled
     };
-    return this.http.post(`/api/admin/users/enable/${id}`, payload, { withCredentials: true });
+    return this.http.post(`/api/admin/users/enable`, payload, { withCredentials: true });
   }
 
   public setAdmin(id: number, admin: boolean): Observable<unknown> {
-    const payload = {
+    const payload: AdminUser = {
+      userId: id,
       admin
     };
     return this.http.post(`/api/admin/users/admin/${id}`, payload, { withCredentials: true });

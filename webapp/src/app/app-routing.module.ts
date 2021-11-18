@@ -1,25 +1,36 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './pages/login/login.component';
-import { RegisterComponent } from './pages/register/register.component';
-import { HomeComponent } from './pages/home/home.component';
-import { ForbiddenComponent } from './pages/forbidden/forbidden.component';
-import { AccountDisabledComponent } from './pages/account-disabled/account-disabled.component';
-import { AdminComponent } from './pages/admin/admin.component';
-import { LoginGuard } from './guards/login.guard';
-import { AdminGuard } from './guards/admin.guard';
-import { CompanyComponent } from './pages/company/company.component';
-import { MyCharacterComponent } from './pages/my-character/my-character.component';
-
 export const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [LoginGuard] },
-  { path: 'login', component: LoginComponent },
-  { path: 'register', component: RegisterComponent },
-  { path: 'forbidden', component: ForbiddenComponent },
-  { path: 'account-disabled', component: AccountDisabledComponent },
-  { path: 'admin', component: AdminComponent, canActivate: [LoginGuard, AdminGuard] },
-  { path: 'company', component: CompanyComponent, canActivate: [LoginGuard] },
-  { path: 'my-character', component: MyCharacterComponent, canActivate: [LoginGuard] }
+  {
+    path: '',
+    loadChildren: () => import('./pages/home/home-page.module').then((m) => m.HomePageModule)
+  },
+  { path: 'login', loadChildren: () => import('./pages/login/login-page.module').then((m) => m.LoginPageModule) },
+  {
+    path: 'register',
+    loadChildren: () => import('./pages/register/register-page.module').then((m) => m.RegisterPageModule)
+  },
+  {
+    path: 'forbidden',
+    loadChildren: () => import('./pages/forbidden/forbidden-page.module').then((m) => m.ForbiddenPageModule)
+  },
+  {
+    path: 'account-disabled',
+    loadChildren: () =>
+      import('./pages/account-disabled/account-disabled-page.module').then((m) => m.AccountDisabledPageModule)
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./pages/admin/admin-page.module').then((m) => m.AdminPageModule)
+  },
+  {
+    path: 'company',
+    loadChildren: () => import('./pages/company/company-page.module').then((m) => m.CompanyPageModule)
+  },
+  {
+    path: 'my-character',
+    loadChildren: () => import('./pages/my-character/my-character-page.module').then((m) => m.MyCharacterPageModule)
+  }
 ];
 
 @NgModule({

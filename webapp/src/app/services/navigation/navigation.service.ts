@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
 import { UserService } from '../user/user.service';
+import { Permission } from '@nw-company-tool/model';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 export type NavigationItem = {
   label: string;
@@ -7,7 +10,7 @@ export type NavigationItem = {
   icon: string;
 };
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class NavigationService {
   private basicNavigation: NavigationItem[] = [
     {
@@ -30,13 +33,33 @@ export class NavigationService {
     }
   ];
 
-  constructor(private userService: UserService) {}
+  private pluginNavigation: NavigationItem[] = [];
 
-  isAdmin(): boolean {
-    return !!this.userService.getUser()?.admin;
+  constructor(private userService: UserService /* private pluginService: PluginService*/) {
+    // pluginService.getPlugins().subscribe(
+    //   (plugins) =>
+    //     (this.pluginNavigation = plugins.map((plugin) => ({
+    //       label: plugin.navigationLabel,
+    //       routerLink: plugin.navigationName + '/flights-search', // TODO temp
+    //       icon: plugin.navigationIcon
+    //     })))
+    // );
   }
 
-  public getNavigationItems(): NavigationItem[] {
-    return this.isAdmin() ? this.basicNavigation.concat(this.adminNavigation) : this.basicNavigation;
+  isAdmin(): Observable<boolean> {
+    return this.userService.getUser$().pipe(map((user) => !!user?.permissions?.includes(Permission.ADMIN)));
+  }
+
+  getNavigationItems(): Observable<NavigationItem[]> {
+    const navigation = this.basicNavigation.concat(this.pluginNavigation);
+    return this.isAdmin().pipe(
+      map((admin) => {
+        if (!admin) {
+          return navigation;
+        } else {
+          return navigation.concat(this.adminNavigation);
+        }
+      })
+    );
   }
 }

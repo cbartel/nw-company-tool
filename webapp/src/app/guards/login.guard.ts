@@ -1,19 +1,23 @@
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { CanActivate } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { UserService } from '../services/user/user.service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Permission } from '@nw-company-tool/model';
 
 @Injectable()
 export class LoginGuard implements CanActivate {
   constructor(private userService: UserService) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(): Observable<boolean> {
     if (!this.userService.isLoggedIn()) {
       this.userService.login();
+      return of(false);
     }
-    return true;
+    return this.userService.getUser$().pipe(
+      map((user) => {
+        return user.permissions.includes(Permission.ENABLED);
+      })
+    );
   }
 }
