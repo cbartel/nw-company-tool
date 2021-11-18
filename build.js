@@ -1,21 +1,13 @@
-const { buildSync } = require("esbuild");
 const { dependencies } = require("./server/package.json");
-const exec = require("util").promisify(require("child_process").exec);
+const exec = require("child_process").exec;
 const fs = require("fs-extra");
 
-const entryPoints = ["server/src/main.ts", "server/src/server.ts"];
-const assets = ["LICENSE", "README.md"];
-
-const config = {
-  entryPoints,
-  outdir: "dist/dist",
-  bundle: true,
-  platform: "node",
-  target: "node12",
-  minify: true,
-  sourcemap: true,
-  external: Object.keys(dependencies),
-};
+const assets = [
+  "LICENSE",
+  "README.md",
+  "server/schema.prisma",
+  "server/migrations",
+];
 
 const packageJson = {
   name: "nw-company-tool",
@@ -23,10 +15,20 @@ const packageJson = {
   dependencies,
 };
 
-async function run(command) {
-  const { stdout, stderr } = await exec(command);
-  console.log(stdout);
-  console.error(stderr);
+function run(command) {
+  return new Promise((resolve) => {
+    const proc = exec(command);
+
+    proc.stdout.on("data", (data) => {
+      console.log(data);
+    });
+    proc.stderr.on("data", (data) => {
+      console.error(data);
+    });
+    proc.on("close", () => {
+      resolve();
+    });
+  });
 }
 
 async function build() {
@@ -36,12 +38,18 @@ async function build() {
 
   await run("npm --prefix webapp install");
   await run("npm --prefix webapp run ng build ");
+  await run("npm --prefix server install ");
+  await run("npm --prefix server run build ");
 
-  buildSync(config);
-
+  fs.copySync("./server/dist", "./dist/dist");
   fs.copySync("./webapp/dist/app", "./dist/dist/app");
   fs.outputJsonSync("./dist/package.json", packageJson, { spaces: 2 });
-  assets.forEach((asset) => fs.copySync(`./${asset}`, `./dist/${asset}`));
+  assets.forEach((asset) => {
+    const source = asset;
+    const path = asset.split("/");
+    const dest = path[path.length - 1];
+    fs.copySync(`./${source}`, `./dist/${dest}`);
+  });
 }
 
 build().then(() => console.log("build complete."));

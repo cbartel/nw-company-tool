@@ -1,31 +1,29 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {
-  Attribute,
-  Character,
-  CharacterAttributes,
-  CharacterQuery,
-  CharacterWithPartialAttributes
-} from '@model/character.model';
+import { Attribute, AttributeQuery, Character, CharacterBase, AttributeUpdate } from '@nw-company-tool/model';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class CharacterService {
   constructor(private http: HttpClient) {}
 
-  public findAll(): Observable<Character[]> {
-    return this.http.get<Character[]>('/api/characters/all', { withCredentials: true });
+  public findAll(): Observable<CharacterBase[]> {
+    return this.http.get<Character[]>('/api/character/all', { withCredentials: true });
   }
 
-  public query(query: CharacterQuery): Observable<CharacterWithPartialAttributes[]> {
-    return this.http.post<CharacterWithPartialAttributes[]>('/api/characters/all', query, { withCredentials: true });
+  public findById(userId: number): Observable<Character> {
+    return this.http.get<Character>(`/api/character/${userId}`, { withCredentials: true });
   }
 
-  public getAllAttributesForUser(userId: number): Observable<CharacterAttributes> {
-    return this.http.get<CharacterAttributes>(`/api/characters/attributes/${userId}`, { withCredentials: true });
+  public query(query: AttributeQuery): Observable<Character[]> {
+    return this.http.post<Character[]>('/api/character/attributes/query', query, { withCredentials: true });
   }
 
-  public updateAttribute(attribute: Attribute, value: number): Observable<unknown> {
-    return this.http.post(`/api/characters/attributes/me/${attribute}`, { value }, { withCredentials: true });
+  public updateAttribute(attribute: Attribute, value: string): Observable<unknown> {
+    const payload: AttributeUpdate = {
+      attribute,
+      value
+    };
+    return this.http.put(`/api/character/me/attributes`, payload, { withCredentials: true });
   }
 }

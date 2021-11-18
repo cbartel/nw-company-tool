@@ -53,7 +53,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.loggedInSub.unsubscribe();
   }
 
-  getNavigationItems(): NavigationItem[] {
+  getNavigationItems(): Observable<NavigationItem[]> {
     return this.navigationService.getNavigationItems();
   }
 }

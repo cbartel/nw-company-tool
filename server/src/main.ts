@@ -1,7 +1,7 @@
 import { exec, fork } from 'child_process';
 import process from 'process';
-import { promisify } from 'util';
-import { ArgsService, Flags } from './service/args.service';
+import { Args, ArgsService, Flags } from './args/args.service';
+import Path from 'path';
 
 const argsService = ArgsService.get();
 
@@ -31,14 +31,31 @@ async function startServer() {
   });
 }
 
+function run(command: string): Promise<void> {
+  return new Promise<void>((resolve) => {
+    const proc = exec(command);
+
+    proc.stdout.on('data', (data) => {
+      console.log(data);
+    });
+    proc.stderr.on('data', (data) => {
+      console.error(data);
+    });
+    proc.on('close', () => {
+      resolve();
+    });
+  });
+}
+
 async function installDependencies() {
   if (argsService.getFlag(Flags.DEVELOPMENT)) {
     console.log('skipping dependencies as this server in running in development mode.');
     return;
   }
   console.log('installing dependencies... (this may take a while)');
-  await promisify(exec)('npm install --only=production');
+  await run('npm install --only=production');
+  await run('npm prune');
   console.log('installing dependencies... done.');
 }
 
-startServer().then(() => console.log('server started.'));
+startServer();

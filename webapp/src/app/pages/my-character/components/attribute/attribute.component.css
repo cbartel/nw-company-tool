@@ -1,0 +1,25 @@
+.attributes-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+}
+.attributes-value-form {
+    width: 48px;
+}
+
+.attributes-value {
+    font-size: 24px;
+    background-color:transparent;
+    border: 0;
+    text-align: center;
+    color: #fff;
+}
+
+.attributes-name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-left: 36px;
+}

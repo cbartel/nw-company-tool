@@ -7,7 +7,7 @@
       <mat-icon>home</mat-icon>
       <span>HOME</span>
     </button>
-    <button mat-menu-item *ngFor="let item of getNavigationItems()" routerLink="{{item.routerLink}}">
+    <button mat-menu-item *ngFor="let item of getNavigationItems() | async" routerLink="{{item.routerLink}}">
       <mat-icon>{{item.icon}}</mat-icon>
       <span>{{item.label}}</span>
     </button>

@@ -32,6 +32,10 @@ input[type=number] {
   width: 100%;
 }
 
+.full-height {
+  height: 100%;
+}
+
 .card {
   width: 800px;
 }
