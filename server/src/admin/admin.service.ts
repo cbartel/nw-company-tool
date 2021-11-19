@@ -6,7 +6,7 @@ import { ArgsService, Flags } from '../args/args.service';
 import { Readable } from 'stream';
 import zlib from 'zlib';
 import tar from 'tar-stream';
-import { Version } from '@nw-company-tool/model';
+import { GithubRelease, Version } from '@nw-company-tool/model';
 
 @Injectable()
 export class AdminService {
@@ -21,16 +21,24 @@ export class AdminService {
     }, 1000);
   }
 
-  public getCurrentRelease(): Version {
+  public getCurrentReleaseVersion(): Version {
     const packageJson = fs.readJsonSync(`${process.cwd()}/package.json`);
     return { version: packageJson.version };
   }
 
-  public async getLatestRelease(): Promise<Version> {
-    const githubRelease = await this.githubService.getLatestRelease();
+  public async getLatestReleaseVersion(): Promise<Version> {
+    const githubRelease = this.argsService.getFlag(Flags.BETA)
+      ? await this.githubService.getLatestBetaRelease()
+      : await this.githubService.getLatestRelease();
     return {
       version: githubRelease.name.substring(1), // strip the v from v1.0.0
     };
+  }
+
+  public async getLatestRelease(): Promise<GithubRelease> {
+    return this.argsService.getFlag(Flags.BETA)
+      ? await this.githubService.getLatestBetaRelease()
+      : await this.githubService.getLatestRelease();
   }
 
   public async update(): Promise<void> {
@@ -39,8 +47,8 @@ export class AdminService {
       return;
     }
     console.log('starting update...');
-    const latestRelease = await this.githubService.getLatestRelease();
-    const currentReleaseVersion = `v${this.getCurrentRelease().version}`; // package.json has release version without v
+    const latestRelease = await this.getLatestRelease();
+    const currentReleaseVersion = `v${this.getCurrentReleaseVersion().version}`; // package.json has release version without v
     if (latestRelease.name === currentReleaseVersion) {
       console.log('already up to date.');
       return;
