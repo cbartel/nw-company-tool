@@ -35,7 +35,8 @@ export class CharacterDetailComponent implements OnInit {
     Attribute.MUSKET,
     Attribute.FIRESTAFF,
     Attribute.LIFESTAFF,
-    Attribute.ICE_GAUNTLET
+    Attribute.ICE_GAUNTLET,
+    Attribute.VOID_GAUNTLET
   ];
 
   tradeSkills: Attribute[] = [

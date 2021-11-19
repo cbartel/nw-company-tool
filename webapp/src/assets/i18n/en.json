@@ -1,6 +1,7 @@
 {
   "ATTRIBUTES": {
     "LEVEL": "Level",
+    "GEAR_SCORE": "Gear Score",
     "STRENGTH": "Strength",
     "DEXTERITY": "Dexterity",
     "INTELLIGENCE": "Intelligence",
