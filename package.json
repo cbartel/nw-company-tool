@@ -25,6 +25,5 @@
     "@semantic-release/release-notes-generator": "^10.0.2",
     "@types/fs-extra": "^9.0.13",
     "semantic-release": "^18.0.0"
-  },
-
+  }
 }
