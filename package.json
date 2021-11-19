@@ -1,6 +1,18 @@
 {
-  "name": "@nw-company-tool",
+  "name": "@nw-company-tool/core",
+  "description": "A tool to organize your new world company",
   "version": "0.0.0",
+  "author": "Krise",
+  "license": "MIT",
+  "keywords": ["New World", "Company", "Tool", "Gaming"],
+  "bugs": {
+    "url": "https://github.com/cbartel/nw-company-tool/issues"
+  },
+  "homepage": "https://github.com/cbartel/nw-company-tool",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cbartel/nw-company-tool.git"
+  },
   "scripts": {
     "build": "node build.js",
     "semantic-release": "semantic-release"
@@ -14,8 +26,5 @@
     "@types/fs-extra": "^9.0.13",
     "semantic-release": "^18.0.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/cbartel/nw-company-tool.git"
-  }
+
 }

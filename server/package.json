@@ -1,7 +1,17 @@
 {
   "name": "@nw-company-tool/server",
   "version": "0.0.0",
-  "description": "",
+  "description": "server for the new world company tool",
+  "author": "Krise",
+  "keywords": ["New World", "Company", "Tool", "Gaming"],
+  "bugs": {
+    "url": "https://github.com/cbartel/nw-company-tool/issues"
+  },
+  "homepage": "https://github.com/cbartel/nw-company-tool",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cbartel/nw-company-tool.git"
+  },
   "private": true,
   "license": "MIT",
   "scripts": {
