@@ -5,6 +5,10 @@ export type User = {
   characterName: string;
 };
 
+export type UserAvatar = {
+  url: string;
+};
+
 export type Permissions = {
   permissions: Permission[];
 };

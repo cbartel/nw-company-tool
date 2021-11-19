@@ -12,8 +12,8 @@ export class TokenService {
     this.TOKEN_SECRET = configService.getServerConfig().TOKEN_SECRET;
   }
 
-  public createAccessToken(userId: number, discordId: string): string {
-    const accessToken: AccessToken = { id: userId, discordId };
+  public createAccessToken(userId: number, discordId: string, discordAvatar: string): string {
+    const accessToken: AccessToken = { id: userId, discordId, discordAvatar };
     return jwt.sign(accessToken, this.TOKEN_SECRET);
   }
 

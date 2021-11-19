@@ -61,7 +61,7 @@ export class LoginController {
       const user = await this.userService.findByDiscordId(discordUser.id);
       if (user) {
         // User has account
-        const token = this.tokenService.createAccessToken(user.id, user.discordId);
+        const token = this.tokenService.createAccessToken(user.id, user.discordId, discordUser.avatar);
         response.cookie(CookieNames.ACCESS_TOKEN, token, { httpOnly: true });
         response.redirect('/');
         return;
@@ -82,7 +82,7 @@ export class LoginController {
       characterName: user.characterName,
     });
     response.clearCookie(CookieNames.DISCORD_TOKEN);
-    const accessToken = this.tokenService.createAccessToken(newUser.id, discordUser.id);
+    const accessToken = this.tokenService.createAccessToken(newUser.id, discordUser.id, discordUser.avatar);
     response.cookie(CookieNames.ACCESS_TOKEN, accessToken, { httpOnly: true });
     response.status(200).send();
   }

@@ -23,6 +23,7 @@ export class LoginGuard implements CanActivate {
     const accessToken = this.tokenService.parseAccessToken(cookies.access_token);
     const user = await this.userService.findUserWithPermissionsById(accessToken.id);
     request.user = user; // TODO do this in middleware!!
+    request.discordAvatar = accessToken.discordAvatar;
 
     const requiredPermissions = this.reflector.getAllAndOverride<string[]>(ROLES_KEY, [
       context.getHandler(),

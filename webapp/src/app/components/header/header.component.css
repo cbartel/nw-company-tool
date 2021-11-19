@@ -13,3 +13,9 @@
 .header-headline {
   cursor: pointer;
 }
+
+.avatar {
+  padding-left: 6px;
+  padding-right: 12px;
+  cursor: pointer;
+}

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, ReplaySubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { LoginResponse, Permission, SetCharacterName, UserWithPermissions } from '@nw-company-tool/model';
+import { LoginResponse, Permission, SetCharacterName, UserAvatar, UserWithPermissions } from '@nw-company-tool/model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +11,7 @@ import { LoginResponse, Permission, SetCharacterName, UserWithPermissions } from
 export class UserService {
   private user$ = new ReplaySubject<UserWithPermissions>(1);
   private loggedIn$ = new ReplaySubject<boolean>(1);
+  private avatar$ = new ReplaySubject<UserAvatar>(1);
   private loggedIn = false;
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -24,6 +25,7 @@ export class UserService {
             this.loggedIn = true;
             this.loggedIn$.next(true);
             this.user$.next(response.user);
+            this.getAvatar(32).subscribe((avatar) => this.avatar$.next(avatar));
             if (response.user && !response.user.permissions.includes(Permission.ENABLED)) {
               this.router.navigate(['account-disabled']);
               return;
@@ -49,6 +51,10 @@ export class UserService {
 
   public isLoggedIn$(): Observable<boolean> {
     return this.loggedIn$;
+  }
+
+  public getAvatar$(): Observable<UserAvatar> {
+    return this.avatar$;
   }
 
   public isLoggedIn(): boolean {
@@ -91,5 +97,9 @@ export class UserService {
         this.refreshUser();
       })
     );
+  }
+
+  private getAvatar(size: number): Observable<UserAvatar> {
+    return this.http.get<UserAvatar>(`/api/user/avatar?size=${size}`, { withCredentials: true });
   }
 }
