@@ -36,7 +36,9 @@
     "rxjs": "^7.2.0",
     "tar-stream": "^2.2.0",
     "tslib": "^2.3.0",
-    "zlib": "^1.0.5"
+    "zlib": "^1.0.5",
+    "semver": "^7.3.5"
+
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
@@ -48,6 +50,7 @@
     "@types/jest": "^27.0.1",
     "@types/node": "^16.0.0",
     "@types/supertest": "^2.0.11",
+    "@types/semver": "^7.3.9",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "eslint": "^8.0.1",
