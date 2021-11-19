@@ -56,4 +56,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   getNavigationItems(): Observable<NavigationItem[]> {
     return this.navigationService.getNavigationItems();
   }
+
+  getAvatarUrl(): Observable<string> {
+    return this.userService.getAvatar$().pipe(map((avatar) => avatar.url));
+  }
 }

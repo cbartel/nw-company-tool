@@ -5,18 +5,18 @@
     </mat-form-field>
 </div>
 <div class="content">
-    <mat-button-toggle-group name="crafting" [formControl]="selectedCraftSkill">
-        <mat-button-toggle *ngFor="let attribute of filterableAttributes" value="{{attribute}}"
-                           checked="{{attribute === attributes.LEVEL}}">{{'ATTRIBUTES.' + attribute | translate}}</mat-button-toggle>
+    <mat-button-toggle-group name="crafting" [formControl]="attributeGroupFilter">
+        <mat-button-toggle *ngFor="let attributeGroup of filterableAttributeGroups" value="{{attributeGroup.attributes}}"
+                           checked="{{attributeGroup.checked === true}}">{{ attributeGroup.label| translate}}</mat-button-toggle>
     </mat-button-toggle-group>
 </div>
 <div class="content">
-    <table mat-table matSort (matSortChange)="sortData($event)" [dataSource]="displayedData"
+    <mat-table matSort (matSortChange)="sortData($event)" [dataSource]="displayedData"
            class="mat-elevation-z8 characters-table">
         <!-- Action Items Column -->
         <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let element">
                 <div class="flex">
                 <button mat-icon-button color="accent" matTooltip="open in Discord" (click)="openInDiscord(element.discordId)">
                     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em"
@@ -30,31 +30,31 @@
                     <mat-icon>info</mat-icon>
                 </button>
                 </div>
-            </td>
+            </mat-cell>
         </ng-container>
 
         <!-- ID Column -->
         <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>ID</th>
-            <td mat-cell *matCellDef="let element">{{element.id}}</td>
+            <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
         </ng-container>
 
         <!-- Character Name Column -->
         <ng-container matColumnDef="characterName">
-            <th mat-header-cell *matHeaderCellDef>Name</th>
-            <td mat-cell *matCellDef="let element">{{element.characterName}}</td>
+            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.characterName}}</mat-cell>
         </ng-container>
 
         <!-- Attribute  Columns -->
         <ng-container *ngFor="let attribute of getAllAttributes()" matColumnDef="{{attribute}}">
-            <th mat-header-cell mat-sort-header="{{attribute}}" *matHeaderCellDef>{{'ATTRIBUTES.' + attribute | translate}}</th>
-            <td mat-cell *matCellDef="let element">{{element[attribute]}}</td>
+            <mat-header-cell mat-sort-header="{{attribute}}" *matHeaderCellDef>{{'ATTRIBUTES.' + attribute | translate}}</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element[attribute]}}</mat-cell>
         </ng-container>
 
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
     <mat-paginator [pageSizeOptions]="[10, 20, 50]"
                    showFirstLastButtons
                    aria-label="Select page of periodic elements">

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Permission, User, UserWithPermissions } from '@nw-company-tool/model';
+import { Permission, User, UserAvatar, UserWithPermissions } from '@nw-company-tool/model';
 import { DatabaseClient } from '../database/database.client';
 
 @Injectable()
@@ -90,5 +90,13 @@ export class UserService {
 
   async removePermission(userId: number, permission: Permission): Promise<void> {
     await this.client.userPermission.delete({ where: { userId_permission: { userId, permission } } });
+  }
+
+  getAvatar(user: User, discordAvatar: string, size?: number): UserAvatar {
+    const url = `https://cdn.discordapp.com/avatars/${user.discordId}/${discordAvatar}.png`;
+    if (size) {
+      return { url: `${url}?size=${size}` };
+    }
+    return { url };
   }
 }

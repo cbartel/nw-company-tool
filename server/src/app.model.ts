@@ -1,4 +1,4 @@
-import { UserWithPermissions } from '@nw-company-tool/model';
+import { UserAvatar, UserWithPermissions } from '@nw-company-tool/model';
 import { Request as ExpressRequest } from 'express';
 
 export enum CookieNames {
@@ -14,8 +14,10 @@ export type Cookies = {
 export type AccessToken = {
   id: number;
   discordId: string;
+  discordAvatar: string;
 };
 
 export type Request = {
   user: UserWithPermissions;
+  discordAvatar: string;
 } & ExpressRequest;
