@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { Permission } from '@nw-company-tool/model';
 
 @Component({
-  selector: 'account-disabled',
+  selector: 'app-account-disabled',
   templateUrl: './account-disabled.component.html',
   styleUrls: ['./account-disabled.component.css']
 })

@@ -19,7 +19,6 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
-import { CharacterModule } from '../../services/character/character.module';
 
 @NgModule({
   imports: [

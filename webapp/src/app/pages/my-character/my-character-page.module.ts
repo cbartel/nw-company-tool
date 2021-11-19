@@ -7,15 +7,12 @@ import { CharacterTradeSkillsComponent } from './components/character-trade-skil
 import { CharacterWeaponMasteryComponent } from './components/character-weapon-mastery/character-weapon-mastery.component';
 import { TradeSkillComponent } from './components/trade-skill/trade-skill.component';
 import { WeaponMasteryComponent } from './components/weapon-mastery/weapon-mastery.component';
-import { CharacterModule } from '../../services/character/character.module';
-import { SnackbarModule } from '../../services/snackbar/snackbar.module';
 import { AttributeComponent } from './components/attribute/attribute.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { UserModule } from '../../services/user/user.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';

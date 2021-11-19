@@ -5,7 +5,7 @@ import { UserService } from '../../../../services/user/user.service';
 import { Character } from '@nw-company-tool/model';
 
 @Component({
-  selector: 'my-character',
+  selector: 'app-my-character',
   templateUrl: './my-character.component.html',
   styleUrls: ['./my-character.component.css']
 })

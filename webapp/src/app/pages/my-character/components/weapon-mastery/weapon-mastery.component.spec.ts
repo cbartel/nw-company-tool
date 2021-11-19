@@ -8,9 +8,8 @@ describe('WeaponMasteryComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WeaponMasteryComponent ]
-    })
-    .compileComponents();
+      declarations: [WeaponMasteryComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

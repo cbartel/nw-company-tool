@@ -121,9 +121,21 @@
             "scripts": [],
             "extraWebpackConfig": "webpack.config.js"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
-  "defaultProject": "nw-company-tool"
+  "defaultProject": "nw-company-tool",
+  "cli": {
+    "defaultCollection": "@angular-eslint/schematics"
+  }
 }
