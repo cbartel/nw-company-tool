@@ -9,7 +9,7 @@ export interface CharacterDetailDialogData {
 }
 
 @Component({
-  selector: 'character-detail',
+  selector: 'app-character-detail',
   templateUrl: './character-detail.component.html',
   styleUrls: ['./character-detail.component.css']
 })

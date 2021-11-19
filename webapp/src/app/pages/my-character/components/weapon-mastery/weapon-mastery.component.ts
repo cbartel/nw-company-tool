@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Attribute } from '@nw-company-tool/model';
 
 @Component({
-  selector: 'weapon-mastery',
+  selector: 'app-weapon-mastery',
   templateUrl: './weapon-mastery.component.html',
   styleUrls: ['./weapon-mastery.component.css']
 })

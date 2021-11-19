@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Attribute, AttributeQuery, Character, CharacterBase, AttributeUpdate } from '@nw-company-tool/model';
+import { Attribute, AttributeQuery, AttributeUpdate, Character, CharacterBase } from '@nw-company-tool/model';
 
 @Injectable({ providedIn: 'root' })
 export class CharacterService {

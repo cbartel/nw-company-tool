@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RegisterRoutingModule } from './register-routing.module';
-import { UserModule } from '../../services/user/user.module';
 import { RegisterComponent } from './routes/root/register.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';

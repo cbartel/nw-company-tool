@@ -3,7 +3,7 @@ import { NavigationItem, NavigationService } from '../../../../services/navigati
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'home-navigation',
+  selector: 'app-home-navigation',
   templateUrl: './home-navigation.component.html',
   styleUrls: ['./home-navigation.component.css']
 })

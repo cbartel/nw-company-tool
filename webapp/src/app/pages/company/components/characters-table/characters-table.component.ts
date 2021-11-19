@@ -12,7 +12,6 @@ import {
   GATHERING_SKILLS,
   REFINING_SKILLS,
   TRADE_SKILLS,
-  WEAPON_SKILLS,
   WEAPON_SKILLS_MAGIC,
   WEAPON_SKILLS_ONE_HANDED,
   WEAPON_SKILLS_RANGED,
@@ -28,7 +27,7 @@ export type FilterModel = {
 };
 
 @Component({
-  selector: 'characters-table',
+  selector: 'app-characters-table',
   templateUrl: './characters-table.component.html',
   styleUrls: ['./characters-table.component.css']
 })

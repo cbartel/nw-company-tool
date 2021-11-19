@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { Attribute } from '@nw-company-tool/model';
 
 @Component({
-  selector: 'trade-skill',
+  selector: 'app-trade-skill',
   templateUrl: './trade-skill.component.html',
   styleUrls: ['./trade-skill.component.css']
 })

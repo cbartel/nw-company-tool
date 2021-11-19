@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../../../../services/admin/admin.service';
 
 @Component({
-  selector: 'update',
+  selector: 'app-update',
   templateUrl: './update.component.html',
   styleUrls: ['./update.component.css']
 })

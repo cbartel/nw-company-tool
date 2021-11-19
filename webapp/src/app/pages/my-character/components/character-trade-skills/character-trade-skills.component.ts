@@ -7,7 +7,7 @@ import { CharacterService } from '../../../../services/character/character.servi
 import { SnackbarService } from '../../../../services/snackbar/snackbar.service';
 
 @Component({
-  selector: 'my-character-trade-skills',
+  selector: 'app-my-character-trade-skills',
   templateUrl: './character-trade-skills.component.html',
   styleUrls: ['./character-trade-skills.component.css']
 })

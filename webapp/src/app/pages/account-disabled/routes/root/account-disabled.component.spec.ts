@@ -8,9 +8,8 @@ describe('AccountDisabledComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccountDisabledComponent ]
-    })
-    .compileComponents();
+      declarations: [AccountDisabledComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

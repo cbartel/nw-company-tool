@@ -7,7 +7,7 @@ import { SnackbarService } from '../../../../services/snackbar/snackbar.service'
 import { Attribute, Character } from '@nw-company-tool/model';
 
 @Component({
-  selector: 'my-character-attributes',
+  selector: 'app-my-character-attributes',
   templateUrl: './character-attributes.component.html',
   styleUrls: ['./character-attributes.component.css']
 })

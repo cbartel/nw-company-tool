@@ -8,9 +8,8 @@ describe('TradeSkillComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TradeSkillComponent ]
-    })
-    .compileComponents();
+      declarations: [TradeSkillComponent]
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -7,7 +7,7 @@ import { CharacterService } from '../../../../services/character/character.servi
 import { SnackbarService } from '../../../../services/snackbar/snackbar.service';
 
 @Component({
-  selector: 'my-character-weapon-mastery',
+  selector: 'app-my-character-weapon-mastery',
   templateUrl: './character-weapon-mastery.component.html',
   styleUrls: ['./character-weapon-mastery.component.css']
 })
