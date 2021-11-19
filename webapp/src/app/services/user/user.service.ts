@@ -26,12 +26,16 @@ export class UserService {
             this.user$.next(response.user);
             if (response.user && !response.user.permissions.includes(Permission.ENABLED)) {
               this.router.navigate(['account-disabled']);
+              return;
             }
+            this.router.navigate(['']);
           } else {
             if (response.newUser) {
               this.router.navigate(['register']);
+              return;
             } else {
               this.router.navigate(['login']);
+              return;
             }
           }
         })

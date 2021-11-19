@@ -30,6 +30,7 @@ export class CharacterWeaponMasteryComponent implements OnInit {
   firestaff = new FormControl(0, [Validators.max(20), Validators.min(0)]);
   lifestaff = new FormControl(0, [Validators.max(20), Validators.min(0)]);
   iceGauntlet = new FormControl(0, [Validators.max(20), Validators.min(0)]);
+  voidGauntlet = new FormControl(0, [Validators.max(20), Validators.min(0)]);
 
   constructor(private characterService: CharacterService, private snackbarService: SnackbarService) {}
 
@@ -45,6 +46,7 @@ export class CharacterWeaponMasteryComponent implements OnInit {
     this.setupForm(this.firestaff, Attribute.FIRESTAFF);
     this.setupForm(this.lifestaff, Attribute.LIFESTAFF);
     this.setupForm(this.iceGauntlet, Attribute.ICE_GAUNTLET);
+    this.setupForm(this.voidGauntlet, Attribute.VOID_GAUNTLET);
   }
 
   private setupForm(form: FormControl, attribute: Attribute) {
