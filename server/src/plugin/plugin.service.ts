@@ -11,6 +11,9 @@ export class PluginService {
   constructor(argsService: ArgsService) {
     const dataPath = argsService.getArgument(Args.DATAPATH) as string;
     this.pluginRoot = Path.join(dataPath, 'plugins/');
+    if (!fs.pathExistsSync(this.pluginRoot)) {
+      fs.mkdirSync(this.pluginRoot);
+    }
   }
 
   public getPluginManifests(): PluginManifest[] {

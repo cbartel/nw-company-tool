@@ -5,6 +5,7 @@ export enum Args {
 
 export enum Flags {
   DEVELOPMENT,
+  BETA,
 }
 
 export class ArgsService {
@@ -21,6 +22,7 @@ export class ArgsService {
 
   private readonly flagMap: Record<string, Flags> = {
     '--development': Flags.DEVELOPMENT,
+    '--beta': Flags.BETA,
   };
 
   private readonly arguments = new Map<Args, string>();

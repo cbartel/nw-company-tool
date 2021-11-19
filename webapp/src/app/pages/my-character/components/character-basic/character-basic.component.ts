@@ -17,6 +17,7 @@ export class CharacterBasicComponent implements OnInit {
 
   name = new FormControl();
   level = new FormControl(0, [Validators.max(60), Validators.min(0)]);
+  gearScore = new FormControl(0, [Validators.max(999), Validators.min(0)]);
 
   constructor(
     private characterService: CharacterService,
@@ -26,14 +27,16 @@ export class CharacterBasicComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getUser$().subscribe((user) => this.name.setValue(user.characterName));
-    this.character$.subscribe((character) => this.level.setValue(+character.LEVEL));
+    this.character$.subscribe((character) => {
+      this.level.setValue(+character.LEVEL);
+      this.gearScore.setValue(+character.GEAR_SCORE);
+    });
   }
 
   save(): void {
-    console.log(this.name.value);
-
     forkJoin([
       this.characterService.updateAttribute(Attribute.LEVEL, this.level.value.toString()),
+      this.characterService.updateAttribute(Attribute.GEAR_SCORE, this.gearScore.value.toString()),
       this.userService.setCharacterName(this.name.value)
     ]).subscribe(() => this.snackbarService.open('Character saved'));
   }

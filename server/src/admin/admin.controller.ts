@@ -46,12 +46,12 @@ export class AdminController {
 
   @Get('/server/release/latest')
   async getLatestRelease(): Promise<Version> {
-    return this.adminService.getLatestRelease();
+    return this.adminService.getLatestReleaseVersion();
   }
 
   @Public()
   @Get('/server/release/current')
   getCurrentRelease(): Version {
-    return this.adminService.getCurrentRelease();
+    return this.adminService.getCurrentReleaseVersion();
   }
 }

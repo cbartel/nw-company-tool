@@ -1,6 +1,7 @@
 {
   "ATTRIBUTES": {
     "LEVEL": "Level",
+    "GEAR_SCORE": "Gear Score",
     "STRENGTH": "Strength",
     "DEXTERITY": "Dexterity",
     "INTELLIGENCE": "Intelligence",
@@ -17,6 +18,7 @@
     "FIRESTAFF": "Firestaff",
     "LIFESTAFF": "Lifestaff",
     "ICE_GAUNTLET": "Ice Gauntlet",
+    "VOID_GAUNTLET": "Void Gauntlet",
     "WEAPONSMITHING": "Weaponsmithing",
     "ARMORING": "Armoring",
     "ENGINEERING": "Engineering",

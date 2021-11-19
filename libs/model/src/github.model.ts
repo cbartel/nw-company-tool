@@ -4,6 +4,7 @@ export type GithubRelease = {
   created_at: string;
   published_at: string;
   body: string;
+  prerelease: boolean;
 };
 
 export type Asset = {
