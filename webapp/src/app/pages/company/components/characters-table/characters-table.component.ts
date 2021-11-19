@@ -4,9 +4,28 @@ import { Sort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { Attribute, Character } from '@nw-company-tool/model';
+import {
+  Attribute,
+  ATTRIBUTES,
+  BASE,
+  Character,
+  GATHERING_SKILLS,
+  REFINING_SKILLS,
+  TRADE_SKILLS,
+  WEAPON_SKILLS,
+  WEAPON_SKILLS_MAGIC,
+  WEAPON_SKILLS_ONE_HANDED,
+  WEAPON_SKILLS_RANGED,
+  WEAPON_SKILLS_TWO_HANDED
+} from '@nw-company-tool/model';
 import { CharacterService } from '../../../../services/character/character.service';
 import { CharacterDetailComponent } from '../character-detail/character-detail.component';
+
+export type FilterModel = {
+  attributes: Attribute[];
+  label: string;
+  checked?: boolean;
+};
 
 @Component({
   selector: 'characters-table',
@@ -14,18 +33,21 @@ import { CharacterDetailComponent } from '../character-detail/character-detail.c
   styleUrls: ['./characters-table.component.css']
 })
 export class CharactersTableComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['action', 'characterName', Attribute.LEVEL];
-  filterableAttributes = [
-    Attribute.LEVEL,
-    Attribute.WEAPONSMITHING,
-    Attribute.ARMORING,
-    Attribute.ENGINEERING,
-    Attribute.JEWELCRAFTING,
-    Attribute.ARCANA,
-    Attribute.COOKING,
-    Attribute.FURNISHING
+  displayedColumns = ['action', 'characterName', ...BASE];
+
+  filterableAttributeGroups: FilterModel[] = [
+    { attributes: BASE, label: 'ATTRIBUTES_GROUP.BASE', checked: true },
+    { attributes: ATTRIBUTES, label: 'ATTRIBUTES_GROUP.ATTRIBUTES' },
+    { attributes: WEAPON_SKILLS_ONE_HANDED, label: 'ATTRIBUTES_GROUP.WEAPON_SKILLS_ONE_HANDED' },
+    { attributes: WEAPON_SKILLS_TWO_HANDED, label: 'ATTRIBUTES_GROUP.WEAPON_SKILLS_TWO_HANDED' },
+    { attributes: WEAPON_SKILLS_RANGED, label: 'ATTRIBUTES_GROUP.WEAPON_SKILLS_RANGED' },
+    { attributes: WEAPON_SKILLS_MAGIC, label: 'ATTRIBUTES_GROUP.WEAPON_SKILLS_MAGIC' },
+    { attributes: TRADE_SKILLS, label: 'ATTRIBUTES_GROUP.TRADE_SKILLS' },
+    { attributes: REFINING_SKILLS, label: 'ATTRIBUTES_GROUP.REFINING_SKILLS' },
+    { attributes: GATHERING_SKILLS, label: 'ATTRIBUTES_GROUP.GATHERING_SKILLS' }
   ];
-  selectedCraftSkill = new FormControl();
+
+  attributeGroupFilter = new FormControl();
 
   displayedData = new MatTableDataSource<Character>();
   data: Character[] = [];
@@ -40,20 +62,21 @@ export class CharactersTableComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.characterService
       .query({
-        attributes: [Attribute.LEVEL]
+        attributes: BASE
       })
       .subscribe((data) => {
         this.data = data.sort((a, b) => this.compare(a.characterName, b.characterName, true));
         this.displayedData.data = data;
       });
-    this.selectedCraftSkill.valueChanges.subscribe((craftSkill: string) => {
+    this.attributeGroupFilter.valueChanges.subscribe((attributesString: string) => {
+      const attributes = attributesString.split(',') as Attribute[];
       this.characterService
         .query({
-          attributes: [Attribute[craftSkill as keyof typeof Attribute]]
+          attributes
         })
         .subscribe((response) => {
           this.data = response.sort((a, b) => this.compare(a.characterName, b.characterName, true));
-          this.displayedColumns = ['action', 'characterName'].concat([craftSkill]);
+          this.displayedColumns = ['action', 'characterName'].concat(attributes);
           this.applyFilter();
         });
     });
@@ -62,7 +85,7 @@ export class CharactersTableComponent implements OnInit, AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.displayedData.paginator = this.paginator;
   }
 
