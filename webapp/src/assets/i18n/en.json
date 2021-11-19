@@ -1,6 +1,7 @@
 {
   "ATTRIBUTES": {
     "LEVEL": "Level",
+    "GEAR_SCORE": "Gear Score",
     "STRENGTH": "Strength",
     "DEXTERITY": "Dexterity",
     "INTELLIGENCE": "Intelligence",
@@ -17,6 +18,7 @@
     "FIRESTAFF": "Firestaff",
     "LIFESTAFF": "Lifestaff",
     "ICE_GAUNTLET": "Ice Gauntlet",
+    "VOID_GAUNTLET": "Void Gauntlet",
     "WEAPONSMITHING": "Weaponsmithing",
     "ARMORING": "Armoring",
     "ENGINEERING": "Engineering",
@@ -34,6 +36,18 @@
     "FISHING": "Fishing",
     "HARVESTING": "Harvesting",
     "TRACKING_AND_SKINNING": "Tracking & Skinning"
+  },
+  "ATTRIBUTES_GROUP": {
+    "BASE": "Base",
+    "ATTRIBUTES": "Attributes",
+    "WEAPON_SKILLS": "Weapons",
+    "WEAPON_SKILLS_ONE_HANDED": "One Handed",
+    "WEAPON_SKILLS_TWO_HANDED": "Two Handed",
+    "WEAPON_SKILLS_RANGED": "Ranged",
+    "WEAPON_SKILLS_MAGIC": "Magic",
+    "TRADE_SKILLS": "Trade Skills",
+    "REFINING_SKILLS": "Refining",
+    "GATHERING_SKILLS": "Gathering"
   }
 }
 

@@ -1,0 +1,23 @@
+<div class="content flex flex-column">
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Character Name</mat-label>
+            <input matInput type="text" [formControl]="name" autocomplete="off">
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Character Level</mat-label>
+            <input matInput type="number" [formControl]="level" autocomplete="off"/>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>Gear Score</mat-label>
+            <input matInput type="number" [formControl]="gearScore" autocomplete="off"/>
+        </mat-form-field>
+    </div>
+    <div>
+        <button mat-raised-button (click)="save()">SAVE</button>
+    </div>
+</div>

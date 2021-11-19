@@ -32,8 +32,16 @@ input[type=number] {
   width: 100%;
 }
 
+.full-height {
+  height: 100%;
+}
+
 .card {
   width: 800px;
+}
+
+.large-card {
+  width: 1280px;
 }
 
 .content {
@@ -72,4 +80,24 @@ input[type=number] {
 .snackbar-error {
   background: #393939;
   color: #ffb3b3;
+}
+
+.w-50 {
+  max-width: 50px;
+}
+
+.w-75 {
+  max-width: 75px;
+}
+
+.w-100 {
+  max-width: 100px;
+}
+
+.w-125 {
+  max-width: 125px;
+}
+
+.w-150 {
+  max-width: 150px;
 }

@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class SnackbarService {
   constructor(private snackBar: MatSnackBar) {}
 
-  open(message: string, duration = 1500) {
+  open(message: string, duration = 1500): void {
     this.snackBar.open(message, 'OK', {
       duration,
       horizontalPosition: 'start',
@@ -14,7 +16,7 @@ export class SnackbarService {
     });
   }
 
-  error(message: string, duration = 3000) {
+  error(message: string, duration = 3000): void {
     this.snackBar.open(message, 'OK', {
       duration,
       horizontalPosition: 'start',

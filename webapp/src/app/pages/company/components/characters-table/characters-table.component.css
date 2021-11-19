@@ -1,0 +1,66 @@
+.characters-table {
+  width: 100%;
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+
+.mat-cell {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 120px !important;
+  width: 120px !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  word-break: break-word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
+}
+
+.mat-header-cell {
+  flex: 0 0 120px !important;
+  width: 120px !important;
+}
+
+.mat-row:hover .mat-cell {
+  border-color: #c2cdf0;
+}
+
+.mat-column-characterName {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 240px !important;
+  width: 240px !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  word-break: break-word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+
+
+mat-button-toggle-group {
+  flex-wrap: wrap;
+}
+
+.mat-button-toggle {
+  flex: 0 1 33.33%;
+  border-bottom: solid 1px rgba(255, 255, 255, 0.12);
+  border-right: solid 1px rgba(255, 255, 255, 0.12);
+}
+
+::ng-deep .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+  line-height: 32px !important;
+}

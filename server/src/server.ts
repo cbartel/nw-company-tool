@@ -1,47 +1,60 @@
-import express from 'express';
-import compression from 'compression';
-import bodyParser from 'body-parser';
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import process from 'process';
+import { ConfigService } from './config/config.service';
+import { Logger, LogLevel, NestApplicationOptions, ValidationPipe } from '@nestjs/common';
+import { Args, ArgsService, Flags } from './args/args.service';
+
 import cookieParser from 'cookie-parser';
-import cors from 'cors';
-import { router as loginRouter } from './routes/login.route';
-import { router as userRouter } from './routes/user.route';
-import { router as characterRouter } from './routes/character.route';
-import { router as configRouter } from './routes/config.route';
-import { router as adminRouter } from './routes/admin.route';
-import { errorHandler, httpErrorHandler } from './routes/error.route';
-import { ConfigService } from './service/config.service';
-import { accountAdmin, accountEnabled } from './routes/auth.route';
-import * as process from 'process';
+import { exec } from 'child_process';
+import Path from 'path';
 
 process.chdir(__dirname + '/../');
 
-const app = express();
+const logger = new Logger('NWCT Server');
+const argsService = ArgsService.get();
+const configService = ConfigService.get();
 
-app.use(bodyParser.json());
-app.use(cookieParser());
-app.use(cors());
-app.use(compression());
+async function setupDatabase() {
+  process.env.DATABASE_URL = `file:${Path.join(
+    argsService.getArgument(Args.DATAPATH),
+    configService.getServerConfig().DATABASE,
+  )}`;
 
-const distDir = __dirname + '/app/';
-app.use(express.static(distDir));
+  return await new Promise<void>((resolve) => {
+    const proc = exec('npx prisma migrate deploy', {
+      env: {
+        ...process.env,
+      },
+    });
 
-app.use('/api/character', accountEnabled);
-app.use('/api/admin', accountEnabled);
-app.use('/api/admin', accountAdmin);
+    proc.stdout.on('data', (data) => {
+      logger.log(data);
+    });
+    proc.stderr.on('data', (data) => {
+      logger.error(data);
+    });
+    proc.on('close', () => {
+      resolve();
+    });
+  });
+}
 
-app.use('/api/login/', loginRouter);
-app.use('/api/user/', userRouter);
-app.use('/api/characters/', characterRouter);
-app.use('/api/config/', configRouter);
-app.use('/api/admin/', adminRouter);
-
-app.all('/*', (req, res) => {
-  res.sendFile('app/index.html', { root: __dirname });
-});
-
-app.use(httpErrorHandler);
-app.use(errorHandler);
-
-const config = ConfigService.get().getServerConfig();
-
-app.listen(config.PORT || 8080);
+async function bootstrap() {
+  await setupDatabase();
+  const options: NestApplicationOptions = {};
+  const loggerOptions: LogLevel[] = ['error', 'warn', 'log'];
+  const debugLoggerOptions: LogLevel[] = ['error', 'warn', 'log', 'debug'];
+  if (!argsService.getFlag(Flags.DEVELOPMENT)) {
+    options.logger = loggerOptions;
+  } else {
+    options.logger = debugLoggerOptions;
+  }
+  const app = await NestFactory.create(AppModule, options);
+  const port = configService.getServerConfig().PORT || 8080;
+  app.use(cookieParser());
+  app.useGlobalPipes(new ValidationPipe());
+  await app.listen(port);
+  logger.log(`server listening on port ${port}`);
+}
+bootstrap();

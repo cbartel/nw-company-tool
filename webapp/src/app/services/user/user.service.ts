@@ -3,53 +3,58 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, ReplaySubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { LoginResponse } from '@model/login.model';
-import { User } from '@model/user.model';
+import { LoginResponse, Permission, SetCharacterName, UserAvatar, UserWithPermissions } from '@nw-company-tool/model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class UserService {
-  private user: User | undefined = undefined;
-  private user$ = new ReplaySubject<User | undefined>(1);
+  private user$ = new ReplaySubject<UserWithPermissions>(1);
   private loggedIn$ = new ReplaySubject<boolean>(1);
+  private avatar$ = new ReplaySubject<UserAvatar>(1);
   private loggedIn = false;
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  public login(): void {
-    this.http
+  async login(): Promise<void> {
+    await this.http
       .post<LoginResponse>('/api/login', {}, { withCredentials: true })
       .pipe(
         map((response) => {
           if (response.success) {
             this.loggedIn = true;
             this.loggedIn$.next(true);
-            this.user = response.user;
-            this.user$.next(this.user);
-            if (this.user && !this.user.enabled) {
+            this.user$.next(response.user);
+            this.getAvatar(32).subscribe((avatar) => this.avatar$.next(avatar));
+            if (response.user && !response.user.permissions.includes(Permission.ENABLED)) {
               this.router.navigate(['account-disabled']);
+              return;
             }
+            this.router.navigate(['']);
           } else {
             if (response.newUser) {
               this.router.navigate(['register']);
+              return;
             } else {
               this.router.navigate(['login']);
+              return;
             }
           }
         })
       )
-      .subscribe();
+      .toPromise();
   }
 
-  public getUser$(): Observable<User | undefined> {
+  public getUser$(): Observable<UserWithPermissions> {
     return this.user$;
-  }
-
-  public getUser(): User | undefined {
-    return this.user;
   }
 
   public isLoggedIn$(): Observable<boolean> {
     return this.loggedIn$;
+  }
+
+  public getAvatar$(): Observable<UserAvatar> {
+    return this.avatar$;
   }
 
   public isLoggedIn(): boolean {
@@ -58,12 +63,11 @@ export class UserService {
 
   public refreshUser(): void {
     this.http
-      .get<User>('/api/user', { withCredentials: true })
+      .get<UserWithPermissions>('/api/user', { withCredentials: true })
       .pipe(
         map((user) => {
           if (user) {
-            this.user = user;
-            this.user$.next(this.user);
+            this.user$.next(user);
           }
         })
       )
@@ -72,7 +76,7 @@ export class UserService {
 
   public logout(): void {
     this.http
-      .post<any>('/api/login/logout', {}, { withCredentials: true })
+      .post<void>('/api/login/logout', {}, { withCredentials: true })
       .pipe(
         map(() => {
           this.loggedIn = false;
@@ -85,10 +89,17 @@ export class UserService {
   }
 
   public setCharacterName(name: string): Observable<unknown> {
-    return this.http.post('/api/user/charactername', { value: name }, { withCredentials: true }).pipe(
+    const payload: SetCharacterName = {
+      characterName: name
+    };
+    return this.http.put('/api/user/charactername', payload, { withCredentials: true }).pipe(
       tap(() => {
         this.refreshUser();
       })
     );
+  }
+
+  private getAvatar(size: number): Observable<UserAvatar> {
+    return this.http.get<UserAvatar>(`/api/user/avatar?size=${size}`, { withCredentials: true });
   }
 }

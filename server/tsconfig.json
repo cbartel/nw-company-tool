@@ -4,31 +4,40 @@
     "src/server.ts"
   ],
   "include": [
-    "src/**/*.d.ts"
+    "src"
   ],
-  "compileOnSave": false,
   "compilerOptions": {
-    "types": ["node"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
     "target": "es2019",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "types": [
+      "node",
+      "jest"
+    ],
     "lib": [
       "es2019",
       "dom"
     ],
-    "module": "commonjs",
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "declaration": true,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": false,
-    "moduleResolution": "node",
-    "importHelpers": true,
-    "allowSyntheticDefaultImports": true
+    "paths": {
+      "@nw-company-tool/model": [
+        "../libs/model/src"
+      ]
+    }
   }
 }

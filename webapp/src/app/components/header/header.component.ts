@@ -53,7 +53,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.loggedInSub.unsubscribe();
   }
 
-  getNavigationItems(): NavigationItem[] {
+  getNavigationItems(): Observable<NavigationItem[]> {
     return this.navigationService.getNavigationItems();
+  }
+
+  getAvatarUrl(): Observable<string> {
+    return this.userService.getAvatar$().pipe(map((avatar) => avatar.url));
   }
 }

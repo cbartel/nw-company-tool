@@ -1,0 +1,16 @@
+<div class="content card flex">
+  <ng-container *ngFor="let item of getNavigationItems() | async">
+    <div [routerLink]="item.routerLink">
+      <mat-card class="home-card">
+        <div class="flex flex-column flex-vertical-center">
+          <div>
+            <mat-icon aria-hidden="false" class="home-icon">{{item.icon}}</mat-icon>
+          </div>
+          <div class="home-label">
+            <span>{{item.label}}</span>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </ng-container>
+</div>

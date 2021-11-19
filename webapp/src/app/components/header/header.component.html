@@ -7,15 +7,16 @@
       <mat-icon>home</mat-icon>
       <span>HOME</span>
     </button>
-    <button mat-menu-item *ngFor="let item of getNavigationItems()" routerLink="{{item.routerLink}}">
+    <button mat-menu-item *ngFor="let item of getNavigationItems() | async" routerLink="{{item.routerLink}}">
       <mat-icon>{{item.icon}}</mat-icon>
       <span>{{item.label}}</span>
     </button>
   </mat-menu>
   <span class="header-headline" (click)="home()">{{headline() | async}}</span>
   <span class="header-spacer"></span>
-  <div *ngIf="isLoggedIn">
+  <div *ngIf="isLoggedIn" class='flex flex-vertical-center'>
     <span class="header-name">{{ username }}</span>
+    <img src="{{ getAvatarUrl() | async }}" routerLink='my-character' class='avatar'/>
     <button mat-raised-button (click)="logout()">Logout</button>
   </div>
 </mat-toolbar>

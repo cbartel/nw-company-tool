@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model CharacterAttribute {
+  userId Int
+  key    String
+  value  String
+  User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, key])
+}
+
+model User {
+  id                 Int                  @id @unique(map: "User_id_uindex") @default(autoincrement())
+  discordId          String               @unique(map: "User_discordId_uindex")
+  discordUsername    String
+  characterName      String
+  CharacterAttribute CharacterAttribute[]
+  UserPermission     UserPermission[]
+}
+
+model UserPermission {
+  userId     Int
+  permission String
+  User       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, permission])
+}

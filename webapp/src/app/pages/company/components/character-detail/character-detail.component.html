@@ -1,0 +1,53 @@
+<h1 mat-dialog-title>{{dialogData.characterName}} (Level: {{character?.LEVEL}} - Gear Score: {{character?.GEAR_SCORE}})</h1>
+<div mat-dialog-content>
+    <div class="flex flex-column content card">
+        <div class="content">
+            <h2>Attributes</h2>
+            <div class="flex flex-wrap">
+                <ng-container *ngFor="let attribute of attributes">
+                    <div class="attributes">
+                        <div class="flex flex-column flex-center flex-vertical-center">
+                            <span>{{character ? character[attribute] : 0}}</span>
+                            <mat-progress-bar mode="determinate"
+                                              [value]="(character ? character[attribute] : 0) / 250 * 100"></mat-progress-bar>
+                            <span>{{'ATTRIBUTES.' + attribute | translate}}</span>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="content">
+            <h2>Weapon Skills</h2>
+            <div class="flex flex-wrap">
+                <ng-container *ngFor="let attribute of weaponSkills">
+                    <div class="attributes">
+                        <div class="flex flex-column flex-center flex-vertical-center">
+                            <span>{{character ? character[attribute] : 0}}</span>
+                            <mat-progress-bar mode="determinate"
+                                              [value]="(character ? character[attribute] : 0) / 20 * 100"></mat-progress-bar>
+                            <span>{{'ATTRIBUTES.' + attribute | translate}}</span>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <div class="content">
+            <h2>Trade Skills</h2>
+            <div class="flex flex-wrap">
+                <ng-container *ngFor="let attribute of tradeSkills">
+                    <div class="attributes">
+                        <div class="flex flex-column flex-center flex-vertical-center">
+                            <span>{{character? character[attribute] : 0}}</span>
+                            <mat-progress-bar mode="determinate"
+                                              [value]="(character ? character[attribute] : 0) / 200 * 100"></mat-progress-bar>
+                            <span>{{'ATTRIBUTES.' + attribute | translate}}</span>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+</div>

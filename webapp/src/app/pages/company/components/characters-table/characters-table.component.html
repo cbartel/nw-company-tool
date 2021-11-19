@@ -1,0 +1,62 @@
+<div class="content">
+    <mat-form-field appearance="standard">
+        <mat-label>Filter</mat-label>
+        <input matInput [formControl]="filter" autocomplete="off" #input>
+    </mat-form-field>
+</div>
+<div class="content">
+    <mat-button-toggle-group name="crafting" [formControl]="attributeGroupFilter">
+        <mat-button-toggle *ngFor="let attributeGroup of filterableAttributeGroups" value="{{attributeGroup.attributes}}"
+                           checked="{{attributeGroup.checked === true}}">{{ attributeGroup.label| translate}}</mat-button-toggle>
+    </mat-button-toggle-group>
+</div>
+<div class="content">
+    <mat-table matSort (matSortChange)="sortData($event)" [dataSource]="displayedData"
+           class="mat-elevation-z8 characters-table">
+        <!-- Action Items Column -->
+        <ng-container matColumnDef="action">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <div class="flex">
+                <button mat-icon-button color="accent" matTooltip="open in Discord" (click)="openInDiscord(element.discordId)">
+                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em"
+                         preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24">
+                        <path d="M22 24l-5.25-5l.63 2H4.5A2.5 2.5 0 0 1 2 18.5v-15A2.5 2.5 0 0 1 4.5 1h15A2.5 2.5 0 0 1 22 3.5V24M12 6.8c-2.68 0-4.56 1.15-4.56 1.15c1.03-.92 2.83-1.45 2.83-1.45l-.17-.17c-1.69.03-3.22 1.2-3.22 1.2c-1.72 3.59-1.61 6.69-1.61 6.69c1.4 1.81 3.48 1.68 3.48 1.68l.71-.9c-1.25-.27-2.04-1.38-2.04-1.38S9.3 14.9 12 14.9s4.58-1.28 4.58-1.28s-.79 1.11-2.04 1.38l.71.9s2.08.13 3.48-1.68c0 0 .11-3.1-1.61-6.69c0 0-1.53-1.17-3.22-1.2l-.17.17s1.8.53 2.83 1.45c0 0-1.88-1.15-4.56-1.15m-2.07 3.79c.65 0 1.18.57 1.17 1.27c0 .69-.52 1.27-1.17 1.27c-.64 0-1.16-.58-1.16-1.27c0-.7.51-1.27 1.16-1.27m4.17 0c.65 0 1.17.57 1.17 1.27c0 .69-.52 1.27-1.17 1.27c-.64 0-1.16-.58-1.16-1.27c0-.7.51-1.27 1.16-1.27z"
+                              fill="currentColor"/>
+                    </svg>
+                </button>
+                <button mat-icon-button color="accent" matTooltip="show details"
+                      (click)="showDetails(element.id, element.characterName)">
+                    <mat-icon>info</mat-icon>
+                </button>
+                </div>
+            </mat-cell>
+        </ng-container>
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
+        </ng-container>
+
+        <!-- Character Name Column -->
+        <ng-container matColumnDef="characterName">
+            <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element.characterName}}</mat-cell>
+        </ng-container>
+
+        <!-- Attribute  Columns -->
+        <ng-container *ngFor="let attribute of getAllAttributes()" matColumnDef="{{attribute}}">
+            <mat-header-cell mat-sort-header="{{attribute}}" *matHeaderCellDef>{{'ATTRIBUTES.' + attribute | translate}}</mat-header-cell>
+            <mat-cell *matCellDef="let element">{{element[attribute]}}</mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[10, 20, 50]"
+                   showFirstLastButtons
+                   aria-label="Select page of periodic elements">
+    </mat-paginator>
+</div>
