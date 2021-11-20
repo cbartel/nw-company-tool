@@ -2,6 +2,8 @@
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/J3J37247V)
 
+<a href="https://discord.gg/rm9Gzf3HCH"><img alt="Discord" src="https://img.shields.io/discord/911515391371665429?label=Discord&style=for-the-badge"></a>
+
 ![GitHub Repo stars](https://img.shields.io/github/stars/cbartel/nw-company-tool?style=social)
 ![GitHub watchers](https://img.shields.io/github/watchers/cbartel/nw-company-tool?style=social)
 
