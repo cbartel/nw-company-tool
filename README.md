@@ -2,6 +2,8 @@
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/J3J37247V)
 
+<a href="https://discord.gg/rm9Gzf3HCH"><img alt="Discord" src="https://img.shields.io/discord/911515391371665429?label=Discord&style=for-the-badge"></a>
+
 ![GitHub Repo stars](https://img.shields.io/github/stars/cbartel/nw-company-tool?style=social)
 ![GitHub watchers](https://img.shields.io/github/watchers/cbartel/nw-company-tool?style=social)
 
@@ -31,6 +33,14 @@ the ability to maintain their level, gear score, attributes, weapon- and trade s
 - create an expedition planner
 - integrate [NWDB.info](https://nwdb.info/) or a similar website
 - enable users to create skill tree builds in this tool to share their builds with your company
+
+### 📸 Footage 📸
+
+#### Company Overview
+![Company Table](docs/img/company_table.png)
+#### My Character
+![My Character](docs/img/my_character.png)
+
 
 ## 🚀 How to install 🚀
 ### Download
