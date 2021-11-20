@@ -34,6 +34,14 @@ the ability to maintain their level, gear score, attributes, weapon- and trade s
 - integrate [NWDB.info](https://nwdb.info/) or a similar website
 - enable users to create skill tree builds in this tool to share their builds with your company
 
+### 📸 Footage 📸
+
+#### Company Overview
+![Company Table](docs/img/company_table.png)
+#### My Character
+![My Character](docs/img/my_character.png)
+
+
 ## 🚀 How to install 🚀
 ### Download
 Make sure you have [nodejs](https://nodejs.dev/) installed!
