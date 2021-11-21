@@ -32,15 +32,14 @@ export type FilterModel = {
   styleUrls: ['./characters-table.component.css']
 })
 export class CharactersTableComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['action', 'characterName', ...BASE];
+  displayedColumns = ['action', 'characterName', ...BASE, ...ATTRIBUTES];
 
   filterableAttributeGroups: FilterModel[] = [
-    { attributes: BASE, label: 'ATTRIBUTES_GROUP.BASE', checked: true },
-    { attributes: ATTRIBUTES, label: 'ATTRIBUTES_GROUP.ATTRIBUTES' },
-    { attributes: WEAPON_SKILLS_ONE_HANDED, label: 'ATTRIBUTES_GROUP.WEAPON_SKILLS_ONE_HANDED' },
-    { attributes: WEAPON_SKILLS_TWO_HANDED, label: 'ATTRIBUTES_GROUP.WEAPON_SKILLS_TWO_HANDED' },
-    { attributes: WEAPON_SKILLS_RANGED, label: 'ATTRIBUTES_GROUP.WEAPON_SKILLS_RANGED' },
-    { attributes: WEAPON_SKILLS_MAGIC, label: 'ATTRIBUTES_GROUP.WEAPON_SKILLS_MAGIC' },
+    { attributes: BASE.concat(ATTRIBUTES), label: 'ATTRIBUTES_GROUP.ATTRIBUTES', checked: true },
+    { attributes: BASE.concat(WEAPON_SKILLS_ONE_HANDED), label: 'ATTRIBUTES_GROUP.WEAPON_SKILLS_ONE_HANDED' },
+    { attributes: BASE.concat(WEAPON_SKILLS_TWO_HANDED), label: 'ATTRIBUTES_GROUP.WEAPON_SKILLS_TWO_HANDED' },
+    { attributes: BASE.concat(WEAPON_SKILLS_RANGED), label: 'ATTRIBUTES_GROUP.WEAPON_SKILLS_RANGED' },
+    { attributes: BASE.concat(WEAPON_SKILLS_MAGIC), label: 'ATTRIBUTES_GROUP.WEAPON_SKILLS_MAGIC' },
     { attributes: TRADE_SKILLS, label: 'ATTRIBUTES_GROUP.TRADE_SKILLS' },
     { attributes: REFINING_SKILLS, label: 'ATTRIBUTES_GROUP.REFINING_SKILLS' },
     { attributes: GATHERING_SKILLS, label: 'ATTRIBUTES_GROUP.GATHERING_SKILLS' }
