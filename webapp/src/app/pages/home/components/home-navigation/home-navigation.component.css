@@ -7,6 +7,10 @@
   margin: 6px 6px 6px 6px;
 }
 
+.home-card-container {
+  flex: 0 0 150px;
+}
+
 .home-card:hover {
   cursor: pointer;
 }

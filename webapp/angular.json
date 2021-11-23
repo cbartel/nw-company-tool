@@ -37,6 +37,9 @@
             "styles": [
               "./src/theme.css",
               "./node_modules/cookieconsent/build/cookieconsent.min.css",
+              "./node_modules/primeng/resources/themes/md-dark-indigo/theme.css",
+              "./node_modules/primeng/resources/primeng.min.css",
+              "./node_modules/primeicons/primeicons.css",
               "./src/styles.css"
             ],
             "scripts": [

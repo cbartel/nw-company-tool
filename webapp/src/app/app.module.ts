@@ -26,6 +26,11 @@ import { AdminModule } from './services/admin/admin.module';
 import { CharacterModule } from './services/character/character.module';
 import { SnackbarModule } from './services/snackbar/snackbar.module';
 import { InterceptorModule } from './interceptor/interceptor.module';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
@@ -56,6 +61,8 @@ const i18nConfig: TranslateModuleConfig = {
   defaultLanguage: 'en'
 };
 
+FullCalendarModule.registerPlugins([dayGridPlugin, timeGridPlugin, interactionPlugin]);
+
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent],
   imports: [
@@ -80,7 +87,8 @@ const i18nConfig: TranslateModuleConfig = {
     MatToolbarModule,
     MatMenuModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatMomentDateModule
   ],
   providers: [AppComponent, LoginGuard, AdminGuard],
   bootstrap: [AppComponent],
