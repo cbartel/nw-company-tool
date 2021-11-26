@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CalendarOptions } from '@fullcalendar/angular';
 import * as moment from 'moment';
+import { ExpeditionService } from '../../../../services/expedition/expedition.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home-calendar',
@@ -21,11 +23,31 @@ export class HomeCalendarComponent {
       right: ''
     },
     aspectRatio: 2,
-    editable: true,
-    selectable: true,
+    editable: false,
+    selectable: false,
     selectMirror: true,
     dayMaxEvents: true,
     firstDay: 1,
-    locale: navigator.language
+    locale: navigator.language,
+    eventSources: [
+      {
+        color: 'yellow',
+        events: (info, success) => {
+          this.expeditionService
+            .getExpeditions()
+            .pipe(
+              map((expeditions) =>
+                expeditions.map((expedition) => ({
+                  title: expedition.name,
+                  start: expedition.beginDateTime
+                }))
+              )
+            )
+            .subscribe((events) => success(events));
+        }
+      }
+    ]
   };
+
+  constructor(private expeditionService: ExpeditionService) {}
 }

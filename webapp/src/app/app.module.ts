@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -31,6 +31,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { ExpeditionModule } from './services/expedition/expedition.module';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
@@ -79,6 +80,7 @@ FullCalendarModule.registerPlugins([dayGridPlugin, timeGridPlugin, interactionPl
     AdminModule,
     CharacterModule,
     ConfigModule,
+    ExpeditionModule,
     NavigationModule,
     PluginModule,
     SnackbarModule,
@@ -90,7 +92,7 @@ FullCalendarModule.registerPlugins([dayGridPlugin, timeGridPlugin, interactionPl
     MatButtonModule,
     MatMomentDateModule
   ],
-  providers: [AppComponent, LoginGuard, AdminGuard],
+  providers: [{ provide: LOCALE_ID, useValue: 'en-GB' }, AppComponent, LoginGuard, AdminGuard],
   bootstrap: [AppComponent],
   exports: []
 })

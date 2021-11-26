@@ -1,0 +1,43 @@
+<div class='content'>
+  <button mat-fab color="primary" (click)='createNew()'>
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+<div class='content'>
+  <mat-table [dataSource]="dataSource">
+    <!-- Planned Definition -->
+    <ng-container matColumnDef="planned">
+      <mat-header-cell *matHeaderCellDef> Begin </mat-header-cell>
+      <mat-cell *matCellDef="let row"> <input matInput type='datetime-local' value='{{row.beginDateTime}}' readonly></mat-cell>
+    </ng-container>
+
+    <!-- Name Definition -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+    </ng-container>
+
+    <!-- Owner Definition -->
+    <ng-container matColumnDef="owner">
+      <mat-header-cell *matHeaderCellDef> Owner </mat-header-cell>
+      <mat-cell *matCellDef="let row"> {{row.owner.characterName}} </mat-cell>
+    </ng-container>
+
+    <!-- Owner Definition -->
+    <ng-container matColumnDef="participants">
+      <mat-header-cell *matHeaderCellDef> Participants </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+
+      </mat-cell>
+    </ng-container>
+
+
+    <!-- Header and Row Declarations -->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSizeOptions]="[10, 20, 50]"
+                 showFirstLastButtons>
+  </mat-paginator>
+</div>

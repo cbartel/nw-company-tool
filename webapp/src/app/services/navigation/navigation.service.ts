@@ -22,6 +22,11 @@ export class NavigationService {
       label: 'COMPANY',
       routerLink: 'company',
       icon: 'group'
+    },
+    {
+      label: 'EXPEDITION',
+      routerLink: 'expedition',
+      icon: 'landscape'
     }
   ];
 
