@@ -1,6 +1,5 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from './config/config.module';
-import { StaticModule } from './static/static.module';
 import { ArgsModule } from './args/args.module';
 import { UserModule } from './user/user.module';
 import { LoginModule } from './login/login.module';
@@ -9,6 +8,7 @@ import { TokenModule } from './token/token.module';
 import { AdminModule } from './admin/admin.module';
 import { CharacterModule } from './character/character.module';
 import { PluginModule } from './plugin/plugin.module';
+import { FrontendMiddleware } from './middleware/frontend.middleware';
 
 @Module({
   imports: [
@@ -16,7 +16,6 @@ import { PluginModule } from './plugin/plugin.module';
     ConfigModule,
     ArgsModule,
     DatabaseModule,
-    StaticModule,
     UserModule,
     LoginModule,
     AdminModule,
@@ -24,4 +23,8 @@ import { PluginModule } from './plugin/plugin.module';
     PluginModule,
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): any {
+    consumer.apply(FrontendMiddleware).forRoutes({ path: '/**', method: RequestMethod.ALL });
+  }
+}

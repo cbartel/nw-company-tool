@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +26,12 @@ import { AdminModule } from './services/admin/admin.module';
 import { CharacterModule } from './services/character/character.module';
 import { SnackbarModule } from './services/snackbar/snackbar.module';
 import { InterceptorModule } from './interceptor/interceptor.module';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { ExpeditionModule } from './services/expedition/expedition.module';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
@@ -56,6 +62,8 @@ const i18nConfig: TranslateModuleConfig = {
   defaultLanguage: 'en'
 };
 
+FullCalendarModule.registerPlugins([dayGridPlugin, timeGridPlugin, interactionPlugin]);
+
 @NgModule({
   declarations: [AppComponent, HeaderComponent, FooterComponent],
   imports: [
@@ -72,6 +80,7 @@ const i18nConfig: TranslateModuleConfig = {
     AdminModule,
     CharacterModule,
     ConfigModule,
+    ExpeditionModule,
     NavigationModule,
     PluginModule,
     SnackbarModule,
@@ -80,9 +89,10 @@ const i18nConfig: TranslateModuleConfig = {
     MatToolbarModule,
     MatMenuModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatMomentDateModule
   ],
-  providers: [AppComponent, LoginGuard, AdminGuard],
+  providers: [{ provide: LOCALE_ID, useValue: 'en-GB' }, AppComponent, LoginGuard, AdminGuard],
   bootstrap: [AppComponent],
   exports: []
 })
