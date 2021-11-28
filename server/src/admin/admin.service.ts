@@ -71,18 +71,18 @@ export class AdminService {
     return new Promise((resolve) => {
       const extract = tar.extract();
       extract.on('entry', (header, stream, next) => {
-        let data = '';
+        const data = [];
 
         stream.on('data', (chunk) => {
           if (header.type === 'file') {
-            data += chunk;
+            data.push(chunk);
           }
         });
 
         stream.on('end', () => {
           if (header.type === 'file') {
             const filePath = `${process.cwd()}/${header.name}`;
-            fs.outputFileSync(filePath, data);
+            fs.outputFileSync(filePath, Buffer.concat(data));
             console.log(`updated: ${header.name}`);
           }
           next();
