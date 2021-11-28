@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
-import { AdminUser, EnableUser, UserWithPermissions, Version } from '@nw-company-tool/model';
+import { AdminUser, DeleteUser, EnableUser, UserWithPermissions, Version } from '@nw-company-tool/model';
 
 @Injectable({
   providedIn: 'root'
@@ -48,6 +48,11 @@ export class AdminService {
   }
 
   public update(): Observable<unknown> {
-    return this.http.post('api/admin/server/update', {}, { withCredentials: true });
+    return this.http.post('/api/admin/server/update', {}, { withCredentials: true });
+  }
+
+  public delete(id: number): Observable<unknown> {
+    const payload: DeleteUser = { userId: id };
+    return this.http.post('/api/admin/users/delete', payload, { withCredentials: true });
   }
 }

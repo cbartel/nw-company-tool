@@ -8,8 +8,8 @@
 .mat-cell {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 120px !important;
-  width: 120px !important;
+  flex: 0 0 100px !important;
+  width: 100px !important;
   overflow-wrap: break-word;
 
   word-break: break-word;
@@ -24,8 +24,8 @@
 }
 
 .mat-header-cell {
-  flex: 0 0 120px !important;
-  width: 120px !important;
+  flex: 0 0 100px !important;
+  width: 100px !important;
 }
 
 .mat-row:hover .mat-cell {
@@ -35,8 +35,8 @@
 .mat-column-characterName {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 240px !important;
-  width: 240px !important;
+  flex: 0 0 180px !important;
+  width: 180px !important;
   overflow-wrap: break-word;
 
   word-break: break-word;

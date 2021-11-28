@@ -11,6 +11,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { CharacterDeleteComponent } from './components/character-delete/character-delete.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [
@@ -22,9 +26,12 @@ import { CommonModule } from '@angular/common';
     MatInputModule,
     MatCardModule,
     MatTabsModule,
-    CommonModule
+    CommonModule,
+    MatIconModule,
+    MatTooltipModule,
+    MatDialogModule
   ],
-  declarations: [AdminComponent, UsersTableComponent, UpdateComponent],
+  declarations: [AdminComponent, UsersTableComponent, UpdateComponent, CharacterDeleteComponent],
   providers: [],
   exports: []
 })
