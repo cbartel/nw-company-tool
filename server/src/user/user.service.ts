@@ -76,6 +76,14 @@ export class UserService {
     }
   }
 
+  async delete(id: number): Promise<void> {
+    await this.client.user.delete({
+      where: {
+        id,
+      },
+    });
+  }
+
   async setCharacterName(id: number, characterName: string): Promise<User> {
     return this.client.user.update({ where: { id }, data: { characterName } });
   }

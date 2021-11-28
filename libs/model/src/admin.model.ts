@@ -11,3 +11,7 @@ export interface EnableUser {
   userId: number;
   enabled: boolean;
 }
+
+export interface DeleteUser {
+  userId: number;
+}

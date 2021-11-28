@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { AdminService } from './admin.service';
 import { Public, RequiredPermissions } from '../login/login.decorator';
 import { EnableUserDto } from './dto/user.enable.dto';
 import { AdminUserDto } from './dto/user.admin.dto';
 import { Permission, UserWithPermissions, Version } from '@nw-company-tool/model';
+import { DeleteUserDto } from './dto/user.delete.dto';
 
 @Controller('/api/admin')
 @RequiredPermissions(Permission.ADMIN)
@@ -14,6 +15,11 @@ export class AdminController {
   @Get('/users')
   async getAllUsers(): Promise<UserWithPermissions[]> {
     return this.userService.findAllWithPermissions();
+  }
+
+  @Post('/users/delete')
+  async deleteUser(@Body() body: DeleteUserDto): Promise<void> {
+    return this.userService.delete(body.userId);
   }
 
   @Post('/users/enable')
