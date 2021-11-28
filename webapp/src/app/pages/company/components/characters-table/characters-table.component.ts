@@ -60,7 +60,7 @@ export class CharactersTableComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.characterService
       .query({
-        attributes: BASE
+        attributes: BASE.concat(ATTRIBUTES)
       })
       .subscribe((data) => {
         this.data = data.sort((a, b) => this.compare(a.characterName, b.characterName, true));
