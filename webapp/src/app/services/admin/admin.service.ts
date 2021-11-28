@@ -27,7 +27,7 @@ export class AdminService {
       userId: id,
       admin
     };
-    return this.http.post(`/api/admin/users/admin/${id}`, payload, { withCredentials: true });
+    return this.http.post(`/api/admin/users/admin`, payload, { withCredentials: true });
   }
 
   public getLatestReleaseVersion(): Observable<Version> {
