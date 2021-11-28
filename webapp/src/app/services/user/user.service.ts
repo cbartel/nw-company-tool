@@ -30,7 +30,6 @@ export class UserService {
               this.router.navigate(['account-disabled']);
               return;
             }
-            this.router.navigate(['']);
           } else {
             if (response.newUser) {
               this.router.navigate(['register']);
