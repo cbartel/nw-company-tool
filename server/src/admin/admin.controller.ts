@@ -26,7 +26,7 @@ export class AdminController {
   }
 
   @Post('/users/admin')
-  async setAdmin(@Param() params, @Body() body: AdminUserDto): Promise<void> {
+  async setAdmin(@Body() body: AdminUserDto): Promise<void> {
     if (body.admin) {
       await this.userService.setPermission(body.userId, Permission.ADMIN);
     } else {
