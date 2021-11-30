@@ -81,10 +81,12 @@ export class ExpeditionService {
     switch (expeditionJoin.role) {
       case Role.DAMAGE: {
         if (roles.length >= 3) throw new HttpException('expedition is full', 400);
+        break;
       }
       case Role.TANK:
       case Role.HEAL: {
         if (roles.length >= 1) throw new HttpException('expedition is full', 400);
+        break;
       }
     }
     await this.client.expeditionParticipant.create({
