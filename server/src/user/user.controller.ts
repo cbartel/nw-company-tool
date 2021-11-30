@@ -3,7 +3,7 @@ import { Cookies, Request } from '../app.model';
 import { UserService } from './user.service';
 import { TokenService } from '../token/token.service';
 import { SetCharacterNameDto } from './dto/charactername.set.dto';
-import { Public, RequiredPermissions } from '../login/login.decorator';
+import { LoggedIn, Public, RequiredPermissions } from '../login/login.decorator';
 import { Permission, UserAvatar, UserWithPermissions } from '@nw-company-tool/model';
 
 @Controller('/api/user')
@@ -24,6 +24,7 @@ export class UserController {
     await this.userService.setCharacterName(request.user.id, body.characterName);
   }
 
+  @LoggedIn()
   @Get('/avatar')
   getAvatar(@Req() request: Request, @Query('size') size: number): UserAvatar {
     return this.userService.getAvatar(request.user, request.discordAvatar, size);

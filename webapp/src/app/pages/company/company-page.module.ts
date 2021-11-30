@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CompanyRoutingModule } from './company-routing.module';
 import { CompanyComponent } from './routes/root/company.component';
 import { CharactersTableComponent } from './components/characters-table/characters-table.component';
-import { CharacterDetailComponent } from './components/character-detail/character-detail.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
@@ -40,7 +39,7 @@ import { CommonModule } from '@angular/common';
     MatCardModule,
     MatTabsModule
   ],
-  declarations: [CompanyComponent, CharactersTableComponent, CharacterDetailComponent],
+  declarations: [CompanyComponent, CharactersTableComponent],
   providers: [],
   exports: []
 })

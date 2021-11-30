@@ -48,6 +48,14 @@
     "TRADE_SKILLS": "Trade Skills",
     "REFINING_SKILLS": "Refining",
     "GATHERING_SKILLS": "Gathering"
+  },
+  "EXPEDITION": {
+    "AMRINE_EXCAVATION": "Amrine Excavation",
+    "STARSTONE_BARROWS": "Starstone Barrows",
+    "THE_DEPTHS": "The Depths",
+    "DYNASTY_SHIPYARD": "Dynasty Shipyard",
+    "LAZARUS_INSTRUMENTALITY": "Lazarus Instrumentality",
+    "GARDEN_OF_GENESIS": "Garden of Genesis"
   }
 }
 

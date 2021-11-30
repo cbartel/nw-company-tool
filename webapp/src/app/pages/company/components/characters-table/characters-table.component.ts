@@ -18,7 +18,7 @@ import {
   WEAPON_SKILLS_TWO_HANDED
 } from '@nw-company-tool/model';
 import { CharacterService } from '../../../../services/character/character.service';
-import { CharacterDetailComponent } from '../character-detail/character-detail.component';
+import { CharacterDetailComponent } from '../../../../components/character-detail/character-detail.component';
 
 export type FilterModel = {
   attributes: Attribute[];

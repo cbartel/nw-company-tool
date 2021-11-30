@@ -4,12 +4,14 @@ import * as moment from 'moment';
 import { Moment } from 'moment';
 import { ExpeditionService } from '../../../../services/expedition/expedition.service';
 import { MatDialogRef } from '@angular/material/dialog';
+import { ExpeditionName, Role } from '@nw-company-tool/model';
 
 type CreateExpeditionForm = {
   date: Moment;
   time: string;
-  expedition: string;
+  expedition: ExpeditionName;
   hasKey: boolean;
+  role: Role;
 };
 
 @Component({
@@ -18,11 +20,13 @@ type CreateExpeditionForm = {
   styleUrls: ['./expedition-create.component.css']
 })
 export class ExpeditionCreateComponent {
+  role = Role;
   form = new FormGroup({
     date: new FormControl(moment(), [Validators.required]),
     time: new FormControl(moment().format('HH:mm'), [Validators.required]),
     expedition: new FormControl(null, [Validators.required]),
-    hasKey: new FormControl(false)
+    hasKey: new FormControl(false),
+    role: new FormControl(null, [Validators.required])
   });
 
   constructor(
@@ -32,33 +36,29 @@ export class ExpeditionCreateComponent {
 
   create() {
     this.form.markAllAsTouched();
-    const expedition: CreateExpeditionForm = this.form.value;
-
     if (this.form.valid) {
-      this.expeditionService.createExpedition({
-        name: expedition.expedition,
-        beginDateTime: expedition.date
-          .set({
-            hour: +expedition.time.split(':')[0],
-            minute: +expedition.time.split(':')[1]
-          })
-          .format('YYYY-MM-DDTHH:mm'),
-        participants: [
-          {
-            userId: 1,
-            characterName: 'Krise',
-            discordId: '1',
-            hasKey: true,
-            role: 'damage'
-          }
-        ],
-        owner: {
-          userId: 1,
-          characterName: 'Krise',
-          discordId: '1'
-        }
-      });
-      this.dialogRef.close();
+      const formData: CreateExpeditionForm = this.form.value;
+      const beginDateTime = formData.date
+        .set({
+          hour: +formData.time.split(':')[0],
+          minute: +formData.time.split(':')[1]
+        })
+        .toISOString();
+      this.expeditionService
+        .createExpedition({
+          name: formData.expedition,
+          beginDateTime,
+          hasTuningOrb: formData.hasKey,
+          role: formData.role
+        })
+        .subscribe(() => {
+          this.expeditionService.refreshExpeditions();
+          this.dialogRef.close();
+        });
     }
+  }
+
+  getExpeditions(): ExpeditionName[] {
+    return Object.values(ExpeditionName);
   }
 }

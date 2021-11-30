@@ -22,6 +22,7 @@ export class TokenInterceptor implements HttpInterceptor {
           }
           if (err.status === 403) {
             this.router.navigate(['forbidden']);
+            this.userService.refreshUser();
           }
         }
         throw throwError(err);

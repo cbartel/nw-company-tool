@@ -14,6 +14,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslateModule } from '@ngx-translate/core';
+import { ExpeditionJoinComponent } from './components/expedition-join/expedition-join.component';
 
 @NgModule({
   imports: [
@@ -28,9 +32,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatSelectModule,
     MatDatepickerModule,
     MatSlideToggleModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    CommonModule,
+    MatTooltipModule,
+    TranslateModule
   ],
-  declarations: [ExpeditionComponent, ExpeditionTableComponent, ExpeditionCreateComponent],
+  declarations: [ExpeditionComponent, ExpeditionTableComponent, ExpeditionCreateComponent, ExpeditionJoinComponent],
   providers: [],
   exports: []
 })

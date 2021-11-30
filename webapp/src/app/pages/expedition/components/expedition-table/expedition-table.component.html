@@ -1,43 +1,84 @@
-<div class='content'>
-  <button mat-fab color="primary" (click)='createNew()'>
+<div class='content flex flex-right'>
+  <button mat-mini-fab color='primary' matTooltip='Create New' (click)='createNew()'>
     <mat-icon>add</mat-icon>
   </button>
 </div>
 <div class='content'>
-  <mat-table [dataSource]="dataSource">
-    <!-- Planned Definition -->
-    <ng-container matColumnDef="planned">
-      <mat-header-cell *matHeaderCellDef> Begin </mat-header-cell>
-      <mat-cell *matCellDef="let row"> <input matInput type='datetime-local' value='{{row.beginDateTime}}' readonly></mat-cell>
+  <mat-table [dataSource]='dataSource'  class="mat-elevation-z8 expedition-table">>
+    <!-- Planned Column -->
+    <ng-container matColumnDef='planned'>
+      <mat-header-cell *matHeaderCellDef> Begin</mat-header-cell>
+      <mat-cell *matCellDef='let row'><input matInput type='datetime-local' value='{{formatDate(row.beginDateTime)}}'
+                                             readonly></mat-cell>
     </ng-container>
 
-    <!-- Name Definition -->
-    <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+    <!-- Name Column -->
+    <ng-container matColumnDef='name'>
+      <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
+      <mat-cell *matCellDef='let row'> {{('EXPEDITION.' + row.name) | translate}} </mat-cell>
     </ng-container>
 
-    <!-- Owner Definition -->
-    <ng-container matColumnDef="owner">
-      <mat-header-cell *matHeaderCellDef> Owner </mat-header-cell>
-      <mat-cell *matCellDef="let row"> {{row.owner.characterName}} </mat-cell>
+    <!-- Owner Column -->
+    <ng-container matColumnDef='owner'>
+      <mat-header-cell *matHeaderCellDef> Owner</mat-header-cell>
+      <mat-cell *matCellDef='let row'> {{row.owner.characterName}} </mat-cell>
     </ng-container>
 
-    <!-- Owner Definition -->
-    <ng-container matColumnDef="participants">
-      <mat-header-cell *matHeaderCellDef> Participants </mat-header-cell>
-      <mat-cell *matCellDef="let row">
+    <!-- Tuning Orb Column -->
+    <ng-container matColumnDef='tuning-orb'>
+      <mat-header-cell *matHeaderCellDef> Tuning Orbs</mat-header-cell>
+      <mat-cell *matCellDef='let row'> {{countTuningOrbs(row)}} </mat-cell>
+    </ng-container>
 
+    <!-- Owner Column -->
+    <ng-container matColumnDef='participants'>
+      <mat-header-cell *matHeaderCellDef> Participants</mat-header-cell>
+      <mat-cell *matCellDef='let row'>
+        <div class='flex'>
+          <button *ngIf='getTank(row.participants); let slot' mat-icon-button color='{{getSlotColor(slot) | async}}'
+                  matTooltip='{{getSlotTooltip(slot) | async}}' (click)='slotClick(slot, row)'>
+            <mat-icon>{{getIcon(slot.role)}}</mat-icon>
+          </button>
+          <button *ngIf='getDamage1(row.participants); let slot' mat-icon-button color='{{getSlotColor(slot) | async}}'
+                  matTooltip='{{getSlotTooltip(slot) | async}}' (click)='slotClick(slot, row)'>
+            <mat-icon>{{getIcon(slot.role)}}</mat-icon>
+          </button>
+          <button *ngIf='getDamage2(row.participants); let slot' mat-icon-button color='{{getSlotColor(slot) | async}}'
+                  matTooltip='{{getSlotTooltip(slot) | async}}' (click)='slotClick(slot, row)'>
+            <mat-icon>{{getIcon(slot.role)}}</mat-icon>
+          </button>
+          <button *ngIf='getDamage3(row.participants); let slot' mat-icon-button color='{{getSlotColor(slot) | async}}'
+                  matTooltip='{{getSlotTooltip(slot) | async}}' (click)='slotClick(slot, row)'>
+            <mat-icon>{{getIcon(slot.role)}}</mat-icon>
+          </button>
+          <button *ngIf='getHeal(row.participants); let slot' mat-icon-button color='{{getSlotColor(slot) | async}}'
+                  matTooltip='{{getSlotTooltip(slot) | async}}' (click)='slotClick(slot, row)'>
+            <mat-icon>{{getIcon(slot.role)}}</mat-icon>
+          </button>
+        </div>
       </mat-cell>
+    </ng-container>
+
+    <!-- Delete Column -->
+    <ng-container matColumnDef='delete'>
+      <mat-header-cell *matHeaderCellDef> Delete</mat-header-cell>
+      <mat-cell *matCellDef='let row'>
+        <button mat-icon-button color='primary' matTooltip='delete' [disabled]='(isOwner(row) | async) === false'
+                (click)='delete(row)'>
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-cell>
+
+
     </ng-container>
 
 
     <!-- Header and Row Declarations -->
-    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-header-row *matHeaderRowDef='displayedColumns'></mat-header-row>
+    <mat-row *matRowDef='let row; columns: displayedColumns;'></mat-row>
   </mat-table>
 
-  <mat-paginator [pageSizeOptions]="[10, 20, 50]"
+  <mat-paginator [pageSizeOptions]='[10, 20, 50]'
                  showFirstLastButtons>
   </mat-paginator>
 </div>

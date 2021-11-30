@@ -17,12 +17,14 @@ model CharacterAttribute {
 }
 
 model User {
-  id                 Int                  @id @unique(map: "User_id_uindex") @default(autoincrement())
-  discordId          String               @unique(map: "User_discordId_uindex")
-  discordUsername    String
-  characterName      String
-  CharacterAttribute CharacterAttribute[]
-  UserPermission     UserPermission[]
+  id                    Int                     @id @unique(map: "User_id_uindex") @default(autoincrement())
+  discordId             String                  @unique(map: "User_discordId_uindex")
+  discordUsername       String
+  characterName         String
+  CharacterAttribute    CharacterAttribute[]
+  Expedition            Expedition[]
+  ExpeditionParticipant ExpeditionParticipant[]
+  UserPermission        UserPermission[]
 }
 
 model UserPermission {
@@ -31,4 +33,24 @@ model UserPermission {
   User       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([userId, permission])
+}
+
+model Expedition {
+  id                    Int                     @id @unique(map: "Expedition_id_uindex") @default(autoincrement())
+  userId                Int
+  name                  String
+  beginDateTime         DateTime
+  User                  User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  ExpeditionParticipant ExpeditionParticipant[]
+}
+
+model ExpeditionParticipant {
+  expeditionId          Int
+  userId                Int
+  hasTuningOrb          Boolean    @default(false)
+  role                  String
+  Expedition            Expedition @relation(fields: [expeditionId], references: [id], onDelete: Cascade)
+  User                  User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([expeditionId, userId])
 }

@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
     const plugins = await this.pluginService.getPlugins().toPromise();
     const routes = this.buildRoutes(plugins);
     this.router.resetConfig(routes);
-    await this.userService.login();
   }
 
   buildRoutes(plugins: PluginDefinition[]): Routes {

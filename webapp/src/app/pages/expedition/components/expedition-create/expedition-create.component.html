@@ -13,11 +13,18 @@
     <mat-form-field appearance='fill'>
       <mat-label>Expedition</mat-label>
       <mat-select formControlName='expedition'>
-        <mat-option value='one'>Expedition 1</mat-option>
-        <mat-option value='two'>Expedition 2</mat-option>
+        <mat-option *ngFor="let expedition of getExpeditions()" value='{{expedition}}'>{{('EXPEDITION.' + expedition) | translate}}</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-slide-toggle formControlName='hasKey'>I have a tuning orb</mat-slide-toggle>
+    <mat-form-field appearance='fill'>
+      <mat-label>Role</mat-label>
+      <mat-select formControlName='role'>
+        <mat-option value='{{role.TANK}}'>Tank</mat-option>
+        <mat-option value='{{role.DAMAGE}}'>Damage</mat-option>
+        <mat-option value='{{role.HEAL}}'>Heal</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-slide-toggle color='primary' formControlName='hasKey'>I have a tuning orb</mat-slide-toggle>
   </div>
 
 <div mat-dialog-actions class='flex flex-right'>

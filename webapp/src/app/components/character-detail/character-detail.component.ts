@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Attribute, Character } from '@nw-company-tool/model';
-import { CharacterService } from '../../../../services/character/character.service';
+import { CharacterService } from '../../services/character/character.service';
 
 export interface CharacterDetailDialogData {
   id: number;
