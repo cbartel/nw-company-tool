@@ -9,6 +9,7 @@ import { AdminModule } from './admin/admin.module';
 import { CharacterModule } from './character/character.module';
 import { PluginModule } from './plugin/plugin.module';
 import { FrontendMiddleware } from './middleware/frontend.middleware';
+import { ExpeditionModule } from './expedition/expedition.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { FrontendMiddleware } from './middleware/frontend.middleware';
     ConfigModule,
     ArgsModule,
     DatabaseModule,
+    ExpeditionModule,
     UserModule,
     LoginModule,
     AdminModule,

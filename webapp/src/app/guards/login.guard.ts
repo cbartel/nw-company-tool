@@ -1,22 +1,31 @@
-import { CanActivate } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { UserService } from '../services/user/user.service';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 import { Permission } from '@nw-company-tool/model';
 
 @Injectable()
 export class LoginGuard implements CanActivate {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   canActivate(): Observable<boolean> {
-    if (!this.userService.isLoggedIn()) {
-      this.userService.login();
-      return of(false);
-    }
-    return this.userService.getUser$().pipe(
+    return this.userService.isLoggedIn$().pipe(
+      mergeMap((isLoggedIn) => {
+        if (isLoggedIn) {
+          return this.userService.getUser$();
+        }
+        return this.userService.login();
+      }),
       map((user) => {
-        return user.permissions.includes(Permission.ENABLED);
+        if (!user) {
+          return false;
+        }
+        if (!user.permissions.includes(Permission.ENABLED)) {
+          this.router.navigate(['account-disabled']);
+          return false;
+        }
+        return true;
       })
     );
   }

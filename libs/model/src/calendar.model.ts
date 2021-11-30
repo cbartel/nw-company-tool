@@ -1,1 +1,3 @@
-export type CalendarEvent = {};
+export enum CalendarEventType {
+  EXPEDITION = 'EXPEDITION',
+}

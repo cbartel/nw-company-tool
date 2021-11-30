@@ -32,6 +32,9 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { ExpeditionModule } from './services/expedition/expedition.module';
+import { CharacterDetailComponent } from './components/character-detail/character-detail.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
@@ -65,7 +68,7 @@ const i18nConfig: TranslateModuleConfig = {
 FullCalendarModule.registerPlugins([dayGridPlugin, timeGridPlugin, interactionPlugin]);
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, FooterComponent],
+  declarations: [AppComponent, HeaderComponent, FooterComponent, CharacterDetailComponent],
   imports: [
     NgcCookieConsentModule.forRoot(cookieConfig),
     TranslateModule.forRoot(i18nConfig),
@@ -90,7 +93,9 @@ FullCalendarModule.registerPlugins([dayGridPlugin, timeGridPlugin, interactionPl
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatProgressBarModule,
+    MatDialogModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'en-GB' }, AppComponent, LoginGuard, AdminGuard],
   bootstrap: [AppComponent],
