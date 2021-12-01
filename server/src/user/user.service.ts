@@ -38,21 +38,23 @@ export class UserService {
       .then((permissions) => permissions.map((permission) => permission.permission));
   }
 
-  async findUserWithPermissionsById(id: number): Promise<UserWithPermissions> {
-    return this.client.user
-      .findUnique({
-        where: { id },
-        include: {
-          UserPermission: true,
-        },
-      })
-      .then((result) => ({
-        id: result.id,
-        discordId: result.discordId,
-        discordUsername: result.discordUsername,
-        characterName: result.characterName,
-        permissions: result.UserPermission.map((it) => it.permission as Permission),
-      }));
+  async findUserWithPermissionsById(id: number): Promise<UserWithPermissions | undefined> {
+    const user = await this.client.user.findUnique({
+      where: { id },
+      include: {
+        UserPermission: true,
+      },
+    });
+    if (!user) {
+      return undefined;
+    }
+    return {
+      id: user.id,
+      discordId: user.discordId,
+      discordUsername: user.discordUsername,
+      characterName: user.characterName,
+      permissions: user.UserPermission.map((it) => it.permission as Permission),
+    };
   }
 
   async findByDiscordId(discordId: string): Promise<User> {
