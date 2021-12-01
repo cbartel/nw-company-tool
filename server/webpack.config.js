@@ -11,5 +11,6 @@ module.exports = function (options) {
       path: path.resolve(__dirname, 'dist'),
       filename: '[name].js',
     },
+    devtool: 'source-map',
   };
 };
