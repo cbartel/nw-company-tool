@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Attribute, Character } from '@nw-company-tool/model';
 import { CharacterService } from '../../services/character/character.service';
 
@@ -60,7 +60,6 @@ export class CharacterDetailComponent implements OnInit {
   ];
 
   constructor(
-    public dialogRef: MatDialogRef<CharacterDetailComponent>,
     @Inject(MAT_DIALOG_DATA) public dialogData: CharacterDetailDialogData,
     private characterService: CharacterService
   ) {}

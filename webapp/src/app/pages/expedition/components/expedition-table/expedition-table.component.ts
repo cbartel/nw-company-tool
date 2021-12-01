@@ -12,7 +12,7 @@ import {
 } from '../../../../components/character-detail/character-detail.component';
 import { UserService } from '../../../../services/user/user.service';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { ExpeditionJoinComponent, ExpeditionJoinDialogData } from '../expedition-join/expedition-join.component';
 import { SnackbarService } from '../../../../services/snackbar/snackbar.service';
 
@@ -35,7 +35,7 @@ export class ExpeditionTableComponent implements OnInit, AfterViewInit {
 
   constructor(
     private expeditionService: ExpeditionService,
-    public dialog: MatDialog,
+    private dialog: MatDialog,
     private userService: UserService,
     private snackbarService: SnackbarService
   ) {}
@@ -114,31 +114,34 @@ export class ExpeditionTableComponent implements OnInit, AfterViewInit {
     }
   }
 
-  slotClick(slot: Slot, expedition: Expedition) {
-    this.userService.getUser$().subscribe((user) => {
-      if (slot.participant) {
-        if (slot.participant.userId === user.id) {
-          this.expeditionService.leaveExpedition({ id: expedition.id });
+  slotClick(slot: Slot, expedition: Expedition): void {
+    this.userService
+      .getUser$()
+      .pipe(first())
+      .subscribe((user) => {
+        if (slot.participant) {
+          if (slot.participant.userId === user.id) {
+            this.expeditionService.leaveExpedition({ id: expedition.id });
+            return;
+          }
+          this.showCharacterDetails(slot.participant);
           return;
         }
-        this.showCharacterDetails(slot.participant);
-        return;
-      }
 
-      if (slot.open && !expedition.participants.map((participant) => participant.userId).includes(user.id)) {
-        const data: ExpeditionJoinDialogData = {
-          slot,
-          expedition
-        };
-        this.dialog.open(ExpeditionJoinComponent, { data });
-        return;
-      }
+        if (slot.open && !expedition.participants.map((participant) => participant.userId).includes(user.id)) {
+          const data: ExpeditionJoinDialogData = {
+            slot,
+            expedition
+          };
+          this.dialog.open(ExpeditionJoinComponent, { data });
+          return;
+        }
 
-      const self = expedition.participants.filter((participant) => participant.userId === user.id)[0];
-      if (slot.open && self) {
-        this.snackbarService.open(`you are already part of this expedition as role ${self.role}!`);
-      }
-    });
+        const self = expedition.participants.filter((participant) => participant.userId === user.id)[0];
+        if (slot.open && self) {
+          this.snackbarService.open(`you are already part of this expedition as role ${self.role}!`);
+        }
+      });
   }
 
   showCharacterDetails(participant: Participant): void {
