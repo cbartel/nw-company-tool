@@ -18,24 +18,26 @@ import { CommonModule } from '@angular/common';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule } from '@ngx-translate/core';
 import { ExpeditionJoinComponent } from './components/expedition-join/expedition-join.component';
+import { CharacterDetailModule } from '../../components/character-detail/character-detail.module';
 
 @NgModule({
   imports: [
     ExpeditionRoutingModule,
+    MatDialogModule,
+    CommonModule,
     MatCardModule,
     MatButtonModule,
     MatTableModule,
     MatPaginatorModule,
     MatInputModule,
     MatIconModule,
-    MatDialogModule,
     MatSelectModule,
     MatDatepickerModule,
     MatSlideToggleModule,
     ReactiveFormsModule,
-    CommonModule,
     MatTooltipModule,
-    TranslateModule
+    TranslateModule,
+    CharacterDetailModule
   ],
   declarations: [ExpeditionComponent, ExpeditionTableComponent, ExpeditionCreateComponent, ExpeditionJoinComponent],
   providers: [],
