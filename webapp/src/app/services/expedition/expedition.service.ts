@@ -27,7 +27,6 @@ export class ExpeditionService {
     this.eventService.subscribe(ExpeditionDeleteEvent).subscribe((event) => this.onExpeditionDelete(event));
     this.eventService.subscribe(ExpeditionJoinEvent).subscribe((event) => this.onExpeditionJoin(event));
     this.eventService.subscribe(ExpeditionLeaveEvent).subscribe((event) => this.onExpeditionLeave(event));
-    this.refreshExpeditions();
   }
 
   public getExpeditions(): Observable<Expedition[]> {

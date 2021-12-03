@@ -1,13 +1,17 @@
 import { Controller, Sse } from '@nestjs/common';
-import { Observable, Subject } from 'rxjs';
+import { interval, Observable, Subject } from 'rxjs';
 import { RequiredPermissions } from '../login/login.decorator';
-import { Permission } from '@nw-company-tool/model';
+import { KeepAliveEvent, Permission } from '@nw-company-tool/model';
 import { OnEvent } from '@nestjs/event-emitter';
 
 @Controller('/api/event')
 @RequiredPermissions(Permission.ENABLED)
 export class EventController {
   private event$ = new Subject<string>();
+
+  constructor() {
+    interval(15000).subscribe(() => this.event$.next(JSON.stringify(new KeepAliveEvent())));
+  }
 
   @Sse('/')
   sse(): Observable<string> {

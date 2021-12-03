@@ -5,3 +5,7 @@ export interface Event {
 }
 
 export type EventType<T extends Event> = new (...params: never[]) => T;
+
+export class KeepAliveEvent implements Event {
+  id: 'KEEPALIVE';
+}

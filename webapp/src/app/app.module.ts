@@ -28,6 +28,7 @@ import { ExpeditionModule } from './services/expedition/expedition.module';
 import { SnackbarModule } from './services/snackbar/snackbar.module';
 import { HeaderModule } from './components/header/header.module';
 import { FooterModule } from './components/footer/footer.module';
+import { EventService } from './services/event/event.service';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
@@ -91,5 +92,9 @@ FullCalendarModule.registerPlugins([dayGridPlugin, timeGridPlugin, interactionPl
   exports: []
 })
 export class AppModule {
-  constructor(private ccService: NgcCookieConsentService, private configService: ConfigService) {}
+  constructor(
+    private ccService: NgcCookieConsentService,
+    private configService: ConfigService,
+    private eventService: EventService
+  ) {}
 }
