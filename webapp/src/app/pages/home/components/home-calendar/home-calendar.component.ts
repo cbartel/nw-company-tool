@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CalendarOptions, EventInput, FullCalendarComponent } from '@fullcalendar/angular';
 import * as moment from 'moment';
 import { ExpeditionService } from '../../../../services/expedition/expedition.service';
@@ -14,7 +14,7 @@ import { Observable, Subscription } from 'rxjs';
   templateUrl: './home-calendar.component.html',
   styleUrls: ['./home-calendar.component.css']
 })
-export class HomeCalendarComponent implements AfterViewInit, OnDestroy {
+export class HomeCalendarComponent implements OnInit, AfterViewInit, OnDestroy {
   options: CalendarOptions = {
     initialDate: moment().format('yyyy-MM-DD'),
     headerToolbar: {
@@ -50,6 +50,20 @@ export class HomeCalendarComponent implements AfterViewInit, OnDestroy {
     private router: Router,
     private translate: TranslateService
   ) {}
+
+  ngOnInit(): void {
+    this.expeditionService.refreshExpeditions();
+  }
+
+  ngAfterViewInit(): void {
+    this.updateSubscription = this.expeditionService
+      .getExpeditions()
+      .subscribe(() => this.calendarComponent.getApi().refetchEvents());
+  }
+
+  ngOnDestroy(): void {
+    this.updateSubscription?.unsubscribe();
+  }
 
   private handleEventClick(info: EventClickArg): void {
     if (info.event.extendedProps.type === CalendarEventType.EXPEDITION) {
@@ -93,15 +107,5 @@ export class HomeCalendarComponent implements AfterViewInit, OnDestroy {
         type: CalendarEventType.EXPEDITION
       }
     };
-  }
-
-  ngAfterViewInit(): void {
-    this.updateSubscription = this.expeditionService
-      .getExpeditions()
-      .subscribe(() => this.calendarComponent.getApi().refetchEvents());
-  }
-
-  ngOnDestroy(): void {
-    this.updateSubscription?.unsubscribe();
   }
 }

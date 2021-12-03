@@ -27,7 +27,6 @@ export class ExpeditionService {
     this.eventService.subscribe(ExpeditionDeleteEvent).subscribe((event) => this.onExpeditionDelete(event));
     this.eventService.subscribe(ExpeditionJoinEvent).subscribe((event) => this.onExpeditionJoin(event));
     this.eventService.subscribe(ExpeditionLeaveEvent).subscribe((event) => this.onExpeditionLeave(event));
-    this.refreshExpeditions();
   }
 
   public getExpeditions(): Observable<Expedition[]> {
@@ -86,10 +85,10 @@ export class ExpeditionService {
     this.updateExpedition(event.expedition);
   }
 
-  private updateExpedition(expedition: Expedition): void {
-    const idx = this.expeditions.findIndex((expedition) => expedition.id === expedition.id);
+  private updateExpedition(updatedExpedition: Expedition): void {
+    const idx = this.expeditions.findIndex((expedition) => expedition.id === updatedExpedition.id);
     if (idx >= 0) {
-      this.expeditions[idx] = expedition;
+      this.expeditions[idx] = updatedExpedition;
     }
     this.expeditions$.next(this.expeditions);
   }
