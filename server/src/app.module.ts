@@ -10,13 +10,19 @@ import { CharacterModule } from './character/character.module';
 import { PluginModule } from './plugin/plugin.module';
 import { FrontendMiddleware } from './middleware/frontend.middleware';
 import { ExpeditionModule } from './expedition/expedition.module';
+import { EventModule } from './event/event.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
   imports: [
+    EventEmitterModule.forRoot({
+      wildcard: true,
+    }),
     TokenModule,
     ConfigModule,
     ArgsModule,
     DatabaseModule,
+    EventModule,
     ExpeditionModule,
     UserModule,
     LoginModule,

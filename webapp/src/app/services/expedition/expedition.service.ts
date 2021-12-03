@@ -3,11 +3,16 @@ import {
   CreateExpedition,
   DeleteExpedition,
   Expedition,
+  ExpeditionCreateEvent,
+  ExpeditionDeleteEvent,
+  ExpeditionJoinEvent,
+  ExpeditionLeaveEvent,
   JoinExpedition,
   LeaveExpedition
 } from '@nw-company-tool/model';
 import { Observable, ReplaySubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { EventService } from '../event/event.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +22,11 @@ export class ExpeditionService {
 
   private expeditions: Expedition[] = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private eventService: EventService) {
+    this.eventService.subscribe(ExpeditionCreateEvent).subscribe((event) => this.onExpeditionCreate(event));
+    this.eventService.subscribe(ExpeditionDeleteEvent).subscribe((event) => this.onExpeditionDelete(event));
+    this.eventService.subscribe(ExpeditionJoinEvent).subscribe((event) => this.onExpeditionJoin(event));
+    this.eventService.subscribe(ExpeditionLeaveEvent).subscribe((event) => this.onExpeditionLeave(event));
     this.refreshExpeditions();
   }
 
@@ -44,10 +53,7 @@ export class ExpeditionService {
     const payload: DeleteExpedition = {
       id
     };
-    this.http.post('/api/expedition/delete', payload, { withCredentials: true }).subscribe(() => {
-      this.expeditions = this.expeditions.filter((expedition) => expedition.id !== id);
-      this.expeditions$.next(this.expeditions);
-    });
+    this.http.post('/api/expedition/delete', payload, { withCredentials: true }).subscribe();
   }
 
   public joinExpedition(joinExpedition: JoinExpedition): void {
@@ -60,5 +66,31 @@ export class ExpeditionService {
     this.http
       .post('/api/expedition/leave', leaveExpedition, { withCredentials: true })
       .subscribe(() => this.refreshExpeditions());
+  }
+
+  private onExpeditionCreate(event: ExpeditionCreateEvent): void {
+    this.expeditions.push(event.expedition);
+    this.expeditions$.next(this.expeditions);
+  }
+
+  private onExpeditionDelete(event: ExpeditionDeleteEvent): void {
+    this.expeditions = this.expeditions.filter((expedition) => expedition.id !== event.expeditionId);
+    this.expeditions$.next(this.expeditions);
+  }
+
+  private onExpeditionJoin(event: ExpeditionJoinEvent): void {
+    this.updateExpedition(event.expedition);
+  }
+
+  private onExpeditionLeave(event: ExpeditionLeaveEvent): void {
+    this.updateExpedition(event.expedition);
+  }
+
+  private updateExpedition(expedition: Expedition): void {
+    const idx = this.expeditions.findIndex((expedition) => expedition.id === expedition.id);
+    if (idx >= 0) {
+      this.expeditions[idx] = expedition;
+    }
+    this.expeditions$.next(this.expeditions);
   }
 }

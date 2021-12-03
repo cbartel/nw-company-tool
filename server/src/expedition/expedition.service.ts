@@ -2,6 +2,10 @@ import { HttpException, Injectable } from '@nestjs/common';
 import {
   CreateExpedition,
   Expedition,
+  ExpeditionCreateEvent,
+  ExpeditionDeleteEvent,
+  ExpeditionJoinEvent,
+  ExpeditionLeaveEvent,
   JoinExpedition,
   LeaveExpedition,
   Participant,
@@ -10,6 +14,7 @@ import {
 } from '@nw-company-tool/model';
 import { ExpeditionParticipant } from '@prisma/client';
 import { DatabaseClient } from '../database/database.client';
+import { EventService } from '../event/event.service';
 
 type ExpeditionQueryResult = {
   id: number;
@@ -21,7 +26,7 @@ type ExpeditionQueryResult = {
 
 @Injectable()
 export class ExpeditionService {
-  constructor(private client: DatabaseClient) {}
+  constructor(private client: DatabaseClient, private eventService: EventService) {}
 
   findAll(): Promise<Expedition[]> {
     return this.client.expedition
@@ -97,6 +102,8 @@ export class ExpeditionService {
         role: expeditionJoin.role,
       },
     });
+    const expedition = await this.findById(expeditionJoin.id);
+    this.eventService.emit(new ExpeditionJoinEvent(expedition));
   }
 
   async leave(user: User, expeditionLeave: LeaveExpedition): Promise<void> {
@@ -108,10 +115,12 @@ export class ExpeditionService {
         },
       },
     });
+    const expedition = await this.findById(expeditionLeave.id);
+    this.eventService.emit(new ExpeditionLeaveEvent(expedition));
   }
 
   async create(user: User, expeditionData: CreateExpedition): Promise<void> {
-    await this.client.expedition.create({
+    const createResult = await this.client.expedition.create({
       data: {
         name: expeditionData.name,
         beginDateTime: expeditionData.beginDateTime,
@@ -129,6 +138,8 @@ export class ExpeditionService {
         },
       },
     });
+    const expedition = await this.findById(createResult.id);
+    this.eventService.emit(new ExpeditionCreateEvent(expedition));
   }
 
   async delete(id: number): Promise<void> {
@@ -137,6 +148,7 @@ export class ExpeditionService {
         id,
       },
     });
+    this.eventService.emit(new ExpeditionDeleteEvent(id));
   }
 
   private mapToExpedition(result: ExpeditionQueryResult): Expedition {

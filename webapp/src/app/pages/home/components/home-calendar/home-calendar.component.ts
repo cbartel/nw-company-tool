@@ -1,20 +1,20 @@
-import { Component } from '@angular/core';
-import { CalendarOptions, EventInput } from '@fullcalendar/angular';
+import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
+import { CalendarOptions, EventInput, FullCalendarComponent } from '@fullcalendar/angular';
 import * as moment from 'moment';
 import { ExpeditionService } from '../../../../services/expedition/expedition.service';
-import { map, mergeMap } from 'rxjs/operators';
+import { first, map, mergeMap } from 'rxjs/operators';
 import { EventClickArg, EventSourceInput } from '@fullcalendar/core';
 import { CalendarEventType, Expedition } from '@nw-company-tool/model';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home-calendar',
   templateUrl: './home-calendar.component.html',
   styleUrls: ['./home-calendar.component.css']
 })
-export class HomeCalendarComponent {
+export class HomeCalendarComponent implements AfterViewInit, OnDestroy {
   options: CalendarOptions = {
     initialDate: moment().format('yyyy-MM-DD'),
     headerToolbar: {
@@ -41,6 +41,10 @@ export class HomeCalendarComponent {
     eventSources: [this.getExpeditions()]
   };
 
+  updateSubscription: Subscription;
+
+  @ViewChild('calendar') calendarComponent: FullCalendarComponent;
+
   constructor(
     private expeditionService: ExpeditionService,
     private router: Router,
@@ -60,6 +64,7 @@ export class HomeCalendarComponent {
         this.expeditionService
           .getExpeditions()
           .pipe(
+            first(),
             map((expeditions) => expeditions.map((expedition) => HomeCalendarComponent.mapExpedition(expedition))),
             mergeMap((events) => {
               return new Observable<EventInput[]>((observer) => {
@@ -88,5 +93,15 @@ export class HomeCalendarComponent {
         type: CalendarEventType.EXPEDITION
       }
     };
+  }
+
+  ngAfterViewInit(): void {
+    this.updateSubscription = this.expeditionService
+      .getExpeditions()
+      .subscribe(() => this.calendarComponent.getApi().refetchEvents());
+  }
+
+  ngOnDestroy(): void {
+    this.updateSubscription?.unsubscribe();
   }
 }

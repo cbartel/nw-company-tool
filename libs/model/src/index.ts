@@ -3,6 +3,7 @@ export * from './calendar.model';
 export * from './character.model';
 export * from './config.model';
 export * from './discord.model';
+export * from './event.model';
 export * from './expedition.model';
 export * from './github.model';
 export * from './login.model';

@@ -1,3 +1,5 @@
+import { Event } from './event.model';
+
 export type CreateExpedition = {
   name: ExpeditionName;
   beginDateTime: string;
@@ -54,4 +56,24 @@ export enum ExpeditionName {
   DYNASTY_SHIPYARD = 'DYNASTY_SHIPYARD',
   LAZARUS_INSTRUMENTALITY = 'LAZARUS_INSTRUMENTALITY',
   GARDEN_OF_GENESIS = 'GARDEN_OF_GENESIS',
+}
+
+export class ExpeditionCreateEvent implements Event {
+  id = 'EXPEDITION.CREATE';
+  constructor(public expedition: Expedition) {}
+}
+
+export class ExpeditionDeleteEvent implements Event {
+  id = 'EXPEDITION.DELETE';
+  constructor(public expeditionId: number) {}
+}
+
+export class ExpeditionJoinEvent implements Event {
+  id = 'EXPEDITION.JOIN';
+  constructor(public expedition: Expedition) {}
+}
+
+export class ExpeditionLeaveEvent implements Event {
+  id = 'EXPEDITION.LEAVE';
+  constructor(public expedition: Expedition) {}
 }

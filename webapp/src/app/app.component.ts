@@ -4,7 +4,7 @@ import { Router, Routes } from '@angular/router';
 import { PluginDefinition } from './services/plugin/plugin.model';
 import { loadRemoteModule } from '@angular-architects/module-federation';
 import { routes } from './app-routing.module';
-import { UserService } from './services/user/user.service';
+import { EventService } from './services/event/event.service';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +12,13 @@ import { UserService } from './services/user/user.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(private userService: UserService, private router: Router, private pluginService: PluginService) {}
+  constructor(private router: Router, private pluginService: PluginService, private eventService: EventService) {}
 
   async ngOnInit(): Promise<void> {
     const plugins = await this.pluginService.getPlugins().toPromise();
     const routes = this.buildRoutes(plugins);
     this.router.resetConfig(routes);
+    this.eventService.init();
   }
 
   buildRoutes(plugins: PluginDefinition[]): Routes {
