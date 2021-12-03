@@ -86,10 +86,10 @@ export class ExpeditionService {
     this.updateExpedition(event.expedition);
   }
 
-  private updateExpedition(expedition: Expedition): void {
-    const idx = this.expeditions.findIndex((expedition) => expedition.id === expedition.id);
+  private updateExpedition(updatedExpedition: Expedition): void {
+    const idx = this.expeditions.findIndex((expedition) => expedition.id === updatedExpedition.id);
     if (idx >= 0) {
-      this.expeditions[idx] = expedition;
+      this.expeditions[idx] = updatedExpedition;
     }
     this.expeditions$.next(this.expeditions);
   }

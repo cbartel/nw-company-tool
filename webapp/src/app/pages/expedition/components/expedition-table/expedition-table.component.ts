@@ -44,7 +44,6 @@ export class ExpeditionTableComponent implements OnInit, AfterViewInit {
     this.expeditionService.getExpeditions().subscribe((data) => {
       this.dataSource.data = data;
     });
-    this.expeditionService.refreshExpeditions();
   }
 
   ngAfterViewInit(): void {
