@@ -52,7 +52,6 @@ export class ExpeditionCreateComponent {
           role: formData.role
         })
         .subscribe(() => {
-          this.expeditionService.refreshExpeditions();
           this.dialogRef.close();
         });
     }
