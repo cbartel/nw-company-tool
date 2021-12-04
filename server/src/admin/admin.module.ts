@@ -4,11 +4,12 @@ import { AdminService } from './admin.service';
 import { UserModule } from '../user/user.module';
 import { GithubModule } from '../github/github.module';
 import { ArgsModule } from '../args/args.module';
+import { EventModule } from '../event/event.module';
 
 @Module({
-  imports: [UserModule, GithubModule, ArgsModule],
+  imports: [UserModule, GithubModule, ArgsModule, EventModule],
   controllers: [AdminController],
   providers: [AdminService],
-  exports: [],
+  exports: [AdminService],
 })
 export class AdminModule {}

@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CharacterDeleteComponent } from './components/character-delete/character-delete.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     CommonModule,
     MatIconModule,
     MatTooltipModule,
-    MatDialogModule
+    MatDialogModule,
+    ReactiveFormsModule
   ],
   declarations: [AdminComponent, UsersTableComponent, UpdateComponent, CharacterDeleteComponent],
   providers: [],

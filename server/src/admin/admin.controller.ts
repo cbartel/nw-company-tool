@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, CacheInterceptor, CacheTTL, Controller, Get, Post, UseInterceptors } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { AdminService } from './admin.service';
 import { Public, RequiredPermissions } from '../login/login.decorator';
@@ -9,6 +9,7 @@ import { DeleteUserDto } from './dto/user.delete.dto';
 
 @Controller('/api/admin')
 @RequiredPermissions(Permission.ADMIN)
+@UseInterceptors(CacheInterceptor)
 export class AdminController {
   constructor(private userService: UserService, private adminService: AdminService) {}
 
@@ -51,6 +52,7 @@ export class AdminController {
   }
 
   @Get('/server/release/latest')
+  @CacheTTL(300)
   async getLatestRelease(): Promise<Version> {
     return this.adminService.getLatestReleaseVersion();
   }
