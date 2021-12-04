@@ -3,4 +3,10 @@
     <p>Current Release: {{currentVersion}}</p>
     <p>Latest Release: {{latestVersion}}</p>
     <button mat-raised-button [disabled]="!updateAvailable" (click)="update()" color="primary">UPDATE</button>
+    <div class='flex flex-column vertical-margin'>
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Log</mat-label>
+            <textarea matInput cdkTextareaAutosize cdkAutosizeMinRows='8' cdkAutosizeMaxRows='8' readonly [formControl]='logForm'></textarea>
+        </mat-form-field>
+    </div>
 </div>
