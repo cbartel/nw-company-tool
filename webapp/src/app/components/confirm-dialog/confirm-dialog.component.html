@@ -1,0 +1,6 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>{{data.content}}</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)='abort()'>{{data.abortLabel}}</button>
+  <button mat-raised-button color='warn' (click)='confirm()'>{{data.confirmLabel}}</button>
+</div>

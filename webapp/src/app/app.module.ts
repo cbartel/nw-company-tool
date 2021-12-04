@@ -29,6 +29,7 @@ import { SnackbarModule } from './services/snackbar/snackbar.module';
 import { HeaderModule } from './components/header/header.module';
 import { FooterModule } from './components/footer/footer.module';
 import { EventService } from './services/event/event.service';
+import { ConfirmDialogModule } from './components/confirm-dialog/confirm-dialog.module';
 
 const cookieConfig: NgcCookieConsentConfig = {
   cookie: {
@@ -85,7 +86,8 @@ FullCalendarModule.registerPlugins([dayGridPlugin, timeGridPlugin, interactionPl
     UserModule,
     // Global Components
     HeaderModule,
-    FooterModule
+    FooterModule,
+    ConfirmDialogModule
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'en-GB' }, AppComponent, LoginGuard, AdminGuard],
   bootstrap: [AppComponent],

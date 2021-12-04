@@ -12,9 +12,11 @@ import {
 } from '../../../../components/character-detail/character-detail.component';
 import { UserService } from '../../../../services/user/user.service';
 import { Observable, of } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { first, map, mergeMap } from 'rxjs/operators';
 import { ExpeditionJoinComponent, ExpeditionJoinDialogData } from '../expedition-join/expedition-join.component';
 import { SnackbarService } from '../../../../services/snackbar/snackbar.service';
+import { ConfirmDialog } from '../../../../components/confirm-dialog/confirm-dialog.service';
+import { TranslateService } from '@ngx-translate/core';
 
 export type Slot = {
   open: boolean;
@@ -37,7 +39,9 @@ export class ExpeditionTableComponent implements OnInit, AfterViewInit {
     private expeditionService: ExpeditionService,
     private dialog: MatDialog,
     private userService: UserService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private confirmDialog: ConfirmDialog,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit(): void {
@@ -57,6 +61,13 @@ export class ExpeditionTableComponent implements OnInit, AfterViewInit {
 
   formatDate(date: string): string {
     return moment.utc(date).local().format('YYYY-MM-DDTHH:mm:00');
+  }
+
+  formatDateLocal(date: string): string {
+    return moment
+      .utc(date)
+      .local()
+      .format(`${moment.localeData().longDateFormat('LL')} ${moment.localeData().longDateFormat('LT')}`);
   }
 
   countTuningOrbs(expedition: Expedition): number {
@@ -167,7 +178,24 @@ export class ExpeditionTableComponent implements OnInit, AfterViewInit {
   }
 
   delete(expedition: Expedition) {
-    this.expeditionService.deleteExpedition(expedition.id);
+    this.translateService
+      .get(`EXPEDITION.${expedition.name}`)
+      .pipe(
+        mergeMap((name) => {
+          return this.confirmDialog.open({
+            title: 'Delete Expedition',
+            content: `${name} - ${expedition.owner.characterName} - ${this.formatDateLocal(expedition.beginDateTime)}`,
+            abortLabel: 'Abort',
+            confirmLabel: 'Delete'
+          });
+        })
+      )
+
+      .subscribe((result) => {
+        if (result.confirmed) {
+          this.expeditionService.deleteExpedition(expedition.id);
+        }
+      });
   }
 
   isOwner(expedition: Expedition): Observable<boolean> {
