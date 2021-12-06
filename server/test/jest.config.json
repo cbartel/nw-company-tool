@@ -1,0 +1,17 @@
+{
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": "\\.spec\\.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "@nw-company-tool/model/(.*)": "<rootDir>/../libs/model/src/$1",
+    "@nw-company-tool/model": "<rootDir>/../libs/model/src"
+  }
+}
