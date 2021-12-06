@@ -109,3 +109,7 @@ input[type=number] {
 .w-150 {
   max-width: 150px;
 }
+
+.margin-left-auto {
+  margin-left: auto;
+}

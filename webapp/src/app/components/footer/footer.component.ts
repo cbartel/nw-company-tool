@@ -14,4 +14,8 @@ export class FooterComponent implements OnInit {
   ngOnInit(): void {
     this.configService.getVersion().subscribe((version) => (this.version = version.version));
   }
+
+  openGithub(): void {
+    window.open('https://github.com/cbartel/nw-company-tool', '_blank');
+  }
 }
