@@ -1,0 +1,21 @@
+.calendar-container {
+    width: 1024px;
+}
+
+::ng-deep.calendar-event {
+    cursor: pointer;
+}
+
+::ng-deep.calendar-event > .fc-event-title {
+    word-wrap: break-word !important;
+    white-space: normal !important;
+    overflow-wrap: break-word;
+    word-break: break-word;
+
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+

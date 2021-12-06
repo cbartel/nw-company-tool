@@ -15,18 +15,9 @@ const logger = new Logger('NWCT Server');
 const argsService = ArgsService.get();
 const configService = ConfigService.get();
 
-async function setupDatabase() {
-  process.env.DATABASE_URL = `file:${Path.join(
-    argsService.getArgument(Args.DATAPATH),
-    configService.getServerConfig().DATABASE,
-  )}`;
-
-  return await new Promise<void>((resolve) => {
-    const proc = exec('npx prisma migrate deploy', {
-      env: {
-        ...process.env,
-      },
-    });
+function run(command: string): Promise<void> {
+  return new Promise<void>((resolve) => {
+    const proc = exec(command);
 
     proc.stdout.on('data', (data) => {
       logger.log(data);
@@ -38,6 +29,16 @@ async function setupDatabase() {
       resolve();
     });
   });
+}
+
+async function setupDatabase() {
+  process.env.DATABASE_URL = `file:${Path.join(
+    argsService.getArgument(Args.DATAPATH),
+    configService.getServerConfig().DATABASE,
+  )}`;
+
+  await run('npx prisma migrate deploy');
+  await run('npx prisma generate');
 }
 
 async function bootstrap() {

@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { SnackbarService } from '../services/snackbar/snackbar.service';
 
 @Injectable()
-export class TokenInterceptor implements HttpInterceptor {
+export class ResponseInterceptor implements HttpInterceptor {
   constructor(private userService: UserService, private router: Router, private snackbarService: SnackbarService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -22,6 +22,10 @@ export class TokenInterceptor implements HttpInterceptor {
           }
           if (err.status === 403) {
             this.router.navigate(['forbidden']);
+            this.userService.refreshUser();
+          }
+          if (err.status === 503) {
+            this.snackbarService.error(err.error.message, 0);
           }
         }
         throw throwError(err);

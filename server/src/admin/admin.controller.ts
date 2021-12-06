@@ -1,19 +1,26 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, CacheInterceptor, CacheTTL, Controller, Get, Post, UseInterceptors } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { AdminService } from './admin.service';
 import { Public, RequiredPermissions } from '../login/login.decorator';
 import { EnableUserDto } from './dto/user.enable.dto';
 import { AdminUserDto } from './dto/user.admin.dto';
 import { Permission, UserWithPermissions, Version } from '@nw-company-tool/model';
+import { DeleteUserDto } from './dto/user.delete.dto';
 
 @Controller('/api/admin')
 @RequiredPermissions(Permission.ADMIN)
+@UseInterceptors(CacheInterceptor)
 export class AdminController {
   constructor(private userService: UserService, private adminService: AdminService) {}
 
   @Get('/users')
   async getAllUsers(): Promise<UserWithPermissions[]> {
     return this.userService.findAllWithPermissions();
+  }
+
+  @Post('/users/delete')
+  async deleteUser(@Body() body: DeleteUserDto): Promise<void> {
+    return this.userService.delete(body.userId);
   }
 
   @Post('/users/enable')
@@ -26,7 +33,7 @@ export class AdminController {
   }
 
   @Post('/users/admin')
-  async setAdmin(@Param() params, @Body() body: AdminUserDto): Promise<void> {
+  async setAdmin(@Body() body: AdminUserDto): Promise<void> {
     if (body.admin) {
       await this.userService.setPermission(body.userId, Permission.ADMIN);
     } else {
@@ -45,6 +52,7 @@ export class AdminController {
   }
 
   @Get('/server/release/latest')
+  @CacheTTL(300)
   async getLatestRelease(): Promise<Version> {
     return this.adminService.getLatestReleaseVersion();
   }

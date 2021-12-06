@@ -14,35 +14,33 @@ export class UserService {
   private avatar$ = new ReplaySubject<UserAvatar>(1);
   private loggedIn = false;
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {
+    this.loggedIn$.next(false);
+  }
 
-  async login(): Promise<void> {
-    await this.http
-      .post<LoginResponse>('/api/login', {}, { withCredentials: true })
-      .pipe(
-        map((response) => {
-          if (response.success) {
-            this.loggedIn = true;
-            this.loggedIn$.next(true);
-            this.user$.next(response.user);
-            this.getAvatar(32).subscribe((avatar) => this.avatar$.next(avatar));
-            if (response.user && !response.user.permissions.includes(Permission.ENABLED)) {
-              this.router.navigate(['account-disabled']);
-              return;
-            }
-            this.router.navigate(['']);
-          } else {
-            if (response.newUser) {
-              this.router.navigate(['register']);
-              return;
-            } else {
-              this.router.navigate(['login']);
-              return;
-            }
+  login(): Observable<UserWithPermissions | undefined> {
+    return this.http.post<LoginResponse>('/api/login', {}, { withCredentials: true }).pipe(
+      map((response) => {
+        if (response.success) {
+          this.loggedIn = true;
+          this.loggedIn$.next(true);
+          this.user$.next(response.user);
+          this.getAvatar(32).subscribe((avatar) => this.avatar$.next(avatar));
+          if (response.user && !response.user.permissions.includes(Permission.ENABLED)) {
+            this.router.navigate(['account-disabled']);
+            return response.user;
           }
-        })
-      )
-      .toPromise();
+        } else {
+          if (response.newUser) {
+            this.router.navigate(['register']);
+            return undefined;
+          } else {
+            this.router.navigate(['login']);
+            return undefined;
+          }
+        }
+      })
+    );
   }
 
   public getUser$(): Observable<UserWithPermissions> {

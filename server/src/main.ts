@@ -1,7 +1,6 @@
 import { exec, fork } from 'child_process';
 import process from 'process';
-import { Args, ArgsService, Flags } from './args/args.service';
-import Path from 'path';
+import { ArgsService, Flags } from './args/args.service';
 
 const argsService = ArgsService.get();
 
@@ -55,6 +54,7 @@ async function installDependencies() {
   console.log('installing dependencies... (this may take a while)');
   await run('npm install --only=production');
   await run('npm prune');
+  await run('npx prisma generate');
   console.log('installing dependencies... done.');
 }
 

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CompanyRoutingModule } from './company-routing.module';
 import { CompanyComponent } from './routes/root/company.component';
 import { CharactersTableComponent } from './components/characters-table/characters-table.component';
-import { CharacterDetailComponent } from './components/character-detail/character-detail.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,6 +18,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
+import { CharacterDetailModule } from '../../components/character-detail/character-detail.module';
 
 @NgModule({
   imports: [
@@ -38,9 +38,10 @@ import { CommonModule } from '@angular/common';
     TranslateModule,
     CommonModule,
     MatCardModule,
-    MatTabsModule
+    MatTabsModule,
+    CharacterDetailModule
   ],
-  declarations: [CompanyComponent, CharactersTableComponent, CharacterDetailComponent],
+  declarations: [CompanyComponent, CharactersTableComponent],
   providers: [],
   exports: []
 })

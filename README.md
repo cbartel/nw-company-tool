@@ -1,21 +1,37 @@
-# ⛏ New World Company Tool 🔨
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica&display=swap" rel="stylesheet">
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/J3J37247V)
+<h1 align="center" style="font-family: 'IM Fell DW Pica', serif;font-size: xxx-large">
+    ⛏ New World Company Tool 🔨
+</h1> 
 
-<a href="https://discord.gg/rm9Gzf3HCH"><img alt="Discord" src="https://img.shields.io/discord/911515391371665429?label=Discord&style=for-the-badge"></a>
+<div align='center' style='display: flex;flex-direction: column;align-content: center'>
+    <div>
+        <a href="https://ko-fi.com/J3J37247V" target='_blank'><img alt="Support me on Ko-fi" src="https://ko-fi.com/img/githubbutton_sm.svg" /></a>
+    </div>
+    <div>
+        <a href="https://discord.gg/rm9Gzf3HCH"><img alt="Discord" src="https://img.shields.io/discord/911515391371665429?label=Discord&style=for-the-badge"></a>
+    </div>
+    <div>
+        <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/cbartel/nw-company-tool?style=social" />
+        <img alt="GitHub watchers" src="https://img.shields.io/github/watchers/cbartel/nw-company-tool?style=social">
+    </div>
+    <div>
+        <img alt="GitHub release (latest SemVer)" src="https://img.shields.io/github/v/release/cbartel/nw-company-tool?style=flat-square">
+        <img alt="GitHub release (latest SemVer including pre-releases)" src="https://img.shields.io/github/v/release/cbartel/nw-company-tool?include_prereleases&label=beta&style=flat-square">
+        <img alt="GitHub Workflow Status (branch)" src="https://img.shields.io/github/workflow/status/cbartel/nw-company-tool/Release/main?style=flat-square">
+        <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/cbartel/nw-company-tool?style=flat-square">
+        <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/cbartel/nw-company-tool/total?style=flat-square">
+        <img alt="GitHub closed issues" src="https://img.shields.io/github/issues-closed/cbartel/nw-company-tool?style=flat-square">
+    </div>
+</div>
 
-![GitHub Repo stars](https://img.shields.io/github/stars/cbartel/nw-company-tool?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/cbartel/nw-company-tool?style=social)
+<h2 style="font-family: 'IM Fell DW Pica', serif">
+    ❓ What is this ❓
+</h2>
 
-![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/cbartel/nw-company-tool?style=flat-square)
-![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/cbartel/nw-company-tool?include_prereleases&label=beta&style=flat-square)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/cbartel/nw-company-tool/Release?style=flat-square)
-![GitHub last commit (branch)](https://img.shields.io/github/last-commit/cbartel/nw-company-tool/develop?style=flat-square)
-![GitHub all releases](https://img.shields.io/github/downloads/cbartel/nw-company-tool/total?style=flat-square)
-![GitHub closed issues](https://img.shields.io/github/issues-closed-raw/cbartel/nw-company-tool?style=flat-square)
-## ❓ What is this ❓
-
-This tool is intended to use with the game New World from Amazon Game Studios. It aims to give all your company members 
+This tool is intended to be used with the game New World from Amazon Game Studios. It aims to give all your company members 
 an overview about other members, their skills and attributes. The tool uses Discord's login and enables all your members
 to reach out to other company members easily.
 
@@ -23,18 +39,19 @@ The server is written in [nest.js](https://nestjs.com/) and uses [prisma](https:
 [SQLite](https://www.sqlite.org/index.html). It runs on [nodejs](https://nodejs.dev/). The webapp is written in
 [angular](https://angular.io/).
 
-The tool is currently in an early development state but already usable and stable. It provides your company members with
-the ability to maintain their level, gear score, attributes, weapon- and trade skills and shows the data on a company table.
-
-### 🛣️ Roadmap 🛣️
+<h3 style="font-family: 'IM Fell DW Pica', serif">
+    🛣️ Roadmap 🛣️
+</h3>
 
 - develop a plugin system to enable other developers to create content for this tool
 - create a war planner to make it easier for your company to organize their war efforts
-- create an expedition planner
+- ~~create an expedition planner~~ ✅ (Release 2.1.0)
 - integrate [NWDB.info](https://nwdb.info/) or a similar website
 - enable users to create skill tree builds in this tool to share their builds with your company
 
-### 📸 Footage 📸
+<h3 style="font-family: 'IM Fell DW Pica', serif">
+    📸 Footage 📸
+</h3> 
 
 #### Company Overview
 ![Company Table](docs/img/company_table.png)
@@ -42,7 +59,10 @@ the ability to maintain their level, gear score, attributes, weapon- and trade s
 ![My Character](docs/img/my_character.png)
 
 
-## 🚀 How to install 🚀
+<h2 style="font-family: 'IM Fell DW Pica', serif">
+    🚀 How to install 🚀
+</h2>
+
 ### Download
 Make sure you have [nodejs](https://nodejs.dev/) installed!
 
@@ -107,7 +127,7 @@ as you see, you need to set up a discord application with OAuth2, this is pretty
 - create a new application at https://discord.com/developers/applications
 - navigate to OAuth2, there you will find your `CLIENT_ID` and `CLIENT_SECRET`
 - edit your redirects, in this example your NWCT server uses `http://www.example.com:8080` as `BASE_URL`, the redirect would
-then be `http://www.example.com:8080/api/login/callback`. Be careful to not any unwanted forward slashes or your login will not work properly.
+then be `http://www.example.com:8080/api/login/callback`. Be careful not to add any unwanted forward slashes or your login will not work properly.
 
 Go back to your `config.json` file, insert the needed values and save this file.
 
@@ -122,7 +142,7 @@ node dist/main.js --dataPath "/opt/nwct/nwct-data/"
 ``` 
 
 ### PM2, nginx and SSL
-I would highly recommend the run NWCT via [pm2](https://pm2.keymetrics.io/) behind a 
+I would highly recommend to run NWCT via [pm2](https://pm2.keymetrics.io/) behind a 
 [nginx proxy server](https://www.nginx.com/) using [certbot](https://certbot.eff.org/instructions).
 Reach out for the documentation of pm2 and nginx on how to install it on your machine.
 
@@ -188,8 +208,6 @@ server {
 
     # Enter your fully qualified domain name or leave blank
     server_name             www.example.com;
-
-    # Listen on port 80 without SSL certificates
 
     # Sets the Max Upload size to 300 MB
     client_max_body_size 300M;

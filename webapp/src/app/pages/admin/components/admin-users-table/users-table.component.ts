@@ -6,6 +6,8 @@ import { UserService } from '../../../../services/user/user.service';
 import { SnackbarService } from '../../../../services/snackbar/snackbar.service';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { CharacterDeleteComponent } from '../character-delete/character-delete.component';
 
 @Component({
   selector: 'app-users-table',
@@ -13,7 +15,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./users-table.component.css']
 })
 export class UsersTableComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'characterName', 'discordUsername', 'discordId', 'enabled', 'admin'];
+  displayedColumns: string[] = ['id', 'characterName', 'discordUsername', 'discordId', 'enabled', 'admin', 'delete'];
 
   displayedData: UserWithPermissions[] = [];
   data: UserWithPermissions[] = [];
@@ -21,7 +23,8 @@ export class UsersTableComponent implements OnInit {
   constructor(
     private adminService: AdminService,
     private userService: UserService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -80,5 +83,30 @@ export class UsersTableComponent implements OnInit {
 
   isAdmin(user: UserWithPermissions): boolean {
     return !!user?.permissions?.includes(Permission.ADMIN);
+  }
+
+  async delete(user: UserWithPermissions): Promise<void> {
+    await this.userService
+      .getUser$()
+      .pipe(
+        map((currentUser) => {
+          //dont delete yourself ;)
+          if (currentUser.id === user.id) {
+            return;
+          }
+          const dialogRef = this.dialog.open(CharacterDeleteComponent, {
+            data: user
+          });
+          dialogRef.afterClosed().subscribe((result) => {
+            if (result === 'delete') {
+              this.adminService.delete(user.id).subscribe(() => {
+                this.snackbarService.open(`User deleted: ${user.characterName}`);
+                this.displayedData = this.displayedData.filter((it) => it.id != user.id);
+              });
+            }
+          });
+        })
+      )
+      .toPromise();
   }
 }

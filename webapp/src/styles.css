@@ -48,6 +48,10 @@ input[type=number] {
   margin: 6px 18px 6px 18px;
 }
 
+.vertical-margin {
+  margin: 18px 0 18px 0;
+}
+
 .flex {
   display: flex;
 }
@@ -62,6 +66,10 @@ input[type=number] {
 
 .flex-center {
   justify-content: center;
+}
+
+.flex-right {
+  justify-content: right;
 }
 
 .flex-vertical-center {
@@ -100,4 +108,8 @@ input[type=number] {
 
 .w-150 {
   max-width: 150px;
+}
+
+.margin-left-auto {
+  margin-left: auto;
 }

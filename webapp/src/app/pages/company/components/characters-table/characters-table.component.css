@@ -8,10 +8,9 @@
 .mat-cell {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 120px !important;
-  width: 120px !important;
+  flex: 0 0 100px !important;
+  width: 100px !important;
   overflow-wrap: break-word;
-  word-wrap: break-word;
 
   word-break: break-word;
 
@@ -25,8 +24,8 @@
 }
 
 .mat-header-cell {
-  flex: 0 0 120px !important;
-  width: 120px !important;
+  flex: 0 0 100px !important;
+  width: 100px !important;
 }
 
 .mat-row:hover .mat-cell {
@@ -36,10 +35,9 @@
 .mat-column-characterName {
   word-wrap: break-word !important;
   white-space: unset !important;
-  flex: 0 0 240px !important;
-  width: 240px !important;
+  flex: 0 0 180px !important;
+  width: 180px !important;
   overflow-wrap: break-word;
-  word-wrap: break-word;
 
   word-break: break-word;
 
@@ -56,7 +54,7 @@ mat-button-toggle-group {
 }
 
 .mat-button-toggle {
-  flex: 0 1 33.33%;
+  flex: 0 1 25%;
   border-bottom: solid 1px rgba(255, 255, 255, 0.12);
   border-right: solid 1px rgba(255, 255, 255, 0.12);
 }

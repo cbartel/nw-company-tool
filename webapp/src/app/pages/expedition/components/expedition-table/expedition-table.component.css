@@ -1,0 +1,51 @@
+.expedition-table {
+    width: 100%;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+
+.mat-cell {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 150px !important;
+    width: 150px !important;
+    overflow-wrap: break-word;
+
+    word-break: break-word;
+
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+}
+
+.mat-header-cell {
+    flex: 0 0 150px !important;
+    width: 150px !important;
+}
+
+.mat-column-planned {
+    flex: 0 0 200px !important;
+    width: 200px !important;
+}
+
+.mat-column-tuning-orb {
+    flex: 0 0 100px !important;
+    width: 100px !important;
+}
+
+.mat-column-participants {
+    flex: 1 1 250px !important;
+    width: 250px !important;
+    justify-content: center;
+}
+
+.mat-column-delete {
+    flex: 1 1 50px !important;
+    width: 50px !important;
+    justify-content: right;
+}

@@ -31,6 +31,10 @@ export const routes: Routes = [
   {
     path: 'my-character',
     loadChildren: () => import('./pages/my-character/my-character-page.module').then((m) => m.MyCharacterPageModule)
+  },
+  {
+    path: 'expedition',
+    loadChildren: () => import('./pages/expedition/expedition-page.module').then((m) => m.ExpeditionPageModule)
   }
 ];
 
