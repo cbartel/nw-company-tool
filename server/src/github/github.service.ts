@@ -25,11 +25,9 @@ export class GithubService {
 
   public async getLatestBetaRelease(): Promise<GithubRelease> {
     const releases = await this.getReleases();
-    return releases
-      .filter((release) => release.prerelease)
-      .reduce((previousValue, currentValue) =>
-        semver.gt(previousValue.name.substring(1), currentValue.name.substring(1)) ? previousValue : currentValue,
-      );
+    return releases.reduce((previousValue, currentValue) =>
+      semver.gt(previousValue.name.substring(1), currentValue.name.substring(1)) ? previousValue : currentValue,
+    );
   }
 
   public getReleases(): Promise<GithubRelease[]> {
