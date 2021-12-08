@@ -234,7 +234,7 @@ Now we can enable this configuration by creating a link in `/etc/nginx/sites-ena
 sudo ln -s /etc/nginx/sites-available/nwct /etc/nginx/sites-enabled
 
 # Test your nginx config
-sudo service nginx conftest
+sudo service nginx configtest
 
 # Restart Nginx
 sudo service nginx restart
@@ -268,7 +268,7 @@ of that directory to that user and switch to that user.
 
 ```bash
 mkdir /opt/nwct
-sudo useradd --system --home /opt/nwct --disabled-password nwct
+sudo useradd -m -d /opt/nwct -s /usr/bin/bash nwct
 sudo chown nwct /opt/nwct
 sudo su nwct
 ```
@@ -399,6 +399,7 @@ cd /opt/nwct
 
 # Start the NWCT server
 pm2 start nwct.config.js
+pm2 save
 
 # List your pm2 processes
 pm2 list
