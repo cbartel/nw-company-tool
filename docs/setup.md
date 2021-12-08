@@ -132,10 +132,11 @@ We need to restart the ssh server for the changes to take effect
 service sshd restart
 ```
 
-Now let's enable and configure our firewall to only allow connections on our newly configured port 2242
+Now let's enable and configure our firewall to only allow connections on our newly configured port 2242 and reboot our droplet
 ```bash
 ufw allow 2242/tcp
 ufw enable
+reboot
 ```
 
 This will disrupt your current ssh connection, because we're connected on port 22. Reconnect to your droplet
