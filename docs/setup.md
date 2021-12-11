@@ -90,7 +90,9 @@ suffice by any means for NWCT. This comes at a cost of $5/month.
 
 I recommend using SSH keys instead of a password to access your droplet. 
 
-TODO - describe how to create SSH keys and stuff
+To create your ssh keys, you can use [PuTTY](https://www.putty.org/). Install it and open puttygen. Generate
+a new key and save the private and public key to your filesystem. Then copy the public key to your clipboard and paste it
+into the dialog over at digitalocean.
 
 ### connect your domain
 
@@ -343,8 +345,6 @@ as you see, you need to set up a discord application with OAuth2, this is pretty
 
 Go back to your `config.json` file, insert the needed values and save this file.
 
-TODO - maybe some screenshots of discord
-
 ### Starting your node process
 
 navigate back to your nwct-server folder, start your NWCT Server again and you should be able to access NWCT
@@ -385,7 +385,7 @@ module.exports = {
   apps : [{
     name: 'nwct',
     script: '/opt/nwct/nwct-server/dist/main.js',
-    args: '--dataPath "/opt/nwct/nwct-data"',
+    args: '--dataPath "/opt/nwct/nwct-data/"',
     max_memory_restart: '100M',
     watch: false
   }]
@@ -414,9 +414,21 @@ try again if you can visit http://nwct.example.com
 
 ### Use certbot to manage your SSL certificates
 
-TODO
+You will need to head over to certbot https://certbot.eff.org/instructions and select that you are running nginx on Ubuntu 20. The instructions tell you to run the following commands
+```bash
+sudo snap install core; sudo snap refresh core
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+sudo certbot --nginx
+```
+You will be promted to enter your email address. If the script asks you, which configuration you want to edit, you can just hit return, this will
+select all configurations (default).
+
+After the script has finished, your nginx server is setup to automatically forward all request from http to https.
 
 ### Update NWCT configuration and Discord OAuth2 configuration
+
+Because the url has now changed from http to https, we need to change the base url and redirects in our NWCT configuration and over at discord:
 
 on your droplet open the NWCT configuration file and edit `BASE_URL` from http to https
 
@@ -434,8 +446,7 @@ In this example your NWCT server uses `https://nwct.example.com` as `BASE_URL`, 
 then be `https://nwct.example.com/api/login/callback`. Be careful not to add any unwanted forward slashes or your 
 login will not work properly.
 
-TODO - maybe some screenshots of discord
 
 ## Conclusion
 
-TODO
+You do now have a droplet running NWCT behind and nginx reverse proxy, setup with SSL and automatic restarts from pm2. Nice! :)
