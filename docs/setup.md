@@ -103,14 +103,10 @@ We can now setup an A-Record to route your domain to your droplet. Under hostnam
 like. Let's go with "nwct" for this guide. Choose your droplet in the "will redirect to" dropdown menu. Leave
 TTL to 3600 seconds as this is totally fine.
 
-TODO - digitalocean firewall
-
 ### update and upgrade your droplet
 
 Now we can connect to our droplet using ssh. If you're running on windows, I recommend you use
-[putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) to connect to your droplet.
-
-TODO - need some screenshots for putty on windows and some explanation for mac - maybe another markup file?
+[PuTTY](https://www.putty.org/) to connect to your droplet.
 
 You've connected to your droplet via ssh using the default port 22. Security wise it is best practice to
 change that port to something else.
@@ -143,6 +139,13 @@ reboot
 
 This will disrupt your current ssh connection, because we're connected on port 22. Reconnect to your droplet
 using your newly configured ssh port 2242.
+
+Before you do this, you will also need to change your Cloud Firewall over at digitalocean, as it only allows connections at port 22.
+To do this, click the "Create" Button in the upper right corner and select "Cloud Firewalls". You can remove the SSH entry with tcp port 22 and
+add the following new rules:
+![image](https://user-images.githubusercontent.com/3408102/145679466-eebf513c-a2b4-4785-82a4-878f9cf25676.png)
+
+Now you should be able to reconnect to your droplet on port 2242.
 
 Now let's update our system using the following command
 
@@ -178,7 +181,6 @@ ufw allow 80/tcp
 ufw allow 443/tcp
 ```
 
-TODO - digitalocean firewall
 
 Open a browser window on your local computer and try to connect to your droplet on http://nwct.example.com
 where nwct is the value we've used in our DNS A-Record and example.com is your domain. You should be able to
