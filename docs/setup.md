@@ -145,6 +145,8 @@ To do this, click the "Create" Button in the upper right corner and select "Clou
 add the following new rules:
 ![image](https://user-images.githubusercontent.com/3408102/145679466-eebf513c-a2b4-4785-82a4-878f9cf25676.png)
 
+Do NOT forget to add this rule to your droplet.
+
 Now you should be able to reconnect to your droplet on port 2242.
 
 Now let's update our system using the following command
