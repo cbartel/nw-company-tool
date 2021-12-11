@@ -8,10 +8,11 @@ You can host NWCT on a variety of hosters, the services I use in this guide are 
 because I like them. I have no collaboration with these providers, I'm pretty sure they don't know this 
 guide even exists.
 
-This guide is also available as a video tutorial on YouTube. Check out the 
+[This guide is also available as a video tutorial on YouTube](https://youtu.be/Vc05LSErptM). Check out the 
 [NWCT YouTube Channel](https://www.youtube.com/channel/UCqf2-UexGK8v-fpORpvBObA)
 
-TODO - insert video here
+
+
 
 If you have any issues, feel free to reach out to me on discord
 
