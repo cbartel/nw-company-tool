@@ -11,9 +11,6 @@
         <a href="https://ko-fi.com/J3J37247V" target='_blank'><img alt="Support me on Ko-fi" src="https://ko-fi.com/img/githubbutton_sm.svg" /></a>
     </div>
     <div>
-        <a href="https://discord.gg/rm9Gzf3HCH"><img alt="Discord" src="https://img.shields.io/discord/911515391371665429?label=Discord&style=for-the-badge"></a>
-    </div>
-    <div>
         <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/cbartel/nw-company-tool?style=social" />
         <img alt="GitHub watchers" src="https://img.shields.io/github/watchers/cbartel/nw-company-tool?style=social">
     </div>
@@ -39,15 +36,6 @@ The server is written in [nest.js](https://nestjs.com/) and uses [prisma](https:
 [SQLite](https://www.sqlite.org/index.html). It runs on [nodejs](https://nodejs.dev/). The webapp is written in
 [angular](https://angular.io/).
 
-<h3 style="font-family: 'IM Fell DW Pica', serif">
-    🛣️ Roadmap 🛣️
-</h3>
-
-- develop a plugin system to enable other developers to create content for this tool
-- create a war planner to make it easier for your company to organize their war efforts
-- ~~create an expedition planner~~ ✅ (Release 2.1.0)
-- integrate [NWDB.info](https://nwdb.info/) or a similar website
-- enable users to create skill tree builds in this tool to share their builds with your company
 
 <h3 style="font-family: 'IM Fell DW Pica', serif">
     🚀 How to install 🚀
