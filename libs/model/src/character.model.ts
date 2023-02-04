@@ -14,8 +14,10 @@ export enum Attribute {
   SPEAR = 'SPEAR',
   GREATAXE = 'GREATAXE',
   WARHAMMER = 'WARHAMMER',
+  GREATSWORD = 'GREATSWORD',
   BOW = 'BOW',
   MUSKET = 'MUSKET',
+  BLUNDERBUSS = 'BLUNDERBUSS',
   FIRESTAFF = 'FIRESTAFF',
   LIFESTAFF = 'LIFESTAFF',
   ICE_GAUNTLET = 'ICE_GAUNTLET',
@@ -56,8 +58,10 @@ export const WEAPON_SKILLS: Attribute[] = [
   Attribute.SPEAR,
   Attribute.GREATAXE,
   Attribute.WARHAMMER,
+  Attribute.GREATSWORD,
   Attribute.BOW,
   Attribute.MUSKET,
+  Attribute.BLUNDERBUSS,
   Attribute.FIRESTAFF,
   Attribute.LIFESTAFF,
   Attribute.ICE_GAUNTLET,
@@ -65,8 +69,8 @@ export const WEAPON_SKILLS: Attribute[] = [
 ];
 
 export const WEAPON_SKILLS_ONE_HANDED: Attribute[] = [Attribute.SWORD_AND_SHIELD, Attribute.RAPIER, Attribute.HATCHET];
-export const WEAPON_SKILLS_TWO_HANDED: Attribute[] = [Attribute.SPEAR, Attribute.GREATAXE, Attribute.WARHAMMER];
-export const WEAPON_SKILLS_RANGED: Attribute[] = [Attribute.BOW, Attribute.MUSKET];
+export const WEAPON_SKILLS_TWO_HANDED: Attribute[] = [Attribute.SPEAR, Attribute.GREATAXE, Attribute.WARHAMMER, Attribute.GREATSWORD];
+export const WEAPON_SKILLS_RANGED: Attribute[] = [Attribute.BOW, Attribute.MUSKET, Attribute.BLUNDERBUSS];
 export const WEAPON_SKILLS_MAGIC: Attribute[] = [
   Attribute.FIRESTAFF,
   Attribute.LIFESTAFF,
