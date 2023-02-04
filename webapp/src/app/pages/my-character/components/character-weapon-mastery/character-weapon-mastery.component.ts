@@ -25,8 +25,10 @@ export class CharacterWeaponMasteryComponent implements OnInit {
   spear = new FormControl(0, [Validators.max(20), Validators.min(0)]);
   greataxe = new FormControl(0, [Validators.max(20), Validators.min(0)]);
   warhammer = new FormControl(0, [Validators.max(20), Validators.min(0)]);
+  greatsword = new FormControl(0, [Validators.max(20), Validators.min(0)]);
   bow = new FormControl(0, [Validators.max(20), Validators.min(0)]);
   musket = new FormControl(0, [Validators.max(20), Validators.min(0)]);
+  blunderbuss = new FormControl(0, [Validators.max(20), Validators.min(0)]);
   firestaff = new FormControl(0, [Validators.max(20), Validators.min(0)]);
   lifestaff = new FormControl(0, [Validators.max(20), Validators.min(0)]);
   iceGauntlet = new FormControl(0, [Validators.max(20), Validators.min(0)]);
@@ -41,8 +43,10 @@ export class CharacterWeaponMasteryComponent implements OnInit {
     this.setupForm(this.spear, Attribute.SPEAR);
     this.setupForm(this.greataxe, Attribute.GREATAXE);
     this.setupForm(this.warhammer, Attribute.WARHAMMER);
+    this.setupForm(this.greatsword, Attribute.GREATSWORD);
     this.setupForm(this.bow, Attribute.BOW);
     this.setupForm(this.musket, Attribute.MUSKET);
+    this.setupForm(this.blunderbuss, Attribute.BLUNDERBUSS);
     this.setupForm(this.firestaff, Attribute.FIRESTAFF);
     this.setupForm(this.lifestaff, Attribute.LIFESTAFF);
     this.setupForm(this.iceGauntlet, Attribute.ICE_GAUNTLET);
