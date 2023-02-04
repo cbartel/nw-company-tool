@@ -42,7 +42,7 @@
   "ATTRIBUTES_GROUP": {
     "BASE": "Base",
     "ATTRIBUTES": "Attributes",
-    "WEAPON_SKI= 'LLS": "Weapons",
+    "WEAPON_SKILLS": "Weapons",
     "WEAPON_SKILLS_ONE_HANDED": "One Handed",
     "WEAPON_SKILLS_TWO_HANDED": "Two Handed",
     "WEAPON_SKILLS_RANGED": "Ranged",
